@@ -73,7 +73,7 @@ export default function Exploremore() {
     <section className="w-full bg-[#FAFAFA] py-16 overflow-x-hidden">
       <div className="max-w-[1280px] mx-auto px-6">
         {/* Title */}
-        <h2 className="text-center text-[32px] font-medium leading-tight text-[#1E1E1E]">
+        <h2 className="text-center text-[32px] font-Neurial_Grotesk font-medium leading-tight text-[#1E1E1E]">
           Everything you need.
           <br />
           All in one place
@@ -114,12 +114,12 @@ export default function Exploremore() {
           <div className="flex-1 max-w-[720px] flex flex-col justify-between h-[450px]">
             {/* Text Area */}
             <div>
-              <h3 className="text-[32px] font-medium font-['Neurial_Grotesk'] text-[#1F1F1F]">
+              <h3 className="text-[28px] font-medium font-Neurial_Grotesk  text-[#1F1F1F]">
                 {items[currentIndex].heading}
               </h3>
 
               {items[currentIndex].subHeading && (
-                <h4 className="mt-2 text-[20px] font-medium font-['Neurial_Grotesk'] text-[#303030]">
+                <h4 className="mt-2 text-[20px] font-medium font-Neurial_Grotesk text-[#303030]">
                   {items[currentIndex].subHeading}
                 </h4>
               )}
@@ -132,7 +132,7 @@ export default function Exploremore() {
                 {items[currentIndex].description2}
               </p>
 
-              <button className="mt-5 px-6 py-2.5 bg-[#0056A6] text-white text-[14px] font-medium hover:bg-[#00407C] transition rounded-sm">
+              <button className="mt-5 px-6 py-2.5 bg-[#0056A6] text-white text-[14px] font-medium font-['Neurial_Grotesk'] hover:bg-[#00407C] transition rounded-sm">
                 Explore More
               </button>
             </div>
