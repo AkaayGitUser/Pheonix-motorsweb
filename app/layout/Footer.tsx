@@ -66,7 +66,7 @@ export default function Footer() {
         {/* Column 2: Address */}
         <div className="w-full lg:w-[24%] lg:px-8 lg:border-r lg:border-white/10 flex flex-col">
           <h3 className="text-[14px] font-bold mb-4 text-white">Address</h3>
-          <div className="flex items-center gap-1.5 mb-1 text-[14px] font-normal text-white">
+          <div className="flex items-center gap-1.5 mb-1 text-[14px] font-Medium text-white/10">
             <Image
               src="/footer/location.png"
               alt="Location"
@@ -86,9 +86,9 @@ export default function Footer() {
 
         {/* Column 3: Contact US */}
         <div className="w-full lg:w-[20%] lg:px-6 lg:border-r lg:border-white/10 flex flex-col">
-          <h3 className="text-[14px] font-bold mb-4 text-white">Contact Us</h3>
+          <h3 className="text-[14px] font-bold mb-4 text-white/10">Contact Us</h3>
           <div className="space-y-2.5">
-            <div className="flex items-center gap-2.5 text-[10px] font-normal text-white whitespace-nowrap">
+            <div className="flex items-center gap-2.5 text-[14px] font-Medium text-white whitespace-nowrap">
               <Image
                 src="/footer/phone.png"
                 alt="Phone"
@@ -116,7 +116,7 @@ export default function Footer() {
         {/* Column 4: About US */}
         <div className="w-full lg:w-[15%] lg:px-8 lg:border-r lg:border-white/10 flex flex-col">
           <h3 className="text-[14px] font-bold mb-4 text-white">About Us</h3>
-          <ul className="space-y-2.5 text-[14px] font-light text-white">
+          <ul className="space-y-2.5 text-[14px] font-Medium text-white/10">
             <li>Our Partner</li>
             <li>Leadership</li>
             <li>Careers</li>
@@ -126,7 +126,7 @@ export default function Footer() {
         {/* Column 5: News */}
         <div className="w-full lg:w-[15%] lg:pl-8 flex flex-col">
           <h3 className="text-[14px] font-bold mb-4 text-white">News</h3>
-          <ul className="space-y-2.5 text-[14px] font-light text-white">
+          <ul className="space-y-2.5 text-[14px] font-Medium text-white/10">
             <li>Blogs</li>
             <li>Press Releases</li>
             <li>Newsletters</li>
