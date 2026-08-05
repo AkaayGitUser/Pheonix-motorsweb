@@ -36,7 +36,7 @@ export default function MomentsInMotion() {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
-                  <p className="text-white font-Neurail Grotesk text-lg mb-3">
+                  <p className="text-white font-Neurail Grotesk text-lg ">
                         Ride in style
                   </p>
                  <p className="text-gray-200 text-sm">
@@ -79,7 +79,7 @@ export default function MomentsInMotion() {
                       <h3 className="font-Neurail Grotesk text-sm mb-2 leading-snug">
                         Ride Beyond the Ordinary
                       </h3>
-                      <p className="text-[11px] leading-relaxed text-blue-100">
+                      <p className="text-sm leading-relaxed text-blue-100">
                         Every Hero motorcycle is built to inspire confidence, combining advanced engineering, refined performance and everyday practicality.Whether it&apos;s your daily commute or your next adventure, experience a ride that&apos;s smooth, reliable and designed to keep you moving forward.
                       </p>
                     </div>
@@ -96,7 +96,7 @@ export default function MomentsInMotion() {
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
-                      <p className="text-white font-Neurail Grotesk text-lg mb-3">
+                      <p className="text-white font-Neurail Grotesk text-lg ">
                         Ride with Confidence
                       </p>
                       <p className="text-gray-200 text-sm">
@@ -113,10 +113,10 @@ export default function MomentsInMotion() {
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-5 flex flex-col justify-end text-white">
-                      <h4 className="font-Neurail Grotesk text-white text-md mb-1">
+                      <h4 className="font-Neurail Grotesk text-white text-lg ">
                         Everyday Freedom
                       </h4>
-                      <p className="text-[11px] text-gray-200 leading-relaxed">
+                      <p className="text-sm text-gray-200 ">
                         Smart mobility for modern commuting.
                       </p>
                     </div>
@@ -207,7 +207,7 @@ export default function MomentsInMotion() {
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
-                      <p className="text-white font-Neurail Grotesk text-lg mb-3">
+                      <p className="text-white font-Neurail Grotesk text-lg ">
                         Ride with Confidence
                       </p>
                       <p className="text-gray-200 text-sm">
@@ -225,10 +225,10 @@ export default function MomentsInMotion() {
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-5 flex flex-col justify-end text-white">
-                      <h4 className="font-Neurail Grotesk text-sm mb-1">
+                      <h4 className="font-Neurail Grotesk text-lg ">
                         Everyday Freedom
                       </h4>
-                      <p className="text-[11px] text-gray-200 leading-relaxed">
+                      <p className="text-sm text-gray-200 leading-relaxed">
                         Smart mobility for modern commuting.
                       </p>
                     </div>
