@@ -256,10 +256,10 @@ export default function StartJourney() {
   const [activeTab, setActiveTab] = useState("Test Ride");
 
   const tabs = [
-    "Test Ride",
-    "New Vehicle Enquiry",
-    "Service Appointment",
-    "Finance Assistance",
+    { id: "Test Ride", label: "Test Ride", shortLabel: "Test Ride" },
+    { id: "New Vehicle Enquiry", label: "New Vehicle Enquiry", shortLabel: "Enquiry" },
+    { id: "Service Appointment", label: "Service Appointment", shortLabel: "Service" },
+    { id: "Finance Assistance", label: "Finance Assistance", shortLabel: "Finance" },
   ];
 
   // Helper function to render the form content
@@ -329,23 +329,23 @@ export default function StartJourney() {
   );
 
   // Layout specifically for sec.png (bottom-left corner flush)
-  const renderSecImageLeftLayout = (src) => (
+  const renderSecImageLeftLayout = (src: string) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-stretch p-6 md:p-10 relative">
-      <div className="w-full flex items-end justify-start relative min-h-[300px]">
+      <div className="hidden md:flex w-full items-end justify-start relative min-h-[300px]">
         <div className="w-full h-full flex items-end justify-start absolute bottom-0 left-0">
           <Image
             src={src}
             alt="Ride"
             width={1250}
             height={1000}
-            className="w-full max-w-[580px] h-auto object-contain object-left-bottom -mb-6 md:-mb-15 -ml-6 md:-ml-23"
+            className="w-full max-w-[580px] h-auto object-contain object-left-bottom -mb-15 -ml-23"
             priority
           />
         </div>
       </div>
       <div className="w-full flex flex-col justify-center">
         <div className="w-full max-w-xs mx-auto md:mx-0 relative z-10">
-          <h3 className="text-2xl font-grotesk mb-6 text-left">
+          <h3 className="text-xl sm:text-2xl font-grotesk mb-4 sm:mb-6 text-left">
             Find Your Perfect Ride
           </h3>
           {renderForm()}
@@ -355,23 +355,23 @@ export default function StartJourney() {
   );
 
   // Helper function to render a layout with image centered on the left
-  const renderLeftImageLayout = (src) => (
+  const renderLeftImageLayout = (src: string) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-stretch p-6 md:p-10 relative">
-      <div className="w-full flex items-end justify-center relative min-h-[300px]">
+      <div className="hidden md:flex w-full items-end justify-center relative min-h-[300px]">
         <div className="w-full h-full flex items-end justify-center absolute bottom-0 left-0 right-0">
           <Image
             src={src}
             alt="Ride"
             width={1200}
             height={900}
-            className="w-full max-w-[580px] h-auto object-contain object-bottom object-center mx-auto mb-6 "
+            className="w-full max-w-[580px] h-auto object-contain object-bottom object-center mx-auto mb-6"
             priority
           />
         </div>
       </div>
       <div className="w-full flex flex-col justify-center">
         <div className="w-full max-w-xs mx-auto md:mx-0 relative z-10">
-          <h3 className="text-2xl font-grotesk mb-6 text-left">
+          <h3 className="text-xl sm:text-2xl font-grotesk mb-4 sm:mb-6 text-left">
             Find Your Perfect Ride
           </h3>
           {renderForm()}
@@ -381,24 +381,24 @@ export default function StartJourney() {
   );
 
   // Helper function to render a layout with image centered on the right
-  const renderRightImageLayout = (src) => (
+  const renderRightImageLayout = (src: string) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-stretch p-6 md:p-10 relative">
       <div className="w-full flex flex-col justify-center">
         <div className="w-full max-w-xs mx-auto md:mx-0 relative z-10">
-          <h3 className="text-2xl font-grotesk mb-6 text-left">
+          <h3 className="text-xl sm:text-2xl font-grotesk mb-4 sm:mb-6 text-left">
             Find Your Perfect Ride
           </h3>
           {renderForm()}
         </div>
       </div>
-      <div className="w-full flex items-end justify-center relative min-h-[300px]">
+      <div className="hidden md:flex w-full items-end justify-center relative min-h-[300px]">
         <div className="w-full h-full flex items-end justify-center absolute bottom-0 left-0 right-0">
           <Image
             src={src}
             alt="Ride"
             width={1200}
             height={900}
-            className="w-full max-w-[580px] h-auto object-contain object-bottom object-center mx-auto -mb-6 md:-mb-10"
+            className="w-full max-w-[580px] h-auto object-contain object-bottom object-center mx-auto -mb-10"
             priority
           />
         </div>
@@ -407,32 +407,33 @@ export default function StartJourney() {
   );
 
   return (
-    <section className="bg-[#F1F1F1] py-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 text-black">
+    <section className="bg-[#F1F1F1] py-12 sm:py-16 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 text-black">
         {/* Heading */}
-        <h2 className="text-2xl font-grotesk text-center mb-8">
+        <h2 className="text-2xl font-grotesk text-center mb-6 sm:mb-8">
           Start Your Journey
         </h2>
 
-        {/* Tabs */}
-        <div className="flex justify-center gap-12 sm:gap-20 mb-10 overflow-x-auto">
+        {/* Tabs: Short labels on mobile, full labels on desktop */}
+        <div className="flex justify-between sm:justify-center items-center gap-2 sm:gap-8 md:gap-12 lg:gap-20 mb-6 sm:mb-10 px-2 sm:px-0 w-full max-w-sm sm:max-w-none mx-auto">
           {tabs.map((tab) => (
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`pb-3 text-md transition shrink-0 ${
-                activeTab === tab
-                  ? "border-b-2 border-blue-700 font-semibold"
-                  : "border-b-2 border-transparent text-gray-600"
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`pb-2 sm:pb-3 text-xs sm:text-sm md:text-base transition shrink-0 ${
+                activeTab === tab.id
+                  ? "border-b-2 border-blue-700 text-blue-700 font-semibold"
+                  : "border-b-2 border-transparent text-gray-600 hover:text-gray-900"
               }`}
             >
-              {tab}
+              <span className="sm:hidden">{tab.shortLabel}</span>
+              <span className="hidden sm:inline">{tab.label}</span>
             </button>
           ))}
         </div>
 
         {/* Static Card Container */}
-        <div className="bg-white rounded-3xl shadow-sm max-w-5xl mx-auto min-h-[520px] relative overflow-hidden flex items-stretch">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-sm max-w-5xl mx-auto min-h-0 md:min-h-[520px] relative overflow-hidden flex items-stretch">
           <AnimatePresence mode="wait">
             {activeTab === "Test Ride" && (
               <motion.div
