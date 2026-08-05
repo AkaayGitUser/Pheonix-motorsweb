@@ -10,46 +10,36 @@ export default function Exploremore() {
       heading: "Every Journey Begins Here.",
       subHeading: "",
       image: "/design-images/journey.jpg",
-      description1:
-        "Certified technicians, genuine spare parts, and modern service facilities keep your vehicle performing at its best. Every service is delivered with precision, ensuring reliability, safety, and long-lasting performance for every journey.",
-      description2:
-        "Certified technicians, genuine spare parts, and modern service facilities keep your vehicle performing at its best.",
+      description:
+        "Certified technicians, genuine spare parts, and modern service facilities keep your vehicle performing at its best. Every service is delivered with precision, ensuring reliability, safety, and long-lasting performance for every journey. Certified technicians, genuine spare parts, and modern service facilities keep your vehicle performing at its best.",
     },
     {
       heading: "Sales",
       subHeading: "Find the Ride That Fits Your Journey",
       image: "/design-images/sale.jpg",
-      description1:
-        "Explore the latest Hero motorcycles and scooters with expert guidance tailored to your needs. From your first enquiry to final delivery, we make every step simple and enjoyable.",
-      description2:
-        "Discover the right model, explore offers and enjoy a seamless buying experience backed by trusted service.",
+      description:
+        "Explore the latest Hero motorcycles and scooters with expert guidance tailored to your needs. From your first enquiry to final delivery, we make every step simple and enjoyable. Discover the right model, explore offers and enjoy a seamless buying experience backed by trusted service.",
     },
     {
       heading: "Service",
       subHeading: "Expert Care for Every Ride",
       image: "/design-images/service.jpg",
-      description1:
-        "Keep your Hero performing at its best with certified technicians, genuine parts and modern service facilities designed for reliability and peace of mind.",
-      description2:
-        "From routine maintenance to major repairs, every service is completed with precision and attention to detail.",
+      description:
+        "Keep your Hero performing at its best with certified technicians, genuine parts and modern service facilities designed for reliability and peace of mind. From routine maintenance to major repairs, every service is completed with precision and attention to detail.",
     },
     {
       heading: "Finance & Insurance",
       subHeading: "Ownership Made Easy",
       image: "/design-images/finance.jpg",
-      description1:
-        "Flexible finance solutions and comprehensive insurance options make owning your Hero more accessible than ever.",
-      description2:
-        "Our team helps you choose the right plan with a simple, transparent process tailored to your needs.",
+      description:
+        "Flexible finance solutions and comprehensive insurance options make owning your Hero more accessible than ever. Our team helps you choose the right plan with a simple, transparent process tailored to your needs.",
     },
     {
       heading: "Member Engagement",
       subHeading: "Beyond the Ride",
       image: "/design-images/member.jpg",
-      description1:
-        "Join a growing community of Hero riders through exclusive events, customer experiences, merchandise, and dealership activities.",
-      description2:
-        "Celebrate every milestone with a dealership that values every rider long after the purchase.",
+      description:
+        "Join a growing community of Hero riders through exclusive events, customer experiences, merchandise, and dealership activities. Celebrate every milestone with a dealership that values every rider long after the purchase.",
     },
   ];
 
@@ -114,7 +104,7 @@ export default function Exploremore() {
           <div className="flex-1 max-w-[720px] flex flex-col justify-between h-[450px]">
             {/* Text Area */}
             <div>
-              <h3 className="text-[28px] font-medium font-Neurial_Grotesk  text-[#1F1F1F]">
+              <h3 className="text-[28px] font-medium font-Neurial_Grotesk text-[#1F1F1F]">
                 {items[currentIndex].heading}
               </h3>
 
@@ -125,11 +115,7 @@ export default function Exploremore() {
               )}
 
               <p className="mt-4 text-[13px] leading-[22px] text-[#555555]">
-                {items[currentIndex].description1}
-              </p>
-
-              <p className="mt-3 text-[13px] leading-[22px] text-[#555555] whitespace-pre-line">
-                {items[currentIndex].description2}
+                {items[currentIndex].description}
               </p>
 
               <button className="mt-5 px-6 py-2.5 bg-[#0056A6] text-white text-[14px] font-medium font-['Neurial_Grotesk'] hover:bg-[#00407C] transition rounded-sm">
@@ -139,12 +125,12 @@ export default function Exploremore() {
 
             {/* Bottom Controls Row */}
             <div className="flex items-center justify-between mt-4">
-              {/* Exactly 4 Uniform Small Images Window (4 * 150px + 3 * 12px gap = 636px) */}
+              {/* Exactly 4 Uniform Small Images Window (Starts from NEXT image index) */}
               <div className="w-[636px] overflow-hidden">
                 <div
                   className="flex gap-3 transition-transform duration-500 ease-in-out"
                   style={{
-                    transform: `translateX(-${currentIndex * THUMBNAIL_STEP}px)`,
+                    transform: `translateX(-${(currentIndex + 1) * THUMBNAIL_STEP}px)`,
                   }}
                 >
                   {extendedItems.map((item, idx) => {
