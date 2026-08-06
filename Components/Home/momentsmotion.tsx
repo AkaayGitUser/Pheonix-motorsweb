@@ -7,7 +7,7 @@ export default function MomentsInMotion() {
   return (
     <section className="w-full py-8 sm:py-12 bg-gray-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 mb-6 sm:mb-8">
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#303030] text-center">
+        <h2 className="text-3xl sm:text-4xl font-regular text-[#303030] text-center">
           Moments in Motion
         </h2>
       </div>
@@ -28,7 +28,7 @@ export default function MomentsInMotion() {
             <div key={loopIndex} className="flex gap-4 sm:gap-6 shrink-0">
               
               {/* ==================== 1. FIRST TALL CARD ==================== */}
-              <div className="w-[260px] sm:w-[300px] lg:w-[360px] h-[380px] sm:h-[460px] lg:h-[544px] relative rounded-lg overflow-hidden shadow-sm shrink-0">
+              <div className="w-[260px] sm:w-[300px] lg:w-[360px] h-[380px] sm:h-[460px] lg:h-[544px] relative rounded-none overflow-hidden shadow-sm shrink-0">
                 <Image
                   src="/images/momentsinmotion/10-removebg-preview.png"
                   alt="Red Scooter Rider"
@@ -36,7 +36,7 @@ export default function MomentsInMotion() {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4 sm:p-6">
-                  <p className="text-white font-Neurail_Grotesk text-base sm:text-lg mb-1 sm:mb-2">
+                  <p className="text-white font-Neurail_Grotesk text-base sm:text-lg">
                     Ride in style
                   </p>
                   <p className="text-gray-200 text-xs sm:text-sm">
@@ -49,7 +49,7 @@ export default function MomentsInMotion() {
               <div className="flex gap-4 sm:gap-6 shrink-0">
                 {/* Column A */}
                 <div className="flex flex-col gap-4 sm:gap-6 w-[280px] sm:w-[360px] lg:w-[480px]">
-                  <div className="relative h-[220px] sm:h-[270px] lg:h-[320px] rounded-lg overflow-hidden shadow-sm">
+                  <div className="relative h-[220px] sm:h-[270px] lg:h-[320px] rounded-none overflow-hidden shadow-sm">
                     <Image
                       src="/images/momentsinmotion/hjk.jpg"
                       alt="Two Adventure Bikes"
@@ -66,7 +66,7 @@ export default function MomentsInMotion() {
                     </div>
                   </div>
 
-                  <div className="relative h-[145px] sm:h-[175px] lg:h-[200px] rounded-lg overflow-hidden shadow-sm grid grid-cols-2 bg-[#0052A3]">
+                  <div className="relative h-[145px] sm:h-[175px] lg:h-[200px] rounded-none overflow-hidden shadow-sm grid grid-cols-2 bg-[#0052A3]">
                     <div className="relative w-full h-full">
                       <Image
                         src="/images/momentsinmotion/151490222.webp"
@@ -80,7 +80,7 @@ export default function MomentsInMotion() {
                         Ride Beyond the Ordinary
                       </h3>
                       <p className="text-[10px] sm:text-[11px] lg:text-[12px] leading-tight sm:leading-relaxed text-blue-100 line-clamp-3 sm:line-clamp-4 lg:line-clamp-none">
-                        Every Hero motorcycle is built to inspire confidence, combining advanced engineering, refined performance and everyday practicality. Whether it&apos;s your daily commute or your next adventure, experience a ride that&apos;s smooth, reliable and designed to keep you moving forward.
+                        Every Hero motorcycle is built to inspire confidence, combining advanced engineering, refined performance and everyday practicality.
                       </p>
                     </div>
                   </div>
@@ -88,7 +88,7 @@ export default function MomentsInMotion() {
 
                 {/* Column B */}
                 <div className="flex flex-col gap-4 sm:gap-6 w-[230px] sm:w-[300px] lg:w-[380px]">
-                  <div className="relative h-[220px] sm:h-[270px] lg:h-[320px] rounded-lg overflow-hidden shadow-sm">
+                  <div className="relative h-[220px] sm:h-[270px] lg:h-[320px] rounded-none overflow-hidden shadow-sm">
                     <Image
                       src="/images/momentsinmotion/merchandise-card.png"
                       alt="Rider in Red Hero Jacket"
@@ -105,7 +105,7 @@ export default function MomentsInMotion() {
                     </div>
                   </div>
 
-                  <div className="relative h-[145px] sm:h-[175px] lg:h-[200px] rounded-lg overflow-hidden shadow-sm">
+                  <div className="relative h-[145px] sm:h-[175px] lg:h-[200px] rounded-none overflow-hidden shadow-sm">
                     <Image
                       src="/images/momentsinmotion/yellowscooty.webp"
                       alt="Yellow Scooter Couple"
@@ -125,7 +125,7 @@ export default function MomentsInMotion() {
               </div>
 
               {/* ==================== 3. SECOND TALL CARD (WITH INNER SLIDING IMAGE) ==================== */}
-              <div className="w-[260px] sm:w-[300px] lg:w-[360px] h-[380px] sm:h-[460px] lg:h-[544px] relative rounded-lg overflow-hidden shadow-sm shrink-0">
+              <div className="w-[260px] sm:w-[300px] lg:w-[360px] h-[380px] sm:h-[460px] lg:h-[544px] relative rounded-none overflow-hidden shadow-sm shrink-0">
                 {/* Inner Motion Container */}
                 <motion.div
                   className="absolute inset-0 w-[130%] h-full"
@@ -160,7 +160,7 @@ export default function MomentsInMotion() {
               <div className="flex gap-4 sm:gap-6 shrink-0">
                 {/* Column C */}
                 <div className="flex flex-col gap-4 sm:gap-6 w-[280px] sm:w-[360px] lg:w-[480px]">
-                  <div className="relative h-[220px] sm:h-[270px] lg:h-[320px] rounded-lg overflow-hidden shadow-sm">
+                  <div className="relative h-[220px] sm:h-[270px] lg:h-[320px] rounded-none overflow-hidden shadow-sm">
                     <Image
                       src="/images/momentsinmotion/hjk.jpg"
                       alt="Two Adventure Bikes"
@@ -177,7 +177,7 @@ export default function MomentsInMotion() {
                     </div>
                   </div>
 
-                  <div className="relative h-[145px] sm:h-[175px] lg:h-[200px] rounded-lg overflow-hidden shadow-sm grid grid-cols-2 bg-[#0052A3]">
+                  <div className="relative h-[145px] sm:h-[175px] lg:h-[200px] rounded-none overflow-hidden shadow-sm grid grid-cols-2 bg-[#0052A3]">
                     <div className="relative w-full h-full">
                       <Image
                         src="/images/momentsinmotion/151490222.webp"
@@ -191,7 +191,7 @@ export default function MomentsInMotion() {
                         Ride Beyond the Ordinary
                       </h3>
                       <p className="text-[10px] sm:text-[11px] lg:text-[12px] leading-tight sm:leading-relaxed text-blue-100 line-clamp-3 sm:line-clamp-4 lg:line-clamp-none">
-                        Every Hero motorcycle is built to inspire confidence, combining advanced engineering, refined performance and everyday practicality. Whether it&apos;s your daily commute or your next adventure, experience a ride that&apos;s smooth, reliable and designed to keep you moving forward.
+                        Every Hero motorcycle is built to inspire confidence, combining advanced engineering, refined performance and everyday practicality.
                       </p>
                     </div>
                   </div>
@@ -199,7 +199,7 @@ export default function MomentsInMotion() {
 
                 {/* Column D */}
                 <div className="flex flex-col gap-4 sm:gap-6 w-[230px] sm:w-[300px] lg:w-[380px]">
-                  <div className="relative h-[220px] sm:h-[270px] lg:h-[320px] rounded-lg overflow-hidden shadow-sm">
+                  <div className="relative h-[220px] sm:h-[270px] lg:h-[320px] rounded-none overflow-hidden shadow-sm">
                     <Image
                       src="/images/momentsinmotion/merchandise-card.png"
                       alt="Rider in Red Hero Jacket"
@@ -216,7 +216,7 @@ export default function MomentsInMotion() {
                     </div>
                   </div>
 
-                  <div className="relative h-[145px] sm:h-[175px] lg:h-[200px] rounded-lg overflow-hidden shadow-sm">
+                  <div className="relative h-[145px] sm:h-[175px] lg:h-[200px] rounded-none overflow-hidden shadow-sm">
                     <Image
                       src="/images/momentsinmotion/yellowscooty.webp"
                       alt="Yellow Scooter Couple"

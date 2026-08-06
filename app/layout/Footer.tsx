@@ -65,7 +65,7 @@ export default function Footer() {
         {/* Column 2: Address */}
         <div className="col-span-1 lg:w-[24%] pr-3 lg:px-8 lg:border-r lg:border-white/10 flex flex-col border-b border-white/10 pb-5 lg:pb-0 lg:border-b-0">
           <h3 className="text-[13px] sm:text-[14px] font-bold mb-2.5 sm:mb-4 text-white">Address</h3>
-          <div className="flex items-center gap-1.5 mb-1 text-[12px] sm:text-[14px] font-medium text-white">
+          <div className="flex items-center gap-1.5 mb-1 text-[10px] sm:text-[12px] font-regular text-white">
             <Image
               src="/footer/location.png"
               alt="Location"
@@ -87,7 +87,7 @@ export default function Footer() {
         <div className="col-span-1 lg:w-[20%] pl-3 lg:px-6 lg:border-r lg:border-white/10 flex flex-col border-b border-white/10 pb-5 lg:pb-0 lg:border-b-0">
           <h3 className="text-[13px] sm:text-[14px] font-bold mb-2.5 sm:mb-4 text-white">Contact Us</h3>
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-[10px] sm:text-[11px] lg:text-[10px] font-medium text-white">
+            <div className="flex items-center gap-2 text-[10px] sm:text-[11px] lg:text-[10px] font-regular text-white/50">
               <Image
                 src="/footer/phone.png"
                 alt="Phone"
@@ -99,7 +99,7 @@ export default function Footer() {
                 040-2222 5555/6666/7777
               </a>
             </div>
-            <div className="flex items-center gap-2 text-[10px] sm:text-[11px] lg:text-[10px] font-normal text-white">
+            <div className="flex items-center gap-2 text-[10px] sm:text-[11px] lg:text-[10px] font-regular text-white/50">
               <Image
                 src="/footer/email.png"
                 alt="Email"
@@ -117,7 +117,7 @@ export default function Footer() {
         {/* Column 4: About US */}
         <div className="col-span-1 lg:w-[15%] pr-3 lg:px-8 lg:border-r lg:border-white/10 flex flex-col pt-1 lg:pt-0">
           <h3 className="text-[13px] sm:text-[14px] font-bold mb-2.5 sm:mb-4 text-white">About Us</h3>
-          <ul className="space-y-2 text-[12px] sm:text-[14px] font-medium text-white/80">
+          <ul className="space-y-2 text-[10px] sm:text-[12px] font-regular text-white/80">
             <li><Link href="#" className="hover:text-white transition-colors">Our Partner</Link></li>
             <li><Link href="#" className="hover:text-white transition-colors">Leadership</Link></li>
             <li><Link href="#" className="hover:text-white transition-colors">Careers</Link></li>
@@ -127,7 +127,7 @@ export default function Footer() {
         {/* Column 5: News */}
         <div className="col-span-1 lg:w-[15%] pl-3 lg:pl-8 flex flex-col pt-1 lg:pt-0">
           <h3 className="text-[13px] sm:text-[14px] font-bold mb-2.5 sm:mb-4 text-white">News</h3>
-          <ul className="space-y-2 text-[12px] sm:text-[14px] font-medium text-white/80">
+          <ul className="space-y-2 text-[10px] sm:text-[12px] font-regular text-white/80">
             <li><Link href="#" className="hover:text-white transition-colors">Blogs</Link></li>
             <li><Link href="#" className="hover:text-white transition-colors">Press Releases</Link></li>
             <li><Link href="#" className="hover:text-white transition-colors">Newsletters</Link></li>
