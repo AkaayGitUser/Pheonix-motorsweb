@@ -114,11 +114,11 @@ export default function Chooseus() {
 
   return (
     <section
-      className="bg-[#F1F1F1] pt-14 md:pt-20 pb-16 md:pb-24 overflow-hidden relative select-none"
+      className="bg-[#F1F1F1] pt-14 md:pt-5 pb-16 md:pb-24 overflow-hidden relative select-none"
       style={{ fontFamily: "'Neurial Grotesk', sans-serif" }}
     >
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-11 text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-normal text-[#303030] tracking-tight">
           Why Riders Choose Us
         </h2>
