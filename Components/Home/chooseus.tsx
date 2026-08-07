@@ -114,7 +114,7 @@ export default function Chooseus() {
 
   return (
     <section
-      className="bg-[#F1F1F1] pt-14 md:pt-5 pb-16 md:pb-24 overflow-hidden relative select-none"
+      className="bg-[#F1F1F1] pt-14 md:pt-5 pb-16 md:pb-10 overflow-hidden relative select-none"
       style={{ fontFamily: "'Neurial Grotesk', sans-serif" }}
     >
       {/* Header */}
@@ -133,7 +133,7 @@ export default function Chooseus() {
         {/* Cards Track */}
         <div
           ref={scrollContainerRef}
-          className="flex gap-6 sm:gap-8 overflow-x-auto no-scrollbar pt-12 sm:pt-14 pb-8 px-6 sm:px-12 md:px-20 lg:px-28 cursor-grab active:cursor-grabbing"
+          className="flex gap-6 sm:gap-8 overflow-x-auto no-scrollbar pt-12 sm:pt-10 pb-8 px-6 sm:px-12 md:px-20 lg:px-28 cursor-grab active:cursor-grabbing"
         >
           {[...testimonials, ...testimonials].map((item, idx) => (
             <div
