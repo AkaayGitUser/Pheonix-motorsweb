@@ -1,251 +1,3 @@
-// "use client";
-
-// import { useState } from "react";
-// import Image from "next/image";
-// import { motion, AnimatePresence } from "framer-motion";
-
-// export default function StartJourney() {
-//   const [activeTab, setActiveTab] = useState("Test Ride");
-
-//   const tabs = [
-//     "Test Ride",
-//     "New Vehicle Enquiry",
-//     "Service Appointment",
-//     "Finance Assistance",
-//   ];
-
-//   const images: Record<string, string> = {
-//     "Test Ride": "/bikefirst.png",
-//     "New Vehicle Enquiry": "/sec.png",
-//     "Service Appointment": "/serviceapp.webp",
-//     "Finance Assistance": "/bikefour.png",
-//   };
-
-//   const imageOnRight =
-//     activeTab === "Test Ride" || activeTab === "Service Appointment";
-
-//   return (
-//     <section className="bg-[#F1F1F1] py-16 overflow-hidden">
-//       <div className="max-w-7xl mx-auto px-6 text-black">
-//         {/* Heading */}
-//         <h2 className="text-2xl font-grotesk text-center mb-8">
-//           Start Your Journey
-//         </h2>
-
-//         {/* Tabs */}
-//         <div className="flex justify-center gap-12 sm:gap-20 mb-10 overflow-x-auto">
-//           {tabs.map((tab) => (
-//             <button
-//               key={tab}
-//               onClick={() => setActiveTab(tab)}
-//               className={`pb-3 text-md transition shrink-0 ${
-//                 activeTab === tab
-//                   ? "border-b-2 border-blue-700 font-semibold"
-//                   : "border-b-2 border-transparent text-gray-600"
-//               }`}
-//             >
-//               {tab}
-//             </button>
-//           ))}
-//         </div>
-
-//         {/* Static Card Container */}
-//         <div className="bg-white rounded-3xl shadow-sm max-w-5xl mx-auto min-h-[520px] relative overflow-hidden flex items-stretch">
-//           {/* Side-by-Side Grid */}
-//           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-stretch p-6 md:p-10 relative">
-//             {/* FORM BLOCK */}
-//             <motion.div
-//               layout
-//               transition={{
-//                 layout: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
-//               }}
-//               className={`w-full flex flex-col justify-center ${
-//                 imageOnRight ? "md:order-1" : "md:order-2"
-//               }`}
-//             >
-//               <AnimatePresence mode="wait">
-//                 <motion.div
-//                   key={`form-text-${activeTab}`}
-//                   initial={{ opacity: 0, y: 10 }}
-//                   animate={{ opacity: 1, y: 0 }}
-//                   exit={{ opacity: 0, y: -10 }}
-//                   transition={{ duration: 0.25 }}
-//                   className="w-full max-w-xs mx-auto md:mx-0 relative z-10"
-//                 >
-//                   <h3 className="text-2xl font-grotesk mb-6 text-left">
-//                     Find Your Perfect Ride
-//                   </h3>
-
-//                   {/* <form className="space-y-3 w-full">
-//                     <div>
-//                       <label className="block text-xs mb-1.5 font-medium">
-//                         Name <span className="text-red-500">*</span>
-//                       </label>
-//                       <input
-//                         type="text"
-//                         placeholder="Enter your name"
-//                         className="placeholder:text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg px-4 placeholder:text-gray-400"
-//                       />
-//                     </div>
-
-//                     <div>
-//                       <label className="block text-xs mb-1.5 font-medium">
-//                         Phone Number <span className="text-red-500">*</span>
-//                       </label>
-//                       <input
-//                         type="text"
-//                         placeholder="Enter your number"
-//                         className="placeholder:text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg px-4 placeholder:text-gray-400"
-//                       />
-//                     </div>
-
-//                     <div>
-//                       <label className="block text-xs mb-1.5 font-medium">
-//                         Email ID <span className="text-red-500">*</span>
-//                       </label>
-//                       <select className="text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg px-4 pr-8 text-gray-400">
-//                         <option>Service name</option>
-//                       </select>
-//                     </div>
-
-//                     <div>
-//                       <label className="block text-xs mb-1.5 font-medium">
-//                         Vehicle Model <span className="text-red-500">*</span>
-//                       </label>
-//                       <select className="text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg px-4 text-gray-400">
-//                         <option>Select vehicle model</option>
-//                       </select>
-//                     </div>
-
-//                     <div>
-//                       <label className="block text-xs mb-1.5 font-medium">
-//                         Showroom <span className="text-red-500">*</span>
-//                       </label>
-//                       <select
-//                         defaultValue=""
-//                         className="text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg px-4 text-gray-400 mb-2"
-//                       >
-//                         <option value="" disabled>
-//                           Select showroom
-//                         </option>
-//                       </select>
-//                     </div>
-
-//                     <button
-//                       type="submit"
-//                       className="w-full h-9 bg-[#0052A5] text-white rounded-lg font-medium"
-//                     >
-//                       Submit
-//                     </button>
-//                   </form> */}
-
-//                   {/* Form with left-shifted dropdown arrows */}
-//                   <form className="space-y-3 w-full">
-//                     <div>
-//                       <label className="block text-xs mb-1.5 font-medium">
-//                         Name <span className="text-red-500">*</span>
-//                       </label>
-//                       <input
-//                         type="text"
-//                         placeholder="Enter your name"
-//                         className="placeholder:text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg px-4 placeholder:text-gray-400"
-//                       />
-//                     </div>
-
-//                     <div>
-//                       <label className="block text-xs mb-1.5 font-medium">
-//                         Phone Number <span className="text-red-500">*</span>
-//                       </label>
-//                       <input
-//                         type="text"
-//                         placeholder="Enter your number"
-//                         className="placeholder:text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg px-4 placeholder:text-gray-400"
-//                       />
-//                     </div>
-
-//                     <div>
-//                       <label className="block text-xs mb-1.5 font-medium">
-//                         Email ID <span className="text-red-500">*</span>
-//                       </label>
-//                       <select className="text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg pl-4 pr-10 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236B7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_20px_center] text-gray-400">
-//                         <option>Service name</option>
-//                       </select>
-//                     </div>
-
-//                     <div>
-//                       <label className="block text-xs mb-1.5 font-medium">
-//                         Vehicle Model <span className="text-red-500">*</span>
-//                       </label>
-//                       <select className="text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg pl-4 pr-10 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236B7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_20px_center] text-gray-400">
-//                         <option>Select vehicle model</option>
-//                       </select>
-//                     </div>
-
-//                     <div>
-//                       <label className="block text-xs mb-1.5 font-medium">
-//                         Showroom <span className="text-red-500">*</span>
-//                       </label>
-//                       <select
-//                         defaultValue=""
-//                         className="text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg pl-4 pr-10 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236B7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_20px_center] text-gray-400 mb-2"
-//                       >
-//                         <option value="" disabled>
-//                           Select showroom
-//                         </option>
-//                       </select>
-//                     </div>
-
-//                     <button
-//                       type="submit"
-//                       className="w-full h-9 bg-[#0052A5] text-white rounded-lg font-medium"
-//                     >
-//                       Submit
-//                     </button>
-//                   </form>
-//                 </motion.div>
-//               </AnimatePresence>
-//             </motion.div>
-
-//             {/* IMAGE BLOCK (Anchored to Card Bottom) */}
-//             {/* IMAGE BLOCK (Centered horizontally and anchored to card bottom) */}
-//             {/* IMAGE BLOCK */}
-//             <motion.div
-//               layout
-//               transition={{
-//                 layout: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
-//               }}
-//               className={`w-full flex items-end justify-center relative min-h-[300px] ${
-//                 imageOnRight ? "md:order-2" : "md:order-1"
-//               }`}
-//             >
-//               <AnimatePresence mode="wait">
-//                 <motion.div
-//                   key={`img-${activeTab}`}
-//                   initial={{ opacity: 0, scale: 0.95 }}
-//                   animate={{ opacity: 1, scale: 1 }}
-//                   exit={{ opacity: 0, scale: 0.95 }}
-//                   transition={{ duration: 0.25 }}
-//                   className="w-full h-full flex items-end justify-center absolute bottom-0 left-0 right-0"
-//                 >
-//                   <Image
-//                     src={images[activeTab]}
-//                     alt="Ride"
-//                     width={1200}
-//                     height={900}
-//                     className="w-full max-w-[580px] h-auto object-contain object-bottom object-center mx-auto -mb-6 md:-mb-10"
-//                     priority
-//                   />
-//                 </motion.div>
-//               </AnimatePresence>
-//             </motion.div>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
-
 "use client";
 
 import { useState } from "react";
@@ -257,22 +9,34 @@ export default function StartJourney() {
 
   const tabs = [
     { id: "Test Ride", label: "Test Ride", shortLabel: "Test Ride" },
-    { id: "New Vehicle Enquiry", label: "New Vehicle Enquiry", shortLabel: "Enquiry" },
-    { id: "Service Appointment", label: "Service Appointment", shortLabel: "Service" },
-    { id: "Finance Assistance", label: "Finance Assistance", shortLabel: "Finance" },
+    {
+      id: "New Vehicle Enquiry",
+      label: "New Vehicle Enquiry",
+      shortLabel: "Enquiry",
+    },
+    {
+      id: "Service Appointment",
+      label: "Service Appointment",
+      shortLabel: "Service",
+    },
+    {
+      id: "Finance Assistance",
+      label: "Finance Assistance",
+      shortLabel: "Finance",
+    },
   ];
 
   // Helper function to render the form content
   const renderForm = () => (
-    <form className="space-y-3 w-full">
+    <form className="space-y-4 w-full ">
       <div>
-        <label className="block text-xs mb-1.5 font-medium">
+        <label className="block text-xs mb-1.5 font-medium ">
           Name <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
           placeholder="Enter your name"
-          className="placeholder:text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg px-4 placeholder:text-gray-400"
+          className="placeholder:text-xs w-full h-10 bg-gray-100 border border-gray-300 rounded-lg px-4 placeholder:text-gray-400"
         />
       </div>
 
@@ -283,7 +47,7 @@ export default function StartJourney() {
         <input
           type="text"
           placeholder="Enter your number"
-          className="placeholder:text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg px-4 placeholder:text-gray-400"
+          className="placeholder:text-xs w-full h-10 bg-gray-100 border border-gray-300 rounded-lg px-4 placeholder:text-gray-400"
         />
       </div>
 
@@ -291,7 +55,7 @@ export default function StartJourney() {
         <label className="block text-xs mb-1.5 font-medium">
           Email ID <span className="text-red-500">*</span>
         </label>
-        <select className="text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg pl-4 pr-10 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236B7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_20px_center] text-gray-400">
+        <select className="text-xs w-full h-10 bg-gray-100 border border-gray-300 rounded-lg pl-4 pr-10 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236B7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_20px_center] text-gray-400">
           <option>Service name</option>
         </select>
       </div>
@@ -300,7 +64,7 @@ export default function StartJourney() {
         <label className="block text-xs mb-1.5 font-medium">
           Vehicle Model <span className="text-red-500">*</span>
         </label>
-        <select className="text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg pl-4 pr-10 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236B7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_20px_center] text-gray-400">
+        <select className="text-xs w-full h-10 bg-gray-100 border border-gray-300 rounded-lg pl-4 pr-10 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236B7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_20px_center] text-gray-400">
           <option>Select vehicle model</option>
         </select>
       </div>
@@ -311,7 +75,7 @@ export default function StartJourney() {
         </label>
         <select
           defaultValue=""
-          className="text-xs w-full h-9 bg-gray-100 border border-gray-300 rounded-lg pl-4 pr-10 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236B7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_20px_center] text-gray-400 mb-2"
+          className="text-xs w-full h-10 bg-gray-100 border border-gray-300 rounded-lg pl-4 pr-10 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236B7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_20px_center] text-gray-400 mb-2"
         >
           <option value="" disabled>
             Select showroom
@@ -321,7 +85,7 @@ export default function StartJourney() {
 
       <button
         type="submit"
-        className="w-full h-9 bg-[#0052A5] text-white rounded-lg font-medium"
+        className="w-full h-10 bg-[#0052A5] text-white rounded-lg font-medium hover:bg-[#003d7c] transition"
       >
         Submit
       </button>
@@ -330,75 +94,75 @@ export default function StartJourney() {
 
   // Layout specifically for sec.png (bottom-left corner flush)
   const renderSecImageLeftLayout = (src: string) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-stretch p-6 md:p-10 relative">
-      <div className="hidden md:flex w-full items-end justify-start relative min-h-[300px]">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-stretch p-8 md:p-14 relative">
+      <div className="hidden md:flex w-full items-end justify-start relative min-h-[360px]">
         <div className="w-full h-full flex items-end justify-start absolute bottom-0 left-0">
           <Image
             src={src}
             alt="Ride"
             width={1250}
             height={1000}
-            className="w-full max-w-[580px] h-auto object-contain object-left-bottom -mb-15 -ml-23"
+            className="w-full max-w-[620px] h-auto object-contain object-left-bottom -mb-17 -ml-28"
             priority
           />
         </div>
       </div>
       <div className="w-full flex flex-col justify-center">
-        <div className="w-full max-w-xs mx-auto md:mx-0 relative z-10">
-          <h3 className="text-xl sm:text-2xl font-grotesk mb-4 sm:mb-6 text-left">
-            Find Your Perfect Ride
-          </h3>
-          {renderForm()}
-        </div>
-      </div>
+  <div className="w-full max-w-sm mx-auto md:ml-auto md:mr-0 relative z-10">
+    <h3 className="sm:text-2xl md:text-4xl font-Neurial Grotesk sm:mb-6 text-left ">
+      Find Your Perfect Ride
+    </h3>
+    {renderForm()}
+  </div>
+</div>
     </div>
   );
 
   // Helper function to render a layout with image centered on the left
   const renderLeftImageLayout = (src: string) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-stretch p-6 md:p-10 relative">
-      <div className="hidden md:flex w-full items-end justify-center relative min-h-[300px]">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-stretch p-8 md:p-14 relative">
+      <div className="hidden md:flex w-full items-end justify-center relative min-h-[360px]">
         <div className="w-full h-full flex items-end justify-center absolute bottom-0 left-0 right-0">
           <Image
             src={src}
             alt="Ride"
             width={1200}
             height={900}
-            className="w-full max-w-[580px] h-auto object-contain object-bottom object-center mx-auto mb-6"
+            className="w-full max-w-[620px] h-auto object-contain object-bottom object-center mx-auto mb-6"
             priority
           />
         </div>
       </div>
-      <div className="w-full flex flex-col justify-center">
-        <div className="w-full max-w-xs mx-auto md:mx-0 relative z-10">
-          <h3 className="text-xl sm:text-2xl font-grotesk mb-4 sm:mb-6 text-left">
-            Find Your Perfect Ride
-          </h3>
-          {renderForm()}
-        </div>
-      </div>
+     <div className="w-full flex flex-col justify-center">
+  <div className="w-full max-w-sm mx-auto md:ml-auto md:mr-0 relative z-10">
+    <h3 className="sm:text-2xl md:text-4xl font-Neurial Grotesk sm:mb-6 text-left">
+      Find Your Perfect Ride
+    </h3>
+    {renderForm()}
+  </div>
+</div>
     </div>
   );
 
   // Helper function to render a layout with image centered on the right
   const renderRightImageLayout = (src: string) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-stretch p-6 md:p-10 relative">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-stretch p-8 md:p-14 relative">
       <div className="w-full flex flex-col justify-center">
-        <div className="w-full max-w-xs mx-auto md:mx-0 relative z-10">
-          <h3 className="text-xl sm:text-2xl font-grotesk mb-4 sm:mb-6 text-left">
+        <div className="w-full max-w-sm mx-auto md:mx-0 relative z-10">
+          <h3 className="text-xl sm:text-2xl md:text-4xl font-Neurial Grotesk mb-4 sm:mb-6 text-left  ">
             Find Your Perfect Ride
           </h3>
           {renderForm()}
         </div>
       </div>
-      <div className="hidden md:flex w-full items-end justify-center relative min-h-[300px]">
+      <div className="hidden md:flex w-full items-end justify-center relative min-h-[360px]">
         <div className="w-full h-full flex items-end justify-center absolute bottom-0 left-0 right-0">
           <Image
             src={src}
             alt="Ride"
             width={1200}
             height={900}
-            className="w-full max-w-[580px] h-auto object-contain object-bottom object-center mx-auto -mb-10"
+            className="w-full max-w-[620px] h-auto object-contain object-bottom object-center mx-auto -mb-14"
             priority
           />
         </div>
@@ -410,30 +174,35 @@ export default function StartJourney() {
     <section className="bg-[#F1F1F1] py-12 sm:py-16 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 text-black">
         {/* Heading */}
-        <h2 className="text-2xl font-grotesk text-center mb-6 sm:mb-8">
+        <h2 className="text-2xl sm:text-3xl font-Neurial Grotesk text-center mb-2 sm:mb-8">
           Start Your Journey
         </h2>
 
-        {/* Tabs: Short labels on mobile, full labels on desktop */}
-        <div className="flex justify-between sm:justify-center items-center gap-2 sm:gap-8 md:gap-12 lg:gap-20 mb-6 sm:mb-10 px-2 sm:px-0 w-full max-w-sm sm:max-w-none mx-auto">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`pb-2 sm:pb-3 text-xs sm:text-sm md:text-base transition shrink-0 ${
-                activeTab === tab.id
-                  ? "border-b-2 border-blue-700 text-blue-700 font-semibold"
-                  : "border-b-2 border-transparent text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              <span className="sm:hidden">{tab.shortLabel}</span>
-              <span className="hidden sm:inline">{tab.label}</span>
-            </button>
-          ))}
-        </div>
+        {/* Tabs with content-width short underline */}
 
-        {/* Static Card Container */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-sm max-w-5xl mx-auto min-h-0 md:min-h-[520px] relative overflow-hidden flex items-stretch">
+        <div className="flex w-full justify-center gap-3 sm:gap-10 mb-[-2]">
+  {tabs.map((tab) => (
+    <button
+      key={tab.id}
+      onClick={() => setActiveTab(tab.id)}
+      className={`pb-4 text-center transition relative group text-md sm:text-md px-2 font-Neurial Grotesk ${
+        activeTab === tab.id ? "regular " : "text-gray-600"
+      }`}
+    >
+      <span className="relative inline-block pb-1">
+        <span className="sm:hidden">{tab.shortLabel}</span>
+        <span className="hidden sm:inline">{tab.label}</span>
+        {activeTab === tab.id && (
+          <span className="absolute bottom-0 -left-1 -right-1 h-[2px] bg-[#003366] rounded-full" />
+        )}
+      </span>
+    </button>
+  ))}
+</div>
+
+
+        {/* Static Card Container - Enlarged */}
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-sm max-w-6xl mx-auto min-h-0 md:min-h-[600px] relative overflow-hidden flex items-stretch">
           <AnimatePresence mode="wait">
             {activeTab === "Test Ride" && (
               <motion.div
