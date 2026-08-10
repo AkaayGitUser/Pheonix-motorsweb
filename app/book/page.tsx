@@ -216,10 +216,12 @@ export default function Hero() {
 
               {/* FEATURES */}
 
+              {/* FEATURES */}
+
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <Image
-                    src="/m.png"
+                    src="/popupone.png"
                     alt="Quick response"
                     width={20}
                     height={20}
@@ -339,8 +341,12 @@ export default function Hero() {
                     Name <span className="text-red-500">*</span>
                   </label>
 
+
                   <input
                     type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -370,6 +376,8 @@ export default function Hero() {
 
                 {/* PHONE */}
 
+                {/* PHONE */}
+
                 <div>
                   <label
                     className="
@@ -383,8 +391,12 @@ export default function Hero() {
                     Phone Number <span className="text-red-500">*</span>
                   </label>
 
+
                   <input
                     type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
@@ -414,6 +426,8 @@ export default function Hero() {
 
                 {/* EMAIL */}
 
+                {/* EMAIL */}
+
                 <div>
                   <label
                     className="
@@ -427,8 +441,12 @@ export default function Hero() {
                     Email ID <span className="text-red-500">*</span>
                   </label>
 
+
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
@@ -458,6 +476,8 @@ export default function Hero() {
 
                 {/* LOCATION */}
 
+                {/* LOCATION */}
+
                 <div>
                   <label
                     className="
@@ -474,6 +494,9 @@ export default function Hero() {
                   <div className="relative">
                     <input
                       type="text"
+                      name="location"
+                      value={formData.location}
+                      onChange={handleChange}
                       name="location"
                       value={formData.location}
                       onChange={handleChange}
