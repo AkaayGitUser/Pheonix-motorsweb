@@ -1,57 +1,80 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Header from "./../../app/layout/header";
 
-export default function Hero() {
+export default function BookPage() {
   const router = useRouter();
 
-  const [showForm, setShowForm] = useState(true);
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  // =========================================================
+  // FORM STATE
+  // =========================================================
 
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    location: "",
-  });
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [location, setLocation] = useState("");
+
+  // =========================================================
+  // POPUP STATE
+  // =========================================================
+
+  const [showForm, setShowForm] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  // =========================================================
+  // REFERENCE ID
+  // =========================================================
 
   const [referenceId, setReferenceId] = useState("");
 
-  // =====================================================
-  // INPUT CHANGE
-  // =====================================================
+  // =========================================================
+  // SUBMIT FORM
+  // =========================================================
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // =====================================================
-  // REQUEST CALLBACK
-  // =====================================================
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Basic validation
+    if (!name.trim() || !phone.trim() || !email.trim() || !location.trim()) {
+      alert("Please fill all the required fields.");
+      return;
+    }
+
+    // Generate reference ID
     const randomNumber = Math.floor(10000 + Math.random() * 90000);
 
-    setReferenceId(`PM-2026-${randomNumber}`);
+    const generatedReferenceId = `PM-2026-${randomNumber}`;
 
+    setReferenceId(generatedReferenceId);
+
+    // Hide form
     setShowForm(false);
-    setShowConfirmation(true);
+
+    // Show success popup
+    setShowSuccess(true);
   };
 
-  // =====================================================
+  // =========================================================
+  // CLOSE FORM
+  // =========================================================
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+
+    // Go back to Hero/Home page
+    router.push("/");
+  };
+
+  // =========================================================
   // DONE BUTTON
-  // Redirect to Hero page
-  // =====================================================
+  // =========================================================
 
   const handleDone = () => {
+    setShowSuccess(false);
+
+    // Go back to Hero/Home page
     router.push("/");
   };
 
@@ -70,122 +93,84 @@ export default function Hero() {
         backgroundImage: "url('/Hero.png')",
       }}
     >
-      {/* ================================================= */}
-      {/* HEADER */}
-      {/* ================================================= */}
+      {/* =====================================================
+          DARK OVERLAY
+      ===================================================== */}
 
-      <div className="relative z-20">
-        <Header />
-      </div>
+      <div className="absolute inset-0 bg-black/10" />
 
-      {/* ================================================= */}
-      {/* HERO TEXT */}
-      {/* ================================================= */}
+      {/* =====================================================
+          REQUEST CALLBACK FORM
+      ===================================================== */}
 
-      <div
-        className="
-          absolute
-          inset-0
-          flex
-          items-center
-          justify-center
-          px-5
-          pointer-events-none
-        "
-      >
-        <h1
-          className="
-            text-white
-            text-center
-            text-xl
-            sm:text-2xl
-            md:text-4xl
-            lg:text-5xl
-          "
-        >
-          Your Next Adventure Starts in Style.
-        </h1>
-      </div>
-
-      {/* ================================================= */}
-      {/* REQUEST CALLBACK FORM */}
-      {/* ================================================= */}
-
-      {showForm && !showConfirmation && (
+      {showForm && !showSuccess && (
         <div
           className="
             fixed
             inset-0
-            z-[999]
-
+            z-50
             flex
             items-center
             justify-center
-
+            bg-black/20
             px-3
+            py-4
             sm:px-5
-
-            bg-black/10
           "
         >
+          {/* =================================================
+              FORM CONTAINER
+          ================================================= */}
+
           <div
             className="
+              relative
+              flex
               w-full
-              max-w-[680px]
-
-              max-h-[92vh]
-
-              bg-white
-
-              rounded-xl
-              sm:rounded-2xl
-
+              max-w-[760px]
+              max-h-[94vh]
               overflow-hidden
-
+              rounded-xl
+              bg-white
               shadow-2xl
 
-              flex
               flex-col
+
               sm:flex-row
             "
           >
-            {/* ================================================= */}
-            {/* LEFT SIDE */}
-            {/* ================================================= */}
+            {/* =================================================
+                LEFT SECTION
+            ================================================= */}
 
             <div
               className="
                 hidden
+                w-full
+                shrink-0
+                bg-[#eef6fc]
+                p-5
+
                 sm:flex
+                sm:w-[34%]
+                sm:flex-col
 
-                w-[34%]
-
-                bg-[#eef5fb]
-
-                p-4
-                md:p-5
-
-                flex-col
+                md:p-6
               "
             >
               {/* CONTACT ICON */}
 
               <div
                 className="
-                  w-10
-                  h-10
-                  md:w-11
-                  md:h-11
-
-                  rounded-full
-                  bg-blue-100
-
+                  mb-3
                   flex
+                  h-11
+                  w-11
                   items-center
                   justify-center
-
+                  rounded-full
+                  bg-[#dceeff]
                   p-2
-                  mb-3
                 "
               >
                 <Image
@@ -193,299 +178,362 @@ export default function Hero() {
                   alt="Contact"
                   width={30}
                   height={30}
-                  className="w-full h-full object-contain"
+                  className="h-full w-full object-contain"
                 />
               </div>
 
-              <h2 className="text-base md:text-lg text-gray-800 mb-1">
+              {/* TITLE */}
+
+              <h2
+                className="
+                  mb-2
+                  text-[18px]
+                  font-normal
+                  text-[#171717]
+                  md:text-[20px]
+                "
+              >
                 Let's Connect!!
               </h2>
 
+              {/* DESCRIPTION */}
+
               <p
                 className="
+                  mb-5
                   text-[10px]
-                  md:text-[11px]
+                  leading-[1.45]
                   text-[#343434]
-                  leading-4
-                  mb-4
+                  md:text-[11px]
                 "
               >
                 Share your details and our team will get in touch with you
                 shortly.
               </p>
 
-              {/* FEATURES */}
+              {/* =================================================
+                  FEATURES
+              ================================================= */}
 
-              {/* FEATURES */}
+              <div className="space-y-4">
 
-              <div className="space-y-3">
+                {/* QUICK RESPONSE */}
+
                 <div className="flex items-center gap-2">
-                  <Image
-                    src="/popupone.png"
-                    alt="Quick response"
-                    width={20}
-                    height={20}
-                    className="w-4 h-4 object-contain shrink-0"
-                  />
+                  <div
+                    className="
+                      flex
+                      h-6
+                      w-6
+                      shrink-0
+                      items-center
+                      justify-center
+                      rounded-full
+                      border
+                      border-[#b9d9f7]
+                      bg-[#dbeeff]
+                    "
+                  >
+                    <Image
+                      src="/m.png"
+                      alt="Quick response"
+                      width={17}
+                      height={17}
+                      className="h-[17px] w-[17px] object-contain"
+                    />
+                  </div>
 
-                  <span className="text-[9px] md:text-[11px] text-[#606060]">
+                  <span
+                    className="
+                      text-[9px]
+                      leading-tight
+                      text-[#606060]
+                      md:text-[10px]
+                    "
+                  >
                     Quick response from our team
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/task.png"
-                    alt="Secure"
-                    width={20}
-                    height={20}
-                    className="w-4 h-4 object-contain shrink-0"
-                  />
+                {/* SECURE */}
 
-                  <span className="text-[9px] md:text-[11px] text-[#606060]">
+                <div className="flex items-center gap-2">
+                  <div
+                    className="
+                      flex
+                      h-6
+                      w-6
+                      shrink-0
+                      items-center
+                      justify-center
+                    "
+                  >
+                    <Image
+                      src="/task.png"
+                      alt="Secure"
+                      width={18}
+                      height={18}
+                      className="h-[18px] w-[18px] object-contain"
+                    />
+                  </div>
+
+                  <span
+                    className="
+                      text-[9px]
+                      leading-tight
+                      text-[#606060]
+                      md:text-[10px]
+                    "
+                  >
                     100% secure & spam free
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/handshake.png"
-                    alt="Personalised"
-                    width={20}
-                    height={20}
-                    className="w-4 h-4 object-contain shrink-0"
-                  />
+                {/* PERSONALIZED ASSISTANCE */}
 
-                  <span className="text-[9px] md:text-[11px] text-[#606060]">
+                <div className="flex items-start gap-2">
+                  <div
+                    className="
+                      flex
+                      h-6
+                      w-6
+                      shrink-0
+                      items-center
+                      justify-center
+                    "
+                  >
+                    <Image
+                      src="/handshake.png"
+                      alt="Personalised assistance"
+                      width={18}
+                      height={18}
+                      className="h-[18px] w-[18px] object-contain"
+                    />
+                  </div>
+
+                  <span
+                    className="
+                      text-[9px]
+                      leading-tight
+                      text-[#606060]
+                      md:text-[10px]
+                    "
+                  >
                     Personalised assistance just for you
                   </span>
                 </div>
+
               </div>
             </div>
 
-            {/* ================================================= */}
-            {/* RIGHT FORM */}
-            {/* ================================================= */}
+            {/* =================================================
+                RIGHT FORM SECTION
+            ================================================= */}
 
             <div
               className="
                 relative
-
                 w-full
-                sm:w-[66%]
+                overflow-y-auto
+                p-5
 
-                p-4
-                sm:p-4
-                md:p-5
+                sm:w-[66%]
+                sm:p-5
+
+                md:p-6
               "
             >
-              {/* CLOSE */}
+              {/* =================================================
+                  CLOSE BUTTON
+              ================================================= */}
 
               <button
                 type="button"
-                onClick={() => setShowForm(false)}
+                onClick={handleCloseForm}
                 className="
                   absolute
-                  top-2.5
-                  right-2.5
-
-                  w-7
-                  h-7
-
+                  right-3
+                  top-3
+                  z-20
                   flex
+                  h-7
+                  w-7
                   items-center
                   justify-center
-
                   rounded-full
-
+                  transition
                   hover:bg-gray-100
                 "
+                aria-label="Close"
               >
                 <Image
                   src="/cross.png"
                   alt="Close"
                   width={18}
                   height={18}
-                  className="w-4 h-4 object-contain"
+                  className="h-4 w-4 object-contain"
                 />
               </button>
 
+              {/* TITLE */}
+
               <h2
                 className="
-                  text-base
-                  sm:text-lg
-                  text-gray-800
-                  mb-3
+                  mb-5
                   pr-8
+                  text-[18px]
+                  font-normal
+                  text-[#171717]
+
+                  sm:text-[19px]
+
+                  md:text-[20px]
                 "
               >
                 Find Your Perfect Ride
               </h2>
 
+              {/* =================================================
+                  FORM
+              ================================================= */}
+
               <form
                 onSubmit={handleSubmit}
-                className="space-y-2.5"
+                className="space-y-3"
               >
                 {/* NAME */}
 
                 <div>
                   <label
                     className="
+                      mb-1
                       block
                       text-[11px]
-                      sm:text-xs
                       text-black
-                      mb-1
+                      sm:text-[12px]
                     "
                   >
                     Name <span className="text-red-500">*</span>
                   </label>
 
-
                   <input
                     type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Enter your name"
-                    required
                     className="
+                      h-10
                       w-full
-                      h-9
-
-                      border
-                      border-gray-400
-
-                      bg-[#F7F7F7]
-
                       rounded-md
-
+                      border
+                      border-[#9ca3af]
+                      bg-[#f7f7f7]
                       px-3
-
-                      text-xs
-
+                      text-[12px]
+                      text-black
                       outline-none
-
+                      placeholder:text-[#9ca3af]
                       focus:border-[#004a99]
+                      focus:ring-1
+                      focus:ring-[#004a99]
+
+                      sm:text-[13px]
                     "
                   />
                 </div>
 
                 {/* PHONE */}
 
-                {/* PHONE */}
-
                 <div>
                   <label
                     className="
+                      mb-1
                       block
                       text-[11px]
-                      sm:text-xs
                       text-black
-                      mb-1
+                      sm:text-[12px]
                     "
                   >
                     Phone Number <span className="text-red-500">*</span>
                   </label>
 
-
                   <input
                     type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     placeholder="Enter your number"
-                    required
                     className="
+                      h-10
                       w-full
-                      h-9
-
-                      border
-                      border-gray-400
-
-                      bg-[#F7F7F7]
-
                       rounded-md
-
+                      border
+                      border-[#9ca3af]
+                      bg-[#f7f7f7]
                       px-3
-
-                      text-xs
-
+                      text-[12px]
+                      text-black
                       outline-none
-
+                      placeholder:text-[#9ca3af]
                       focus:border-[#004a99]
+                      focus:ring-1
+                      focus:ring-[#004a99]
+
+                      sm:text-[13px]
                     "
                   />
                 </div>
 
                 {/* EMAIL */}
 
-                {/* EMAIL */}
-
                 <div>
                   <label
                     className="
+                      mb-1
                       block
                       text-[11px]
-                      sm:text-xs
                       text-black
-                      mb-1
+                      sm:text-[12px]
                     "
                   >
                     Email ID <span className="text-red-500">*</span>
                   </label>
 
-
                   <input
                     type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your mail"
-                    required
                     className="
+                      h-10
                       w-full
-                      h-9
-
-                      border
-                      border-gray-400
-
-                      bg-[#F7F7F7]
-
                       rounded-md
-
+                      border
+                      border-[#9ca3af]
+                      bg-[#f7f7f7]
                       px-3
-
-                      text-xs
-
+                      text-[12px]
+                      text-black
                       outline-none
-
+                      placeholder:text-[#9ca3af]
                       focus:border-[#004a99]
+                      focus:ring-1
+                      focus:ring-[#004a99]
+
+                      sm:text-[13px]
                     "
                   />
                 </div>
 
                 {/* LOCATION */}
 
-                {/* LOCATION */}
-
                 <div>
                   <label
                     className="
+                      mb-1
                       block
                       text-[11px]
-                      sm:text-xs
                       text-black
-                      mb-1
+                      sm:text-[12px]
                     "
                   >
                     Location <span className="text-red-500">*</span>
@@ -494,75 +542,69 @@ export default function Hero() {
                   <div className="relative">
                     <input
                       type="text"
-                      name="location"
-                      value={formData.location}
-                      onChange={handleChange}
-                      name="location"
-                      value={formData.location}
-                      onChange={handleChange}
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
                       placeholder="Enter your pin code or area"
-                      required
                       className="
+                        h-10
                         w-full
-                        h-9
-
-                        border
-                        border-gray-400
-
-                        bg-[#F7F7F7]
-
                         rounded-md
-
+                        border
+                        border-[#9ca3af]
+                        bg-[#f7f7f7]
                         pl-3
-                        pr-9
-
-                        text-xs
-
+                        pr-10
+                        text-[12px]
+                        text-black
                         outline-none
-
+                        placeholder:text-[#9ca3af]
                         focus:border-[#004a99]
+                        focus:ring-1
+                        focus:ring-[#004a99]
+
+                        sm:text-[13px]
                       "
                     />
 
-                    <Image
-                      src="/shoot.png"
-                      alt="Location"
-                      width={16}
-                      height={16}
+                    <div
                       className="
+                        pointer-events-none
                         absolute
                         right-3
                         top-1/2
                         -translate-y-1/2
-
-                        w-4
-                        h-4
                       "
-                    />
+                    >
+                      <Image
+                        src="/shoot.png"
+                        alt="Location"
+                        width={18}
+                        height={18}
+                        className="h-4 w-4 object-contain"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                {/* REQUEST BUTTON */}
+                {/* SUBMIT BUTTON */}
 
                 <button
                   type="submit"
                   className="
+                    mt-2
+                    h-10
                     w-full
-                    h-9
-
-                    bg-[#004a99]
-                    hover:bg-[#003b7a]
-
-                    text-white
-
                     rounded-md
-
-                    text-xs
-                    sm:text-sm
-
+                    bg-[#004a99]
+                    px-4
+                    text-[13px]
                     font-medium
-
+                    text-white
                     transition
+                    hover:bg-[#003b7a]
+                    active:scale-[0.99]
+
+                    sm:text-[14px]
                   "
                 >
                   Request a Callback
@@ -573,115 +615,102 @@ export default function Hero() {
         </div>
       )}
 
-      {/* ===================================================== */}
-      {/* REQUEST CONFIRMED POPUP */}
-      {/* ===================================================== */}
+      {/* =====================================================
+          SUCCESS / REQUEST CONFIRMED POPUP
+      ===================================================== */}
 
-      {showConfirmation && (
+      {showSuccess && (
         <div
           className="
             fixed
             inset-0
-            z-[9999]
-
+            z-[60]
             flex
             items-center
             justify-center
-
-            px-3
-            sm:px-5
-
             bg-black/25
+            px-3
+            py-4
+            sm:px-5
           "
         >
-          {/* ================================================= */}
-          {/* CONFIRMATION CARD */}
-          {/* ================================================= */}
+          {/* =================================================
+              SUCCESS CONTAINER
+          ================================================= */}
 
           <div
             className="
               relative
-
               w-full
-
               max-w-[760px]
-
-              bg-white
-
-              rounded-[18px]
-              sm:rounded-[22px]
-
+              overflow-hidden
+              rounded-[20px]
               border
               border-[#d5e3f4]
-
-              shadow-[0_15px_40px_rgba(0,0,0,0.22)]
-
+              bg-white
               px-4
-              sm:px-6
-              md:px-8
-
               py-5
+              shadow-2xl
+
+              sm:px-7
               sm:py-6
+
+              md:px-8
+              md:py-6
             "
           >
-            {/* ================================================= */}
-            {/* GREEN CHECK */}
-            {/* ================================================= */}
+            {/* =================================================
+                SUCCESS ICON
+            ================================================= */}
 
-            <div className="flex justify-center">
-              <div
+            <div
+              className="
+                mx-auto
+                mb-2
+                flex
+                h-12
+                w-12
+                items-center
+                justify-center
+                rounded-full
+                border-[4px]
+                border-[#d9f7e7]
+                bg-[#00c853]
+                shadow-sm
+
+                sm:h-14
+                sm:w-14
+              "
+            >
+              <span
                 className="
-                  w-12
-                  h-12
+                  text-[30px]
+                  font-bold
+                  leading-none
+                  text-white
 
-                  sm:w-14
-                  sm:h-14
-
-                  rounded-full
-
-                  bg-[#20c94f]
-
-                  border-4
-                  border-[#dcf7e3]
-
-                  flex
-                  items-center
-                  justify-center
+                  sm:text-[34px]
                 "
               >
-                <span
-                  className="
-                    text-white
-                    text-[28px]
-                    sm:text-[34px]
-                    font-bold
-                    leading-none
-                  "
-                >
-                  ✓
-                </span>
-              </div>
+                ✓
+              </span>
             </div>
 
-            {/* ================================================= */}
-            {/* HEADING */}
-            {/* ================================================= */}
+            {/* =================================================
+                TITLE
+            ================================================= */}
 
             <h1
               className="
                 text-center
-
-                text-[23px]
-                sm:text-[28px]
-                md:text-[32px]
-
-                font-bold
-
-                text-[#123b7a]
-
+                text-[24px]
+                font-semibold
                 leading-tight
+                text-[#003b7a]
 
-                mt-2
+                sm:text-[28px]
+
+                md:text-[32px]
               "
             >
               REQUEST CONFIRMED
@@ -689,39 +718,34 @@ export default function Hero() {
 
             {/* BLUE LINE */}
 
-            <div className="flex justify-center mt-2 mb-3">
-              <div
-                className="
-                  w-16
-                  sm:w-20
+            <div
+              className="
+                mx-auto
+                my-2
+                h-[3px]
+                w-16
+                rounded-full
+                bg-[#0878dc]
+              "
+            />
 
-                  h-[2px]
-
-                  bg-[#0876dc]
-
-                  rounded-full
-                "
-              />
-            </div>
-
-            {/* ================================================= */}
-            {/* MESSAGE */}
-            {/* ================================================= */}
+            {/* =================================================
+                DESCRIPTION
+            ================================================= */}
 
             <div
               className="
-                text-center
-
-                text-[#17264a]
-
-                text-[10px]
-                sm:text-[11px]
-                md:text-[13px]
-
-                leading-4
-                sm:leading-5
-
+                mx-auto
                 mb-4
+                max-w-[600px]
+                text-center
+                text-[10px]
+                leading-[1.5]
+                text-[#172b4d]
+
+                sm:text-[11px]
+
+                md:text-[12px]
               "
             >
               <p>
@@ -738,145 +762,295 @@ export default function Hero() {
               </p>
             </div>
 
-            {/* ================================================= */}
-            {/* DETAILS - NO ICONS */}
-            {/* ================================================= */}
+            {/* =================================================
+                DETAILS
+            ================================================= */}
 
             <div className="space-y-2">
-              <ConfirmationRow
-                label="NAME"
-                value={formData.name}
-              />
 
-              <ConfirmationRow
-                label="PHONE NUMBER"
-                value={formData.phone}
-              />
+              {/* NAME */}
 
-              <ConfirmationRow
-                label="EMAIL ID"
-                value={formData.email}
-              />
+              <div
+                className="
+                  flex
+                  min-h-[48px]
+                  items-center
+                  rounded-xl
+                  border
+                  border-[#d7e4f3]
+                  bg-white
+                  px-3
 
-              <ConfirmationRow
-                label="LOCATION"
-                value={formData.location}
-              />
+                  sm:min-h-[50px]
+                  sm:px-4
+                "
+              >
+                <div
+                  className="
+                    w-[35%]
+                    shrink-0
+                    border-r
+                    border-[#d1d9e3]
+                    pr-2
+                    text-[10px]
+                    font-medium
+                    text-[#003b7a]
+
+                    sm:text-[12px]
+                  "
+                >
+                  NAME
+                </div>
+
+                <div
+                  className="
+                    w-[65%]
+                    pl-3
+                    text-right
+                    text-[11px]
+                    font-semibold
+                    text-[#171717]
+                    break-words
+
+                    sm:text-[12px]
+                  "
+                >
+                  {name}
+                </div>
+              </div>
+
+              {/* PHONE */}
+
+              <div
+                className="
+                  flex
+                  min-h-[48px]
+                  items-center
+                  rounded-xl
+                  border
+                  border-[#d7e4f3]
+                  bg-white
+                  px-3
+
+                  sm:min-h-[50px]
+                  sm:px-4
+                "
+              >
+                <div
+                  className="
+                    w-[35%]
+                    shrink-0
+                    border-r
+                    border-[#d1d9e3]
+                    pr-2
+                    text-[10px]
+                    font-medium
+                    text-[#003b7a]
+
+                    sm:text-[12px]
+                  "
+                >
+                  PHONE NUMBER
+                </div>
+
+                <div
+                  className="
+                    w-[65%]
+                    pl-3
+                    text-right
+                    text-[11px]
+                    font-semibold
+                    text-[#171717]
+                    break-words
+
+                    sm:text-[12px]
+                  "
+                >
+                  {phone}
+                </div>
+              </div>
+
+              {/* EMAIL */}
+
+              <div
+                className="
+                  flex
+                  min-h-[48px]
+                  items-center
+                  rounded-xl
+                  border
+                  border-[#d7e4f3]
+                  bg-white
+                  px-3
+
+                  sm:min-h-[50px]
+                  sm:px-4
+                "
+              >
+                <div
+                  className="
+                    w-[35%]
+                    shrink-0
+                    border-r
+                    border-[#d1d9e3]
+                    pr-2
+                    text-[10px]
+                    font-medium
+                    text-[#003b7a]
+
+                    sm:text-[12px]
+                  "
+                >
+                  EMAIL ID
+                </div>
+
+                <div
+                  className="
+                    w-[65%]
+                    pl-3
+                    text-right
+                    text-[10px]
+                    font-semibold
+                    text-[#171717]
+                    break-all
+
+                    sm:text-[12px]
+                  "
+                >
+                  {email}
+                </div>
+              </div>
+
+              {/* LOCATION */}
+
+              <div
+                className="
+                  flex
+                  min-h-[48px]
+                  items-center
+                  rounded-xl
+                  border
+                  border-[#d7e4f3]
+                  bg-white
+                  px-3
+
+                  sm:min-h-[50px]
+                  sm:px-4
+                "
+              >
+                <div
+                  className="
+                    w-[35%]
+                    shrink-0
+                    border-r
+                    border-[#d1d9e3]
+                    pr-2
+                    text-[10px]
+                    font-medium
+                    text-[#003b7a]
+
+                    sm:text-[12px]
+                  "
+                >
+                  LOCATION
+                </div>
+
+                <div
+                  className="
+                    w-[65%]
+                    pl-3
+                    text-right
+                    text-[11px]
+                    font-semibold
+                    text-[#171717]
+                    break-words
+
+                    sm:text-[12px]
+                  "
+                >
+                  {location}
+                </div>
+              </div>
 
               {/* REFERENCE ID */}
 
               <div
                 className="
                   flex
+                  min-h-[50px]
                   items-center
-
-                  min-h-[48px]
-                  sm:min-h-[52px]
-
-                  border-2
-                  border-[#0876dc]
-
                   rounded-xl
-
+                  border-2
+                  border-[#0878dc]
+                  bg-white
                   px-3
-                  sm:px-4
-                  md:px-5
 
-                  py-2
+                  sm:min-h-[54px]
+                  sm:px-4
                 "
               >
-                {/* LABEL */}
-
                 <div
                   className="
-                    w-[36%]
-
-                    text-[#123b7a]
-
+                    w-[35%]
+                    shrink-0
+                    border-r
+                    border-[#d1d9e3]
+                    pr-2
                     text-[10px]
-                    sm:text-xs
-                    md:text-sm
-
                     font-medium
+                    text-[#003b7a]
 
-                    leading-tight
+                    sm:text-[12px]
                   "
                 >
                   REFERENCE ID
                 </div>
 
-                {/* DIVIDER */}
-
                 <div
                   className="
-                    h-7
-                    sm:h-8
-
-                    w-px
-
-                    bg-[#cbd5e1]
-
-                    mx-3
-                    sm:mx-4
-
-                    shrink-0
-                  "
-                />
-
-                {/* REFERENCE VALUE */}
-
-                <div
-                  className="
-                    flex-1
-
+                    w-[65%]
+                    pl-3
                     text-right
-
-                    text-[#123b7a]
-
-                    text-sm
-                    sm:text-base
-                    md:text-xl
-
+                    text-[15px]
                     font-bold
+                    text-[#003b7a]
+                    break-words
 
-                    break-all
+                    sm:text-[17px]
+
+                    md:text-[19px]
                   "
                 >
                   {referenceId}
                 </div>
               </div>
+
             </div>
 
-            {/* ================================================= */}
-            {/* DONE BUTTON */}
-            {/* ================================================= */}
+            {/* =================================================
+                DONE BUTTON
+            ================================================= */}
 
-            <div className="flex justify-center mt-5">
+            <div className="mt-3 flex justify-center">
               <button
                 type="button"
                 onClick={handleDone}
                 className="
-                  w-[120px]
-                  sm:w-[140px]
-
-                  h-10
-                  sm:h-11
-
-                  bg-[#004a99]
-                  hover:bg-[#003b7a]
-
-                  text-white
-
+                  h-9
+                  min-w-[110px]
                   rounded-md
-
-                  text-sm
-                  sm:text-base
-
+                  bg-[#004a99]
+                  px-8
+                  text-[12px]
                   font-semibold
-
+                  text-white
                   transition
+                  hover:bg-[#003b7a]
+                  active:scale-95
 
-                  shadow-sm
+                  sm:h-10
+                  sm:min-w-[130px]
+                  sm:text-[13px]
                 "
               >
                 Done
@@ -886,102 +1060,5 @@ export default function Hero() {
         </div>
       )}
     </section>
-  );
-}
-
-/* ============================================================= */
-/* CONFIRMATION ROW - NO ICON */
-/* ============================================================= */
-
-function ConfirmationRow({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
-  return (
-    <div
-      className="
-        flex
-        items-center
-
-        min-h-[45px]
-        sm:min-h-[48px]
-
-        border
-        border-[#dce6f2]
-
-        rounded-xl
-
-        px-3
-        sm:px-4
-        md:px-5
-
-        py-2
-      "
-    >
-      {/* LABEL */}
-
-      <div
-        className="
-          w-[36%]
-
-          text-[#123b7a]
-
-          text-[10px]
-          sm:text-xs
-          md:text-sm
-
-          font-medium
-
-          leading-tight
-        "
-      >
-        {label}
-      </div>
-
-      {/* DIVIDER */}
-
-      <div
-        className="
-          h-6
-          sm:h-7
-
-          w-px
-
-          bg-[#cbd5e1]
-
-          mx-3
-          sm:mx-4
-
-          shrink-0
-        "
-      />
-
-      {/* VALUE */}
-
-      <div
-        className="
-          flex-1
-
-          text-right
-
-          text-[#111827]
-
-          text-[10px]
-          sm:text-xs
-          md:text-sm
-
-          font-semibold
-
-          break-words
-
-          leading-tight
-        "
-      >
-        {value}
-      </div>
-    </div>
   );
 }
