@@ -1,195 +1,546 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Header from "./../../app/layout/header";
-import Link from "next/link";
 
 export default function Hero() {
+  const router = useRouter();
+
   const [showForm, setShowForm] = useState(true);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    location: "",
+  });
+
+  const [referenceId, setReferenceId] = useState("");
+
+  // =====================================================
+  // INPUT CHANGE
+  // =====================================================
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // =====================================================
+  // REQUEST CALLBACK
+  // =====================================================
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const randomNumber = Math.floor(10000 + Math.random() * 90000);
+
+    setReferenceId(`PM-2026-${randomNumber}`);
+
+    setShowForm(false);
+    setShowConfirmation(true);
+  };
+
+  // =====================================================
+  // DONE BUTTON
+  // Redirect to Hero page
+  // =====================================================
+
+  const handleDone = () => {
+    router.push("/");
+  };
 
   return (
     <section
-      className="relative min-h-screen bg-cover bg-center bg-no-repeat "
+      className="
+        relative
+        min-h-screen
+        w-full
+        overflow-hidden
+        bg-cover
+        bg-center
+        bg-no-repeat
+      "
       style={{
         backgroundImage: "url('/Hero.png')",
       }}
     >
-      {/* Header */}
-      <div className="absolute top-[-20] left-0 right-0 z-20">
+      {/* ================================================= */}
+      {/* HEADER */}
+      {/* ================================================= */}
+
+      <div className="relative z-20">
         <Header />
       </div>
-      {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
-        <h1 className="text-grey-50  md:text-4xl  text-center md:mt-[-220] font-Neurial Grotesk font-regular font-thin ">
+
+      {/* ================================================= */}
+      {/* HERO TEXT */}
+      {/* ================================================= */}
+
+      <div
+        className="
+          absolute
+          inset-0
+          flex
+          items-center
+          justify-center
+          px-5
+          pointer-events-none
+        "
+      >
+        <h1
+          className="
+            text-white
+            text-center
+            text-xl
+            sm:text-2xl
+            md:text-4xl
+            lg:text-5xl
+          "
+        >
           Your Next Adventure Starts in Style.
         </h1>
       </div>
 
-      {/* <div className="flex justify-center  ">
-        <button
-          onClick={() => setShowForm(true)}
-          className="  border border-white text-sm  mb-10 font-grotesk text-white w-55 h-10 "
-        >
-          Start Your Adventure
-        </button>
-      </div> */}
+      {/* ================================================= */}
+      {/* REQUEST CALLBACK FORM */}
+      {/* ================================================= */}
 
-      {/* Popup Form Modal */}
-      {showForm && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center sm:items-start sm:pt-20 pt-10 px-4">
-          <div className="bg-white w-full max-w-73 sm:max-w-xl md:w-150 h-auto md:h-110 flex flex-col md:flex-row max-h-[90vh]">
-            {/* Modal Content */}
-            {/* Left Section (Hidden on small mobile) */}
-            <div className="hidden sm:flex md:w-5/14 bg-[#eef5fb] p-2 md:py-6  md:px-5 flex-col justify-start">
-              {/* Custom Image Icon */}
-              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4 overflow-hidden p-2">
+      {showForm && !showConfirmation && (
+        <div
+          className="
+            fixed
+            inset-0
+            z-[999]
+
+            flex
+            items-center
+            justify-center
+
+            px-3
+            sm:px-5
+
+            bg-black/10
+          "
+        >
+          <div
+            className="
+              w-full
+              max-w-[680px]
+
+              max-h-[92vh]
+
+              bg-white
+
+              rounded-xl
+              sm:rounded-2xl
+
+              overflow-hidden
+
+              shadow-2xl
+
+              flex
+              flex-col
+              sm:flex-row
+            "
+          >
+            {/* ================================================= */}
+            {/* LEFT SIDE */}
+            {/* ================================================= */}
+
+            <div
+              className="
+                hidden
+                sm:flex
+
+                w-[34%]
+
+                bg-[#eef5fb]
+
+                p-4
+                md:p-5
+
+                flex-col
+              "
+            >
+              {/* CONTACT ICON */}
+
+              <div
+                className="
+                  w-10
+                  h-10
+                  md:w-11
+                  md:h-11
+
+                  rounded-full
+                  bg-blue-100
+
+                  flex
+                  items-center
+                  justify-center
+
+                  p-2
+                  mb-3
+                "
+              >
                 <Image
-                  src="/msg.png" // Replace with your image path inside the /public folder
-                  alt="Contact Icon"
-                  width={32}
-                  height={32}
+                  src="/msg.png"
+                  alt="Contact"
+                  width={30}
+                  height={30}
                   className="w-full h-full object-contain"
                 />
               </div>
 
-              <h2 className="text-xl  font-regular text-gray-800 mb-2 ">
-                Let{"'"}s Connect!!
+              <h2 className="text-base md:text-lg text-gray-800 mb-1">
+                Let's Connect!!
               </h2>
 
-              <p className="text-xs sm:text-xs  mb-6 text-[#343434]">
-                Share your details and our team will get in touch with<br/> you
+              <p
+                className="
+                  text-[10px]
+                  md:text-[11px]
+                  text-[#343434]
+                  leading-4
+                  mb-4
+                "
+              >
+                Share your details and our team will get in touch with you
                 shortly.
               </p>
 
-              <div className="space-y-3 text-xs sm:text-sm text-[#606060]">
-                <div className="flex items-center gap-3">
+              {/* FEATURES */}
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
                   <Image
                     src="/m.png"
                     alt="Quick response"
-                    width={22}
-                    height={22}
-                    className="w-5 h-5 object-contain shrink-0"
+                    width={20}
+                    height={20}
+                    className="w-4 h-4 object-contain shrink-0"
                   />
-                  <span className="text-[11px] sm:text-xs">
+
+                  <span className="text-[9px] md:text-[11px] text-[#606060]">
                     Quick response from our team
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3 text-[#606060]">
+                <div className="flex items-center gap-2">
                   <Image
                     src="/task.png"
-                    alt="Secure and spam free"
-                    width={22}
-                    height={22}
-                    className="w-5 h-5 object-contain shrink-0"
+                    alt="Secure"
+                    width={20}
+                    height={20}
+                    className="w-4 h-4 object-contain shrink-0"
                   />
-                  <span className="text-[11px] sm:text-xs">
+
+                  <span className="text-[9px] md:text-[11px] text-[#606060]">
                     100% secure & spam free
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3 text-[#606060]">
+                <div className="flex items-center gap-2">
                   <Image
                     src="/handshake.png"
-                    alt="Personalised assistance"
-                    width={22}
-                    height={22}
-                    className="w-5 h-5 object-contain shrink-0"
+                    alt="Personalised"
+                    width={20}
+                    height={20}
+                    className="w-4 h-4 object-contain shrink-0"
                   />
-                  <span className="text-[11px] sm:text-xs">
+
+                  <span className="text-[9px] md:text-[11px] text-[#606060]">
                     Personalised assistance just for you
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Right Form Section */}
-            <div className="w-full md:w-7/11 p-6 sm:p-4 overflow-y-auto relative">
-              {/* Close Button positioned inside the form section */}
-              <Link
-                href="/Form" // Change to your main page or hero route path
-                className="absolute top-3 right-3 z-30 w-8 h-8 flex items-center justify-center p-1.5 rounded-full  hover:bg-gray-100 transition duration-200 "
-                aria-label="Close"
+            {/* ================================================= */}
+            {/* RIGHT FORM */}
+            {/* ================================================= */}
+
+            <div
+              className="
+                relative
+
+                w-full
+                sm:w-[66%]
+
+                p-4
+                sm:p-4
+                md:p-5
+              "
+            >
+              {/* CLOSE */}
+
+              <button
+                type="button"
+                onClick={() => setShowForm(false)}
+                className="
+                  absolute
+                  top-2.5
+                  right-2.5
+
+                  w-7
+                  h-7
+
+                  flex
+                  items-center
+                  justify-center
+
+                  rounded-full
+
+                  hover:bg-gray-100
+                "
               >
                 <Image
                   src="/cross.png"
                   alt="Close"
-                  width={20}
-                  height={20}
-                  className="w-full h-full object-contain"
+                  width={18}
+                  height={18}
+                  className="w-4 h-4 object-contain"
                 />
-              </Link>
+              </button>
 
-              <h2 className="sm:text-lg font-md text-gray-800 mb-5 ">
+              <h2
+                className="
+                  text-base
+                  sm:text-lg
+                  text-gray-800
+                  mb-3
+                  pr-8
+                "
+              >
                 Find Your Perfect Ride
               </h2>
 
-              <form className="space-y-3">{/* Form inputs go here */}</form>
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-2.5"
+              >
+                {/* NAME */}
 
-              <form className="space-y-3">
                 <div>
-                  <label className="block text-xs sm:text-sm text-black mb-1">
+                  <label
+                    className="
+                      block
+                      text-[11px]
+                      sm:text-xs
+                      text-black
+                      mb-1
+                    "
+                  >
                     Name <span className="text-red-500">*</span>
                   </label>
+
                   <input
                     type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     placeholder="Enter your name"
-                    className=" w-full border bg-[#F7f7f7]  placeholder:text-[#9CA3AF] rounded-md px-3 h-10 text-xs sm:text-sm outline-none"
+                    required
+                    className="
+                      w-full
+                      h-9
+
+                      border
+                      border-gray-400
+
+                      bg-[#F7F7F7]
+
+                      rounded-md
+
+                      px-3
+
+                      text-xs
+
+                      outline-none
+
+                      focus:border-[#004a99]
+                    "
                   />
                 </div>
 
+                {/* PHONE */}
+
                 <div>
-                  <label className="block text-xs sm:text-sm text-black mb-1">
+                  <label
+                    className="
+                      block
+                      text-[11px]
+                      sm:text-xs
+                      text-black
+                      mb-1
+                    "
+                  >
                     Phone Number <span className="text-red-500">*</span>
                   </label>
+
                   <input
                     type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     placeholder="Enter your number"
-                    className="w-full border bg-[#F7f7f7]  placeholder:text-[#9CA3AF]  rounded-md px-3 h-10 text-xs sm:text-sm outline-none "
+                    required
+                    className="
+                      w-full
+                      h-9
+
+                      border
+                      border-gray-400
+
+                      bg-[#F7F7F7]
+
+                      rounded-md
+
+                      px-3
+
+                      text-xs
+
+                      outline-none
+
+                      focus:border-[#004a99]
+                    "
                   />
                 </div>
 
+                {/* EMAIL */}
+
                 <div>
-                  <label className="block text-xs sm:text-sm text-black mb-1">
+                  <label
+                    className="
+                      block
+                      text-[11px]
+                      sm:text-xs
+                      text-black
+                      mb-1
+                    "
+                  >
                     Email ID <span className="text-red-500">*</span>
                   </label>
+
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="Enter your mail"
-                    className="w-full border bg-[#F7f7f7]  placeholder:text-[#9CA3AF] rounded-md px-3 h-10 text-xs sm:text-sm outline-none "
+                    required
+                    className="
+                      w-full
+                      h-9
+
+                      border
+                      border-gray-400
+
+                      bg-[#F7F7F7]
+
+                      rounded-md
+
+                      px-3
+
+                      text-xs
+
+                      outline-none
+
+                      focus:border-[#004a99]
+                    "
                   />
                 </div>
 
+                {/* LOCATION */}
+
                 <div>
-                  <label className="block text-xs sm:text-sm text-black mb-1">
+                  <label
+                    className="
+                      block
+                      text-[11px]
+                      sm:text-xs
+                      text-black
+                      mb-1
+                    "
+                  >
                     Location <span className="text-red-500">*</span>
                   </label>
 
-                  {/* Relative Container */}
-                  <div className="relative flex items-center">
+                  <div className="relative">
                     <input
                       type="text"
+                      name="location"
+                      value={formData.location}
+                      onChange={handleChange}
                       placeholder="Enter your pin code or area"
-                      className="w-full border bg-[#F7f7f7] placeholder:text-[#9CA3AF] rounded-md pl-3 pr-10 h-10 text-xs sm:text-sm outline-none"
+                      required
+                      className="
+                        w-full
+                        h-9
+
+                        border
+                        border-gray-400
+
+                        bg-[#F7F7F7]
+
+                        rounded-md
+
+                        pl-3
+                        pr-9
+
+                        text-xs
+
+                        outline-none
+
+                        focus:border-[#004a99]
+                      "
                     />
 
-                    {/* Right-aligned Location Image */}
-                    <div className="absolute right-3 flex items-center pointer-events-none">
-                      <Image
-                        src="/shoot.png" // Replace with your image path in the /public folder
-                        alt="Location"
-                        width={18}
-                        height={18}
-                        className="w-4 h-4 object-contain"
-                      />
-                    </div>
+                    <Image
+                      src="/shoot.png"
+                      alt="Location"
+                      width={16}
+                      height={16}
+                      className="
+                        absolute
+                        right-3
+                        top-1/2
+                        -translate-y-1/2
+
+                        w-4
+                        h-4
+                      "
+                    />
                   </div>
                 </div>
 
+                {/* REQUEST BUTTON */}
+
                 <button
                   type="submit"
-                  className="w-full bg-[#004a99] text-white py-2.5 rounded-md text-sm sm:text-base font-medium hover:bg-[#003b7a] transition mt-2"
+                  className="
+                    w-full
+                    h-9
+
+                    bg-[#004a99]
+                    hover:bg-[#003b7a]
+
+                    text-white
+
+                    rounded-md
+
+                    text-xs
+                    sm:text-sm
+
+                    font-medium
+
+                    transition
+                  "
                 >
                   Request a Callback
                 </button>
@@ -198,6 +549,416 @@ export default function Hero() {
           </div>
         </div>
       )}
+
+      {/* ===================================================== */}
+      {/* REQUEST CONFIRMED POPUP */}
+      {/* ===================================================== */}
+
+      {showConfirmation && (
+        <div
+          className="
+            fixed
+            inset-0
+            z-[9999]
+
+            flex
+            items-center
+            justify-center
+
+            px-3
+            sm:px-5
+
+            bg-black/25
+          "
+        >
+          {/* ================================================= */}
+          {/* CONFIRMATION CARD */}
+          {/* ================================================= */}
+
+          <div
+            className="
+              relative
+
+              w-full
+
+              max-w-[760px]
+
+              bg-white
+
+              rounded-[18px]
+              sm:rounded-[22px]
+
+              border
+              border-[#d5e3f4]
+
+              shadow-[0_15px_40px_rgba(0,0,0,0.22)]
+
+              px-4
+              sm:px-6
+              md:px-8
+
+              py-5
+              sm:py-6
+            "
+          >
+            {/* ================================================= */}
+            {/* GREEN CHECK */}
+            {/* ================================================= */}
+
+            <div className="flex justify-center">
+              <div
+                className="
+                  w-12
+                  h-12
+
+                  sm:w-14
+                  sm:h-14
+
+                  rounded-full
+
+                  bg-[#20c94f]
+
+                  border-4
+                  border-[#dcf7e3]
+
+                  flex
+                  items-center
+                  justify-center
+                "
+              >
+                <span
+                  className="
+                    text-white
+                    text-[28px]
+                    sm:text-[34px]
+                    font-bold
+                    leading-none
+                  "
+                >
+                  ✓
+                </span>
+              </div>
+            </div>
+
+            {/* ================================================= */}
+            {/* HEADING */}
+            {/* ================================================= */}
+
+            <h1
+              className="
+                text-center
+
+                text-[23px]
+                sm:text-[28px]
+                md:text-[32px]
+
+                font-bold
+
+                text-[#123b7a]
+
+                leading-tight
+
+                mt-2
+              "
+            >
+              REQUEST CONFIRMED
+            </h1>
+
+            {/* BLUE LINE */}
+
+            <div className="flex justify-center mt-2 mb-3">
+              <div
+                className="
+                  w-16
+                  sm:w-20
+
+                  h-[2px]
+
+                  bg-[#0876dc]
+
+                  rounded-full
+                "
+              />
+            </div>
+
+            {/* ================================================= */}
+            {/* MESSAGE */}
+            {/* ================================================= */}
+
+            <div
+              className="
+                text-center
+
+                text-[#17264a]
+
+                text-[10px]
+                sm:text-[11px]
+                md:text-[13px]
+
+                leading-4
+                sm:leading-5
+
+                mb-4
+              "
+            >
+              <p>
+                Your request with Phoenix Motors has been successfully
+                received.
+              </p>
+
+              <p>
+                Our team will connect with you shortly to assist you.
+              </p>
+
+              <p>
+                We look forward to welcoming you to Phoenix Motors.
+              </p>
+            </div>
+
+            {/* ================================================= */}
+            {/* DETAILS - NO ICONS */}
+            {/* ================================================= */}
+
+            <div className="space-y-2">
+              <ConfirmationRow
+                label="NAME"
+                value={formData.name}
+              />
+
+              <ConfirmationRow
+                label="PHONE NUMBER"
+                value={formData.phone}
+              />
+
+              <ConfirmationRow
+                label="EMAIL ID"
+                value={formData.email}
+              />
+
+              <ConfirmationRow
+                label="LOCATION"
+                value={formData.location}
+              />
+
+              {/* REFERENCE ID */}
+
+              <div
+                className="
+                  flex
+                  items-center
+
+                  min-h-[48px]
+                  sm:min-h-[52px]
+
+                  border-2
+                  border-[#0876dc]
+
+                  rounded-xl
+
+                  px-3
+                  sm:px-4
+                  md:px-5
+
+                  py-2
+                "
+              >
+                {/* LABEL */}
+
+                <div
+                  className="
+                    w-[36%]
+
+                    text-[#123b7a]
+
+                    text-[10px]
+                    sm:text-xs
+                    md:text-sm
+
+                    font-medium
+
+                    leading-tight
+                  "
+                >
+                  REFERENCE ID
+                </div>
+
+                {/* DIVIDER */}
+
+                <div
+                  className="
+                    h-7
+                    sm:h-8
+
+                    w-px
+
+                    bg-[#cbd5e1]
+
+                    mx-3
+                    sm:mx-4
+
+                    shrink-0
+                  "
+                />
+
+                {/* REFERENCE VALUE */}
+
+                <div
+                  className="
+                    flex-1
+
+                    text-right
+
+                    text-[#123b7a]
+
+                    text-sm
+                    sm:text-base
+                    md:text-xl
+
+                    font-bold
+
+                    break-all
+                  "
+                >
+                  {referenceId}
+                </div>
+              </div>
+            </div>
+
+            {/* ================================================= */}
+            {/* DONE BUTTON */}
+            {/* ================================================= */}
+
+            <div className="flex justify-center mt-5">
+              <button
+                type="button"
+                onClick={handleDone}
+                className="
+                  w-[120px]
+                  sm:w-[140px]
+
+                  h-10
+                  sm:h-11
+
+                  bg-[#004a99]
+                  hover:bg-[#003b7a]
+
+                  text-white
+
+                  rounded-md
+
+                  text-sm
+                  sm:text-base
+
+                  font-semibold
+
+                  transition
+
+                  shadow-sm
+                "
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
+  );
+}
+
+/* ============================================================= */
+/* CONFIRMATION ROW - NO ICON */
+/* ============================================================= */
+
+function ConfirmationRow({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div
+      className="
+        flex
+        items-center
+
+        min-h-[45px]
+        sm:min-h-[48px]
+
+        border
+        border-[#dce6f2]
+
+        rounded-xl
+
+        px-3
+        sm:px-4
+        md:px-5
+
+        py-2
+      "
+    >
+      {/* LABEL */}
+
+      <div
+        className="
+          w-[36%]
+
+          text-[#123b7a]
+
+          text-[10px]
+          sm:text-xs
+          md:text-sm
+
+          font-medium
+
+          leading-tight
+        "
+      >
+        {label}
+      </div>
+
+      {/* DIVIDER */}
+
+      <div
+        className="
+          h-6
+          sm:h-7
+
+          w-px
+
+          bg-[#cbd5e1]
+
+          mx-3
+          sm:mx-4
+
+          shrink-0
+        "
+      />
+
+      {/* VALUE */}
+
+      <div
+        className="
+          flex-1
+
+          text-right
+
+          text-[#111827]
+
+          text-[10px]
+          sm:text-xs
+          md:text-sm
+
+          font-semibold
+
+          break-words
+
+          leading-tight
+        "
+      >
+        {value}
+      </div>
+    </div>
   );
 }
