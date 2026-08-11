@@ -28,7 +28,22 @@ export default function BookPage() {
   // =========================================================
 
   const [referenceId, setReferenceId] = useState("");
+  const [error, setError] = useState("");
 
+  const handlePhoneChange = (e) => {
+    const value = e.target.value.replace(/\D/g, ""); // numbers only
+    setPhone(value);
+
+    if (value.length > 0 && value.length !== 10) {
+      setError("Phone number must be 10 digits");
+    } 
+    if (!/^[6-9]\d{9}$/.test(value)) {
+      setError("Please Enter valid Phone Number") 
+    }
+    else {
+      setError("");
+    }
+  };
   // =========================================================
   // SUBMIT FORM
   // =========================================================
@@ -216,7 +231,6 @@ export default function BookPage() {
               ================================================= */}
 
               <div className="space-y-4">
-
                 {/* QUICK RESPONSE */}
 
                 <div className="flex items-center gap-2">
@@ -322,7 +336,6 @@ export default function BookPage() {
                     Personalised assistance just for you
                   </span>
                 </div>
-
               </div>
             </div>
 
@@ -397,10 +410,7 @@ export default function BookPage() {
                   FORM
               ================================================= */}
 
-              <form
-                onSubmit={handleSubmit}
-                className="space-y-3"
-              >
+              <form onSubmit={handleSubmit} className="space-y-3">
                 {/* NAME */}
 
                 <div>
@@ -460,7 +470,7 @@ export default function BookPage() {
                   <input
                     type="tel"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={handlePhoneChange}
                     placeholder="Enter your number"
                     className="
                       h-10
@@ -477,10 +487,14 @@ export default function BookPage() {
                       focus:border-[#004a99]
                       focus:ring-1
                       focus:ring-[#004a99]
-
                       sm:text-[13px]
                     "
+                    required
+                    maxLength={10}
                   />
+                  {error && (
+                    <p className="text-red-500 text-xs mt-1">{error}</p>
+                  )}
                 </div>
 
                 {/* EMAIL */}
@@ -518,9 +532,9 @@ export default function BookPage() {
                       focus:border-[#004a99]
                       focus:ring-1
                       focus:ring-[#004a99]
-
                       sm:text-[13px]
                     "
+                    required
                   />
                 </div>
 
@@ -624,7 +638,7 @@ export default function BookPage() {
           className="
             fixed
             inset-0
-            z-[60]
+            z-60
             flex
             items-center
             justify-center
@@ -642,7 +656,7 @@ export default function BookPage() {
             className="
               relative
               w-full
-              max-w-[760px]
+              max-w-190
               overflow-hidden
               rounded-[20px]
               border
@@ -651,12 +665,12 @@ export default function BookPage() {
               px-4
               py-5
               shadow-2xl
-
               sm:px-7
               sm:py-6
-
               md:px-8
               md:py-6
+              md:w-1/2
+              md:h-140
             "
           >
             {/* =================================================
@@ -673,7 +687,7 @@ export default function BookPage() {
                 items-center
                 justify-center
                 rounded-full
-                border-[4px]
+                border-1px
                 border-[#d9f7e7]
                 bg-[#00c853]
                 shadow-sm
@@ -749,17 +763,12 @@ export default function BookPage() {
               "
             >
               <p>
-                Your request with Phoenix Motors has been successfully
-                received.
+                Your request with Phoenix Motors has been successfully received.
               </p>
 
-              <p>
-                Our team will connect with you shortly to assist you.
-              </p>
+              <p>Our team will connect with you shortly to assist you.</p>
 
-              <p>
-                We look forward to welcoming you to Phoenix Motors.
-              </p>
+              <p>We look forward to welcoming you to Phoenix Motors.</p>
             </div>
 
             {/* =================================================
@@ -767,7 +776,6 @@ export default function BookPage() {
             ================================================= */}
 
             <div className="space-y-2">
-
               {/* NAME */}
 
               <div
@@ -1024,7 +1032,6 @@ export default function BookPage() {
                   {referenceId}
                 </div>
               </div>
-
             </div>
 
             {/* =================================================

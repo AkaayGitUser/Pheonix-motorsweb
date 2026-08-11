@@ -26,7 +26,7 @@ export default function Hero() {
       <div className="md:flex md:justify-center flex justify-center -mt-22 md:mt-0">
   <button
     onClick={() => router.push("/book")}
-    className="border border-white text-sm mb-10 text-white w-52 h-10 hover:bg-white hover:text-black transition duration-200"
+    className="border border-white text-sm mb-10 text-white w-52 h-10 hover:bg-white hover:text-black transition duration-200 z-10"
   >
     Start Your Adventure
   </button>
