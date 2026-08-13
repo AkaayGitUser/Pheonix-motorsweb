@@ -30,17 +30,18 @@ export default function BookPage() {
   const [referenceId, setReferenceId] = useState("");
   const [error, setError] = useState("");
 
-  const handlePhoneChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ""); // numbers only
+  const handlePhoneChange = (err: React.ChangeEvent<HTMLInputElement>
+) =>{
+    err.preventDefault();
+    const value = err.target.value.replace(/\D/g, ""); // numbers only
     setPhone(value);
 
     if (value.length > 0 && value.length !== 10) {
       setError("Phone number must be 10 digits");
-    } 
-    if (!/^[6-9]\d{9}$/.test(value)) {
-      setError("Please Enter valid Phone Number") 
     }
-    else {
+    if (!/^[6-9]\d{9}$/.test(value)) {
+      setError("Please Enter valid Phone Number");
+    } else {
       setError("");
     }
   };
@@ -142,7 +143,7 @@ export default function BookPage() {
               relative
               flex
               w-full
-              max-w-[760px]
+              max-w-190
               max-h-[94vh]
               overflow-hidden
               rounded-xl
@@ -208,7 +209,7 @@ export default function BookPage() {
                   md:text-[20px]
                 "
               >
-                Let's Connect!!
+                Let{"'"}s Connect!!
               </h2>
 
               {/* DESCRIPTION */}
@@ -253,7 +254,7 @@ export default function BookPage() {
                       alt="Quick response"
                       width={17}
                       height={17}
-                      className="h-[17px] w-[17px] object-contain"
+                      className="h-4.25 w-4.25 object-contain"
                     />
                   </div>
 
@@ -287,7 +288,7 @@ export default function BookPage() {
                       alt="Secure"
                       width={18}
                       height={18}
-                      className="h-[18px] w-[18px] object-contain"
+                      className="h-4.5 w-4.5 object-contain"
                     />
                   </div>
 
@@ -321,7 +322,7 @@ export default function BookPage() {
                       alt="Personalised assistance"
                       width={18}
                       height={18}
-                      className="h-[18px] w-[18px] object-contain"
+                      className="h-4.5 w-4.5 object-contain"
                     />
                   </div>
 
@@ -736,7 +737,7 @@ export default function BookPage() {
               className="
                 mx-auto
                 my-2
-                h-[3px]
+                h-0.75
                 w-16
                 rounded-full
                 bg-[#0878dc]
@@ -751,10 +752,10 @@ export default function BookPage() {
               className="
                 mx-auto
                 mb-4
-                max-w-[600px]
+                max-w-150
                 text-center
                 text-[10px]
-                leading-[1.5]
+                leading-normal
                 text-[#172b4d]
 
                 sm:text-[11px]
@@ -781,7 +782,7 @@ export default function BookPage() {
               <div
                 className="
                   flex
-                  min-h-[48px]
+                  min-h-12
                   items-center
                   rounded-xl
                   border
@@ -789,7 +790,7 @@ export default function BookPage() {
                   bg-white
                   px-3
 
-                  sm:min-h-[50px]
+                  sm:min-h-12.5
                   sm:px-4
                 "
               >
@@ -818,7 +819,7 @@ export default function BookPage() {
                     text-[11px]
                     font-semibold
                     text-[#171717]
-                    break-words
+                    wrap-break-words
 
                     sm:text-[12px]
                   "
@@ -832,7 +833,7 @@ export default function BookPage() {
               <div
                 className="
                   flex
-                  min-h-[48px]
+                  min-h-12
                   items-center
                   rounded-xl
                   border
@@ -840,7 +841,7 @@ export default function BookPage() {
                   bg-white
                   px-3
 
-                  sm:min-h-[50px]
+                  sm:min-h-12.5
                   sm:px-4
                 "
               >
@@ -869,7 +870,7 @@ export default function BookPage() {
                     text-[11px]
                     font-semibold
                     text-[#171717]
-                    break-words
+                    wrap-break-words
 
                     sm:text-[12px]
                   "
@@ -883,7 +884,7 @@ export default function BookPage() {
               <div
                 className="
                   flex
-                  min-h-[48px]
+                  min-h-12
                   items-center
                   rounded-xl
                   border
@@ -891,7 +892,7 @@ export default function BookPage() {
                   bg-white
                   px-3
 
-                  sm:min-h-[50px]
+                  sm:min-h-12.5
                   sm:px-4
                 "
               >
@@ -934,7 +935,7 @@ export default function BookPage() {
               <div
                 className="
                   flex
-                  min-h-[48px]
+                  min-h-12
                   items-center
                   rounded-xl
                   border
@@ -942,7 +943,7 @@ export default function BookPage() {
                   bg-white
                   px-3
 
-                  sm:min-h-[50px]
+                  sm:min-h-12.5
                   sm:px-4
                 "
               >
@@ -971,7 +972,7 @@ export default function BookPage() {
                     text-[11px]
                     font-semibold
                     text-[#171717]
-                    break-words
+                    wrap-break-words
 
                     sm:text-[12px]
                   "
@@ -985,7 +986,7 @@ export default function BookPage() {
               <div
                 className="
                   flex
-                  min-h-[50px]
+                  min-h-12.5
                   items-center
                   rounded-xl
                   border-2
@@ -993,7 +994,7 @@ export default function BookPage() {
                   bg-white
                   px-3
 
-                  sm:min-h-[54px]
+                  sm:min-h-13.5
                   sm:px-4
                 "
               >
@@ -1022,7 +1023,7 @@ export default function BookPage() {
                     text-[15px]
                     font-bold
                     text-[#003b7a]
-                    break-words
+                    wrap-break-words
 
                     sm:text-[17px]
 
@@ -1044,7 +1045,7 @@ export default function BookPage() {
                 onClick={handleDone}
                 className="
                   h-9
-                  min-w-[110px]
+                  min-w-27.5
                   rounded-md
                   bg-[#004a99]
                   px-8
@@ -1056,7 +1057,7 @@ export default function BookPage() {
                   active:scale-95
 
                   sm:h-10
-                  sm:min-w-[130px]
+                  sm:min-w-32.5
                   sm:text-[13px]
                 "
               >
