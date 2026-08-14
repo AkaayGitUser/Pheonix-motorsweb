@@ -25,6 +25,10 @@ body {
   font-family: 'Neurial Grotesk', sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @utility no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -32,4 +36,32 @@ body {
     display: none;
   }
 }
+
+/* Custom styles for Hero Carousel */
+@keyframes thumbnail-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@utility clip-hero-help {
+  @media (min-width: 768px) {
+    clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
+  }
+}
+
+@utility clip-hero-header {
+  @media (min-width: 768px) {
+    clip-path: polygon(0 0, 38% 0, 48% 80px, 100% 80px, 100% 100%, 0 100%);
+  }
+}
+
+@utility clip-card {
+  clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+}
+
+
 
