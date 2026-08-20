@@ -32,4 +32,10 @@ body {
     display: none;
   }
 }
-
+@font-face {
+  font-family: "Land Rover Web Bold";
+  src: url("/fonts/LandRoverWeb-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
