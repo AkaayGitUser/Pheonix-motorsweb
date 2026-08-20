@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import {
   Gauge,
   Zap,
@@ -23,6 +22,11 @@ interface VehicleColor {
   name: string;
   hex: string;
   image: string;
+
+  // Optional 360-style image sequence.
+  // Keep `image` as the normal/default image.
+  // Add multiple angle images here when available.
+  views?: string[];
 }
 
 interface VehicleSpec {
@@ -51,220 +55,55 @@ interface Vehicle {
 
 const motorcycles: Vehicle[] = [
   {
-    id: "splendor-plus",
-    name: "Splendor Plus",
-    subtitle: "Reliable. Efficient. Everyday.",
-    thumbnail: "/book/splendor-plus.png",
+    id: "karizma-xmr",
+    name: "KARIZMA XMR",
+    subtitle: "Born to perform. Built to thrill.",
+    thumbnail:
+      "/book/destini-110/karizma-xmr/grey/front-three-quarter.jpg",
+    imageScale: 1.28,
+    colors: [
+      {
+        id: "grey",
+        name: "Grey",
+        hex: "#7A7A7A",
+        image:
+          "/book/destini-110/karizma-xmr/grey/front-three-quarter.jpg",
+        views: [
+          "/book/destini-110/karizma-xmr/grey/front.jpg",
+          "/book/destini-110/karizma-xmr/grey/front-three-quarter.jpg",
+          "/book/destini-110/karizma-xmr/grey/side.jpg",
+          "/book/destini-110/karizma-xmr/grey/rear-three-quarter.jpg",
+        ],
+      },
+    ],
+    specs: [
+      { value: "210 cc", label: "Engine", type: "engine" },
+      { value: "25.5 PS", label: "Power", type: "power" },
+      { value: "6 Speed", label: "Transmission", type: "transmission" },
+      { value: "Petrol", label: "Fuel", type: "fuel" },
+      { value: "11 L", label: "Fuel Tank", type: "fuel" },
+    ],
+  },
+  {
+    id: "hf-deluxe",
+    name: "HF DELUXE",
+    subtitle: "Reliable performance for every journey.",
+    thumbnail:
+      "/book/destini-110/deluxe/black/front-three-quarter.jpg",
+    imageScale: 1.12,
     colors: [
       {
         id: "black",
         name: "Black",
         hex: "#111111",
-        image: "/book/splendor-plus.png",
-      },
-    ],
-    specs: [
-      { value: "97.2 cc", label: "Engine", type: "engine" },
-      { value: "70 kmpl", label: "Mileage (ARAI)", type: "mileage" },
-      { value: "8.02 PS", label: "Power", type: "power" },
-      { value: "4 Speed", label: "Transmission", type: "transmission" },
-      { value: "9.8 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "splendor-plus-xtec",
-    name: "Splendor Plus XTEC",
-    subtitle: "Smart. Stylish. Connected.",
-    thumbnail: "/book/splendor-plus-xtec.png",
-    colors: [
-      {
-        id: "black-red",
-        name: "Black Red",
-        hex: "#151515",
-        image: "/book/splendor-plus-xtec.png",
-      },
-    ],
-    specs: [
-      { value: "97.2 cc", label: "Engine", type: "engine" },
-      { value: "68 kmpl", label: "Mileage", type: "mileage" },
-      { value: "8.02 PS", label: "Power", type: "power" },
-      { value: "4 Speed", label: "Transmission", type: "transmission" },
-      { value: "9.8 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "splendor",
-    name: "Splendor",
-    subtitle: "Built for everyday journeys.",
-    thumbnail: "/book/img2.png",
-    colors: [
-      {
-        id: "brown",
-        name: "Brown",
-        hex: "#765A45",
-        image: "/book/img2.png",
-      },
-    ],
-    specs: [
-      { value: "97.2 cc", label: "Engine", type: "engine" },
-      { value: "65 kmpl", label: "Mileage", type: "mileage" },
-      { value: "8.02 PS", label: "Power", type: "power" },
-      { value: "4 Speed", label: "Transmission", type: "transmission" },
-      { value: "9.8 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "super-splendor",
-    name: "Super Splendor",
-    subtitle: "Performance meets everyday comfort.",
-    thumbnail: "/book/super-splendor.png",
-    colors: [
-      {
-        id: "red-black",
-        name: "Red Black",
-        hex: "#DA111A",
-        image: "/book/super-splendor.png",
-      },
-    ],
-    specs: [
-      { value: "125 cc", label: "Engine", type: "engine" },
-      { value: "60 kmpl", label: "Mileage", type: "mileage" },
-      { value: "10.8 PS", label: "Power", type: "power" },
-      { value: "5 Speed", label: "Transmission", type: "transmission" },
-      { value: "12 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "xpulse-200",
-    name: "Xpulse 200",
-    subtitle: "Adventure begins where the road ends.",
-    thumbnail: "/book/img3.png",
-    colors: [
-      {
-        id: "grey",
-        name: "Grey",
-        hex: "#575B5E",
-        image: "/book/img3.png",
-      },
-    ],
-    specs: [
-      { value: "199.6 cc", label: "Engine", type: "engine" },
-      { value: "40 kmpl", label: "Mileage", type: "mileage" },
-      { value: "19.1 PS", label: "Power", type: "power" },
-      { value: "5 Speed", label: "Transmission", type: "transmission" },
-      { value: "13 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "xpulse-200-4v",
-    name: "Xpulse 200 4V",
-    subtitle: "Explore beyond boundaries.",
-    thumbnail: "/book/img4.png",
-    colors: [
-      {
-        id: "white",
-        name: "White",
-        hex: "#EEEEEE",
-        image: "/book/img4.png",
-      },
-    ],
-    specs: [
-      { value: "199.6 cc", label: "Engine", type: "engine" },
-      { value: "40 kmpl", label: "Mileage", type: "mileage" },
-      { value: "19.1 PS", label: "Power", type: "power" },
-      { value: "5 Speed", label: "Transmission", type: "transmission" },
-      { value: "13 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "xtreme-250r",
-    name: "Xtreme 250R",
-    subtitle: "Power designed to thrill.",
-    thumbnail: "/book/xtreme250r-red.png",
-    colors: [
-      {
-        id: "red",
-        name: "Red",
-        hex: "#E10600",
-        image: "/book/xtreme250r-red.png",
-      },
-      {
-        id: "white",
-        name: "White",
-        hex: "#EEEEEE",
-        image: "/book/xtreme-white.png",
-      },
-    ],
-    specs: [
-      { value: "249 cc", label: "Engine", type: "engine" },
-      { value: "36 kmpl", label: "Mileage", type: "mileage" },
-      { value: "30 PS", label: "Power", type: "power" },
-      { value: "6 Speed", label: "Transmission", type: "transmission" },
-      { value: "11.5 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "xtreme-160r",
-    name: "Xtreme 160R",
-    subtitle: "Street performance redefined.",
-    thumbnail: "/book/xtreme160r-grey.png",
-    colors: [
-      {
-        id: "grey",
-        name: "Grey",
-        hex: "#9EA5A9",
-        image: "/book/xtreme160r-grey.png",
-      },
-    ],
-    specs: [
-      { value: "163.2 cc", label: "Engine", type: "engine" },
-      { value: "49 kmpl", label: "Mileage", type: "mileage" },
-      { value: "15 PS", label: "Power", type: "power" },
-      { value: "5 Speed", label: "Transmission", type: "transmission" },
-      { value: "12 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "xtreme-125r",
-    name: "Xtreme 125R",
-    subtitle: "Sporty. Sharp. Everyday.",
-    thumbnail: "/book/xtreme-125r.png",
-    colors: [
-      {
-        id: "red-black",
-        name: "Red Black",
-        hex: "#D71920",
-        image: "/book/xtreme-125r.png",
-      },
-    ],
-    specs: [
-      { value: "124.7 cc", label: "Engine", type: "engine" },
-      { value: "66 kmpl", label: "Mileage", type: "mileage" },
-      { value: "11.5 PS", label: "Power", type: "power" },
-      { value: "5 Speed", label: "Transmission", type: "transmission" },
-      { value: "10 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "hf-deluxe",
-    name: "HF Deluxe",
-    subtitle: "Dependability for every journey.",
-    thumbnail: "/book/img8.png",
-    colors: [
-      {
-        id: "blue",
-        name: "Blue",
-        hex: "#14789C",
-        image: "/book/img8.png",
+        image:
+          "/book/destini-110/deluxe/black/front-three-quarter.jpg",
+        views: [
+          "/book/destini-110/deluxe/black/front.jpg",
+          "/book/destini-110/deluxe/black/front-three-quarter.jpg",
+          "/book/destini-110/deluxe/black/side.jpg",
+          "/book/destini-110/deluxe/black/rear-three-quarter.jpg",
+        ],
       },
     ],
     specs: [
@@ -275,6 +114,36 @@ const motorcycles: Vehicle[] = [
       { value: "9.6 L", label: "Fuel Tank", type: "fuel" },
     ],
   },
+  {
+    id: "splendor",
+    name: "SPLENDOR",
+    subtitle: "Reliable. Efficient. Everyday.",
+    thumbnail:
+      "/book/destini-110/splendor/black/front-three-quarter.webp",
+    imageScale: 1.14,
+    colors: [
+      {
+        id: "black",
+        name: "Black",
+        hex: "#111111",
+        image:
+          "/book/destini-110/splendor/black/front-three-quarter.webp",
+        views: [
+          "/book/destini-110/splendor/black/front-three-quarter.webp",
+          "/book/destini-110/splendor/black/side.webp",
+          "/book/destini-110/splendor/black/rear-three-quarter.webp",
+          "/book/destini-110/splendor/black/other-side.webp",
+        ],
+      },
+    ],
+    specs: [
+      { value: "97.2 cc", label: "Engine", type: "engine" },
+      { value: "70 kmpl", label: "Mileage", type: "mileage" },
+      { value: "8.02 PS", label: "Power", type: "power" },
+      { value: "4 Speed", label: "Transmission", type: "transmission" },
+      { value: "9.8 L", label: "Fuel Tank", type: "fuel" },
+    ],
+  },
 ];
 
 /* =========================================================
@@ -283,86 +152,54 @@ const motorcycles: Vehicle[] = [
 
 const scooters: Vehicle[] = [
   {
-    id: "destini-125",
-    name: "Destini 125",
-    subtitle: "Comfort with premium style.",
-    thumbnail: "/book/sco1.png",
+    id: "destini-110",
+    name: "Destini 110",
+    subtitle: "Comfort. Style. Everyday convenience.",
+    thumbnail: "/book/destini-110/blue/front-three-quarter.jpg",
+    imageScale: 1.10,
     colors: [
       {
-        id: "green",
-        name: "Green",
-        hex: "#75816F",
-        image: "/book/sco1.png",
-      },
-      {
-        id: "yellow",
-        name: "Yellow",
-        hex: "#F2C100",
-        image: "/book/xoom-yellow.png",
-      },
-    ],
-    specs: [
-      { value: "124.6 cc", label: "Engine", type: "engine" },
-      { value: "50 kmpl", label: "Mileage", type: "mileage" },
-      { value: "9 PS", label: "Power", type: "power" },
-      { value: "Automatic", label: "Transmission", type: "transmission" },
-      { value: "5 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "pleasure",
-    name: "Pleasure",
-    subtitle: "Easy. Stylish. Effortless.",
-    thumbnail: "/book/Pleasure.png",
-    colors: [
-      {
-        id: "silver",
-        name: "Silver Brown",
-        hex: "#C7C7C0",
-        image: "/book/Pleasure.png",
+        id: "blue",
+        name: "Blue",
+        hex: "#0E5D8E",
+        image: "/book/destini-110/blue/front-three-quarter.jpg",
+        views: [
+          "/book/destini-110/blue/front.jpg",
+          "/book/destini-110/blue/front-three-quarter.jpg",
+          "/book/destini-110/blue/side.jpg",
+          "/book/destini-110/blue/rear-three-quarter.jpg",
+        ],
       },
       {
         id: "red",
         name: "Red",
-        hex: "#D71920",
-        image: "/book/pleasure-red.jpg",
+        hex: "#E21A24",
+        image: "/book/destini-110/red/front-three-quarter.jpg",
+        views: [
+          "/book/destini-110/red/front.jpg",
+          "/book/destini-110/red/front-three-quarter.jpg",
+          "/book/destini-110/red/side.jpg",
+          "/book/destini-110/red/rear-three-quarter.jpg",
+        ],
       },
       {
-        id: "blue",
-        name: "Blue",
-        hex: "#6BB8C6",
-        image: "/book/pleasure-blue.jpg",
+        id: "silver",
+        name: "Silver",
+        hex: "#C8D2D4",
+        image: "/book/destini-110/silver/front-three-quarter.jpg",
+        views: [
+          "/book/destini-110/silver/front.jpg",
+          "/book/destini-110/silver/front-three-quarter.jpg",
+          "/book/destini-110/silver/side.jpg",
+        ],
       },
     ],
     specs: [
       { value: "110.9 cc", label: "Engine", type: "engine" },
       { value: "50 kmpl", label: "Mileage", type: "mileage" },
-      { value: "8 PS", label: "Power", type: "power" },
-      { value: "Automatic", label: "Transmission", type: "transmission" },
-      { value: "4.8 L", label: "Fuel Tank", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "xoom",
-    name: "Xoom",
-    subtitle: "Sporty design for city rides.",
-    thumbnail: "/book/xoom-grey.png",
-    colors: [
-      {
-        id: "grey",
-        name: "Grey",
-        hex: "#6C6E73",
-        image: "/book/xoom-grey.png",
-      },
-    ],
-    specs: [
-      { value: "110.9 cc", label: "Engine", type: "engine" },
-      { value: "53 kmpl", label: "Mileage", type: "mileage" },
       { value: "8.15 PS", label: "Power", type: "power" },
       { value: "Automatic", label: "Transmission", type: "transmission" },
-      { value: "5.2 L", label: "Fuel Tank", type: "fuel" },
+      { value: "5 L", label: "Fuel Tank", type: "fuel" },
     ],
   },
 ];
@@ -373,55 +210,42 @@ const scooters: Vehicle[] = [
 
 const evVehicles: Vehicle[] = [
   {
-    id: "vida-vx2",
-    name: "VIDA VX2",
+    id: "vida-vx2-plus",
+    name: "VIDA VX2 PLUS",
     subtitle: "Electric mobility for everyday life.",
-    thumbnail: "/book/vida-vx2-black.jpg",
+    thumbnail: "/book/destini-110/vida-vx2/black/front-three-quarter-1.jpg",
+    imageScale: 1.08,
     colors: [
       {
         id: "black",
         name: "Black",
-        hex: "#151515",
-        image: "/book/vida-vx2-black.jpg",
+        hex: "#111111",
+        image: "/book/destini-110/vida-vx2/black/front-three-quarter-1.jpg",
+        views: [
+          "/book/destini-110/vida-vx2/black/front.jpg",
+          "/book/destini-110/vida-vx2/black/front-three-quarter-1.jpg",
+          "/book/destini-110/vida-vx2/black/left-side.jpg",
+          "/book/destini-110/vida-vx2/black/right-side.jpg",
+          "/book/destini-110/vida-vx2/black/front-three-quarter-2.jpg",
+        ],
       },
       {
         id: "grey",
         name: "Grey",
-        hex: "#928D89",
-        image: "/book/vida-vx2-grey.jpg",
+        hex: "#8A8582",
+        image: "/book/destini-110/vida-vx2/grey/front-three-quarter-1.webp",
+        views: [
+          "/book/destini-110/vida-vx2/grey/front.webp",
+          "/book/destini-110/vida-vx2/grey/front-three-quarter-1.webp",
+          "/book/destini-110/vida-vx2/grey/left-side.webp",
+          "/book/destini-110/vida-vx2/grey/right-side.webp",
+          "/book/destini-110/vida-vx2/grey/front-three-quarter-2.webp",
+        ],
       },
     ],
     specs: [
       { value: "Electric", label: "Motor", type: "engine" },
       { value: "100 km", label: "Range", type: "mileage" },
-      { value: "Electric", label: "Power", type: "power" },
-      { value: "Automatic", label: "Drive", type: "transmission" },
-      { value: "Battery", label: "Energy", type: "fuel" },
-    ],
-  },
-
-  {
-    id: "vida-vx2-plus",
-    name: "VIDA VX2 Plus",
-    subtitle: "Smart electric performance.",
-    thumbnail: "/book/vida-vx2-plus-blue.png",
-    colors: [
-      {
-        id: "blue",
-        name: "Blue",
-        hex: "#0758A8",
-        image: "/book/vida-vx2-plus-blue.png",
-      },
-      {
-        id: "grey",
-        name: "Grey",
-        hex: "#777271",
-        image: "/book/vida-vx2-plus-grey.jpg",
-      },
-    ],
-    specs: [
-      { value: "Electric", label: "Motor", type: "engine" },
-      { value: "140 km", label: "Range", type: "mileage" },
       { value: "Electric", label: "Power", type: "power" },
       { value: "Automatic", label: "Drive", type: "transmission" },
       { value: "Battery", label: "Energy", type: "fuel" },
@@ -439,21 +263,106 @@ const vehicleData: Record<Category, Vehicle[]> = {
   ev: evVehicles,
 };
 
+
+/* =========================================================
+   SMART IMAGE
+   - Tries the exact path first.
+   - If the extension is different, it automatically tries
+     .avif, .webp, .png, .jpg and .jpeg.
+   - This avoids blank images when your saved file extension
+     is different from the code.
+========================================================= */
+
+function SmartImage({
+  src,
+  alt,
+  className = "",
+  style,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const getCandidates = (value: string) => {
+    const base = value.replace(/\.(avif|webp|png|jpe?g)$/i, "");
+
+    return Array.from(
+      new Set([
+        value,
+        `${base}.avif`,
+        `${base}.webp`,
+        `${base}.png`,
+        `${base}.jpg`,
+        `${base}.jpeg`,
+      ])
+    );
+  };
+
+  const [candidates, setCandidates] = useState<string[]>(
+    getCandidates(src)
+  );
+  const [candidateIndex, setCandidateIndex] = useState(0);
+
+  useEffect(() => {
+    setCandidates(getCandidates(src));
+    setCandidateIndex(0);
+  }, [src]);
+
+  return (
+    <img
+      src={candidates[candidateIndex]}
+      alt={alt}
+      draggable={false}
+      className={className}
+      style={style}
+      onError={() => {
+        setCandidateIndex((current) =>
+          current < candidates.length - 1
+            ? current + 1
+            : current
+        );
+      }}
+    />
+  );
+}
+
 /* =========================================================
    MAIN COMPONENT
 ========================================================= */
 
 export default function MomentsMotion() {
   const [category, setCategory] =
-    useState<Category>("motorcycle");
+    useState<Category>("scooter");
 
   const [selectedVehicle, setSelectedVehicle] =
-    useState<Vehicle>(motorcycles[0]);
+    useState<Vehicle>(scooters[0]);
 
   const [selectedColor, setSelectedColor] =
-    useState<VehicleColor>(motorcycles[0].colors[0]);
+    useState<VehicleColor>(scooters[0].colors[0]);
+
+  const [viewIndex, setViewIndex] = useState(0);
+  const [isAutoRotatePaused, setIsAutoRotatePaused] = useState(false);
 
   const vehicles = vehicleData[category];
+
+  const selectedViews =
+    selectedColor.views && selectedColor.views.length > 0
+      ? selectedColor.views
+      : [selectedColor.image];
+
+  // AUTO ROTATE:
+  // changes the main vehicle image automatically to create
+  // a 360-style rotating effect from your angle images.
+  useEffect(() => {
+    if (selectedViews.length <= 1 || isAutoRotatePaused) return;
+
+    const timer = window.setInterval(() => {
+      setViewIndex((prev) => (prev + 1) % selectedViews.length);
+    }, 1300);
+
+    return () => window.clearInterval(timer);
+  }, [selectedVehicle.id, selectedColor.id, selectedViews.length, isAutoRotatePaused]);
 
   const changeCategory = (newCategory: Category) => {
     setCategory(newCategory);
@@ -464,11 +373,13 @@ export default function MomentsMotion() {
 
     setSelectedVehicle(first);
     setSelectedColor(first.colors[0]);
+    setViewIndex(0);
   };
 
   const changeVehicle = (vehicle: Vehicle) => {
     setSelectedVehicle(vehicle);
     setSelectedColor(vehicle.colors[0]);
+    setViewIndex(0);
   };
 
   return (
@@ -500,7 +411,7 @@ export default function MomentsMotion() {
 
           md:px-7
 
-          lg:h-screen
+          lg:min-h-[100svh] lg:h-[100svh]
           lg:min-h-[650px]
           lg:max-h-[950px]
           lg:px-10
@@ -589,6 +500,7 @@ export default function MomentsMotion() {
                 <CategoryTab
                   title="Motorcycle"
                   active={category === "motorcycle"}
+                  disabled={false}
                   onClick={() =>
                     changeCategory("motorcycle")
                   }
@@ -597,6 +509,7 @@ export default function MomentsMotion() {
                 <CategoryTab
                   title="Scooter"
                   active={category === "scooter"}
+                  disabled={scooters.length === 0}
                   onClick={() =>
                     changeCategory("scooter")
                   }
@@ -605,6 +518,7 @@ export default function MomentsMotion() {
                 <CategoryTab
                   title="EV"
                   active={category === "ev"}
+                  disabled={false}
                   onClick={() =>
                     changeCategory("ev")
                   }
@@ -734,8 +648,11 @@ export default function MomentsMotion() {
                       className="
                         relative
 
-                        h-[153px]
+                        h-[150px]
                         w-full
+
+                        sm:h-[155px]
+                        lg:h-[160px]
 
                         shrink-0
 
@@ -744,19 +661,22 @@ export default function MomentsMotion() {
                         bg-white
                       "
                     >
-                      <Image
+                      <SmartImage
                         src={vehicle.thumbnail}
                         alt={vehicle.name}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 260px"
+                        style={{
+                          transform: `scale(${vehicle.imageScale ?? 1.1})`,
+                          transformOrigin: "center",
+                        }}
                         className="
+                          h-full
+                          w-full
                           object-contain
+                          object-center
                           p-3
 
                           transition-transform
                           duration-300
-
-                          group-hover:scale-[1.025]
                         "
                       />
                     </div>
@@ -820,6 +740,8 @@ export default function MomentsMotion() {
               flex-col
 
               bg-white
+
+              lg:overflow-hidden
             "
           >
             {/* TOP TITLE + COLOURS */}
@@ -912,9 +834,10 @@ export default function MomentsMotion() {
                         type="button"
                         title={color.name}
                         aria-label={`Select ${color.name}`}
-                        onClick={() =>
-                          setSelectedColor(color)
-                        }
+                        onClick={() => {
+                          setSelectedColor(color);
+                          setViewIndex(0);
+                        }}
                         className={`
                           relative
 
@@ -1022,7 +945,7 @@ export default function MomentsMotion() {
 
                 mt-1
 
-                h-[265px]
+                h-[290px]
                 w-full
 
                 shrink-0
@@ -1031,27 +954,32 @@ export default function MomentsMotion() {
 
                 bg-white
 
-                sm:h-[335px]
-                md:h-[385px]
-
-                lg:h-[340px]
-
-                xl:h-[385px]
-
-                2xl:h-[410px]
+                sm:h-[330px]
+                md:h-[370px]
+                lg:h-[clamp(300px,45vh,390px)]
+                xl:h-[clamp(330px,48vh,420px)]
+                2xl:h-[430px]
               "
             >
-              <Image
-                key={`${selectedVehicle.id}-${selectedColor.id}`}
-                src={selectedColor.image}
-                alt={`${selectedVehicle.name} ${selectedColor.name}`}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 62vw"
+              <SmartImage
+                key={`${selectedVehicle.id}-${selectedColor.id}-${viewIndex}`}
+                src={selectedViews[viewIndex] ?? selectedColor.image}
+                alt={`${selectedVehicle.name} ${selectedColor.name} angle ${viewIndex + 1}`}
+                style={{
+                  transform: `scale(${selectedVehicle.imageScale ?? 1.1})`,
+                  transformOrigin: "center",
+                }}
                 className="
+                  h-full
+                  w-full
                   object-contain
                   object-center
+                  p-2
+                  sm:p-3
+                  lg:p-4
                 "
               />
+
             </div>
 
             {/* SPECIFICATIONS */}
@@ -1217,15 +1145,18 @@ function CategoryTab({
   title,
   active,
   onClick,
+  disabled = false,
 }: {
   title: string;
   active: boolean;
   onClick: () => void;
+  disabled?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
+      disabled={disabled}
       className={`
         relative
 
@@ -1248,6 +1179,9 @@ function CategoryTab({
 
         transition-colors
         duration-300
+
+        disabled:cursor-not-allowed
+        disabled:opacity-35
 
         sm:text-[10px]
 
