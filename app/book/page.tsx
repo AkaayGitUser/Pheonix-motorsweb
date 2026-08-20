@@ -143,10 +143,10 @@ export default function BookPage() {
               relative
               flex
               w-full
-              max-w-190
-              max-h-[94vh]
+              max-w-[600px]
+              max-h-[75vh]
               overflow-hidden
-              rounded-xl
+              rounded-none
               bg-white
               shadow-2xl
 
@@ -349,6 +349,7 @@ export default function BookPage() {
                 relative
                 w-full
                 overflow-y-auto
+                no-scrollbar
                 p-5
 
                 sm:w-[66%]
@@ -374,7 +375,7 @@ export default function BookPage() {
                   w-7
                   items-center
                   justify-center
-                  rounded-full
+                  rounded-none
                   transition
                   hover:bg-gray-100
                 "
@@ -435,7 +436,7 @@ export default function BookPage() {
                     className="
                       h-10
                       w-full
-                      rounded-md
+                      rounded-none
                       border
                       border-[#9ca3af]
                       bg-[#f7f7f7]
@@ -476,7 +477,7 @@ export default function BookPage() {
                     className="
                       h-10
                       w-full
-                      rounded-md
+                      rounded-none
                       border
                       border-[#9ca3af]
                       bg-[#f7f7f7]
@@ -521,7 +522,7 @@ export default function BookPage() {
                     className="
                       h-10
                       w-full
-                      rounded-md
+                      rounded-none
                       border
                       border-[#9ca3af]
                       bg-[#f7f7f7]
@@ -563,7 +564,7 @@ export default function BookPage() {
                       className="
                         h-10
                         w-full
-                        rounded-md
+                        rounded-none
                         border
                         border-[#9ca3af]
                         bg-[#f7f7f7]
@@ -609,7 +610,7 @@ export default function BookPage() {
                     mt-2
                     h-10
                     w-full
-                    rounded-md
+                    rounded-none
                     bg-[#004a99]
                     px-4
                     text-[13px]

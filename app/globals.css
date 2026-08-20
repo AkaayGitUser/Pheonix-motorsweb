@@ -25,6 +25,10 @@ body {
   font-family: 'Neurial Grotesk', sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Land Rover Web Bold', 'Neurial Grotesk', sans-serif;
+}
+
 @utility no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;

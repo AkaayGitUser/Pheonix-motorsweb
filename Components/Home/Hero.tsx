@@ -24,16 +24,29 @@ export default function Hero() {
       src: "/images/ev.png",
       alt: "Hero Motorcycles - Premium Lineup",
       link: "/book",
+      title: "Electric. Effortless. Yours.",
+
     },
     {
       type: "image",
-      src: "/hero-3.png",
+      src: "/hero/hero-1.png",
       alt: "Hero Xtreme - Unleash the Beast",
       link: "/book",
+      title: "Ride Into The Future",
+      titleOffset: "pb-96 md:pb-[28rem]"
+    },
+    {
+      type: "image",
+      src: "/hero/hero-5.png",
+      alt: "Hero Xtreme - Unleash the Beast",
+      link: "/book",
+      position: "object-top",
+      buttonText: "Participate Now",
+      buttonTitle: "Power Your Everyday",
     },
     {
       type: "video",
-      src: "/hero-video.mp4",
+      src: "/hero/hero.mp4",
       alt: "Hero Adventure Journey",
       link: "/book",
     },
@@ -48,9 +61,7 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [isHovered, slides.length]);
 
-  const handleSlideClick = () => {
-    router.push(slides[activeIndex].link);
-  };
+
 
   return (
     <div className="relative w-full">
@@ -59,11 +70,10 @@ export default function Hero() {
 
       {/* 1. Fullscreen Media Slider Viewport (Adjusted height to account for header) */}
       <section className="relative w-full h-[calc(100dvh-48px)] md:h-[calc(100dvh-56px)] min-h-[500px] flex flex-col justify-between bg-black overflow-hidden select-none">
-        
+
         {/* Background media wrapper */}
-        <div 
-          className="absolute inset-0 w-full h-full cursor-pointer z-0"
-          onClick={handleSlideClick}
+        <div
+          className="absolute inset-0 w-full h-full z-0"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -89,7 +99,7 @@ export default function Hero() {
                   alt={slides[activeIndex].alt}
                   fill
                   priority
-                  className="object-cover"
+                  className={`object-cover ${slides[activeIndex].position || "object-center"}`}
                 />
               )}
               {/* Vignette overlay for text contrast */}
@@ -98,10 +108,9 @@ export default function Hero() {
           </AnimatePresence>
         </div>
 
-        {/* Middle text overlay (Active only for the video slide) - Shifted upward to clear bottom panel */}
         <AnimatePresence>
-          {activeIndex === 3 && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pb-24 md:pb-40 z-10 pointer-events-none">
+          {slides[activeIndex].type === "video" && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pt-24 md:pt-28 pb-24 md:pb-40 z-10 pointer-events-none">
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -118,7 +127,7 @@ export default function Hero() {
                 transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
                 className="text-white/90 text-sm md:text-xl mt-4 max-w-2xl font-sans drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]"
               >
-                Experience high performance, premium engineering, and absolute control.
+
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -142,8 +151,112 @@ export default function Hero() {
           )}
         </AnimatePresence>
 
+        {/* Slide Description Overlay (Active for slides with custom title/description) */}
+        <AnimatePresence>
+          {!(slides[activeIndex].type === "video") && (slides[activeIndex] as any).title && (
+            <div className={`absolute inset-y-0 right-12 md:right-36 w-[calc(100%-48px)] md:w-[614px] flex flex-col justify-center items-start text-left z-10 pointer-events-none pt-24 md:pt-28 ${(slides[activeIndex] as any).titleOffset || 'pb-48 md:pb-56'}`}>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="flex flex-col items-start"
+              >
+                {/* Title */}
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="text-white text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase leading-tight font-sans drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] max-w-none md:max-w-none md:whitespace-nowrap"
+                >
+                  {(slides[activeIndex] as any).title}
+                </motion.h1>
+
+                {/* Description */}
+                <motion.p
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="text-white/90 text-sm md:text-xl mt-4 font-sans leading-snug drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-sm md:max-w-md"
+                >
+                  {(slides[activeIndex] as any).description}
+                </motion.p>
+
+                {/* Tagline */}
+                {(slides[activeIndex] as any).tagline && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="text-white/80 text-xs md:text-base mt-1 font-sans leading-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-sm md:max-w-md"
+                  >
+                    {(slides[activeIndex] as any).tagline}
+                  </motion.p>
+                )}
+
+                {/* CTA Button */}
+                {(slides[activeIndex] as any).title !== "Ride Into The Future" && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5, duration: 0.4 }}
+                    className="pointer-events-auto mt-4 self-center"
+                  >
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push((slides[activeIndex] as any).link);
+                      }}
+                      className="px-8 py-3 bg-[#0056A6] text-white font-medium hover:bg-[#00407C] transition-all duration-300 uppercase tracking-widest text-xs md:text-sm rounded-sm shadow-2xl flex items-center gap-2 group border border-white/10 cursor-pointer"
+                    >
+                      Book Now
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </motion.div>
+                )}
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
+        {/* Custom Slide Button Overlay (Active for slides with custom buttonText) */}
+        <AnimatePresence>
+          {(slides[activeIndex] as any).buttonText && (
+            <div className="absolute inset-y-0 right-6 md:right-16 w-[calc(100%-48px)] md:w-[614px] flex flex-col justify-center items-start text-left z-10 pointer-events-none pt-24 md:pt-28 pb-32 md:pb-36">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+                className="pointer-events-auto mt-8 self-center flex flex-col items-center gap-4"
+              >
+                {(slides[activeIndex] as any).buttonTitle && (
+                  <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15, duration: 0.6 }}
+                    className="text-white text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase leading-tight font-sans drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] text-center"
+                  >
+                    {(slides[activeIndex] as any).buttonTitle}
+                  </motion.h1>
+                )}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push((slides[activeIndex] as any).buttonLink || slides[activeIndex].link);
+                  }}
+                  className="px-8 py-3 bg-[#0056A6] text-white font-medium hover:bg-[#00407C] transition-all duration-300 uppercase tracking-widest text-xs md:text-sm rounded-sm shadow-2xl flex items-center gap-2 group border border-white/10 cursor-pointer"
+                >
+                  {(slides[activeIndex] as any).buttonText}
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
         {/* Right Side: Thumbnail Controls & Counter below them - Positioned in the slider viewport */}
-        <div 
+        <div
           className="absolute bottom-6 sm:bottom-8 md:bottom-12 right-6 md:right-16 z-20 flex flex-col pointer-events-auto"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -160,14 +273,13 @@ export default function Hero() {
                 className="relative flex flex-col cursor-pointer focus:outline-none"
               >
                 {/* Thumbnail Image Container */}
-                <div 
+                <div
                   className={`
                     w-[80px] h-[45px] sm:w-[95px] sm:h-[54px] md:w-[110px] md:h-[62px] 
                     overflow-hidden transition-all duration-300
-                    ${
-                      activeIndex === idx
-                        ? "opacity-100 scale-[1.02]"
-                        : "opacity-45 hover:opacity-85"
+                    ${activeIndex === idx
+                      ? "opacity-100 scale-[1.02]"
+                      : "opacity-45 hover:opacity-85"
                     }
                   `}
                 >
@@ -190,7 +302,7 @@ export default function Hero() {
                 </div>
                 {/* Active progress bar indicator at the bottom edge */}
                 {activeIndex === idx && (
-                  <div 
+                  <div
                     className="h-[3px] bg-white w-full origin-left mt-1.5"
                     style={{ animation: "thumbnail-progress 7000ms linear infinite" }}
                   />
@@ -199,20 +311,11 @@ export default function Hero() {
             ))}
           </div>
 
-          {/* Active Counter below the first thumbnail */}
-          <div className="text-white font-sans flex items-baseline leading-none mt-4 select-none pl-1">
-            <span className="text-4xl md:text-6xl font-light tracking-tight">
-              {activeIndex + 1}
-            </span>
-            <span className="text-2xl md:text-3xl font-light text-white/80">
-              /{slides.length}
-            </span>
-          </div>
         </div>
       </section>
 
       {/* 2. Scrolling Reveal Help Widget (Positioned below the viewport fold, overlapping the bottom of the slider) */}
-      
+
     </div>
   );
 }
