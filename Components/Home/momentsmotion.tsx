@@ -45,6 +45,7 @@ interface Vehicle {
   name: string;
   subtitle: string;
   thumbnail: string;
+  imageScale?: number;
   colors: VehicleColor[];
   specs: VehicleSpec[];
 }
