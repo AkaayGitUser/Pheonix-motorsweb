@@ -154,7 +154,7 @@ export default function Hero() {
         {/* Slide Description Overlay (Active for slides with custom title/description) */}
         <AnimatePresence>
           {!(slides[activeIndex].type === "video") && (slides[activeIndex] as any).title && (
-            <div className={`absolute inset-y-0 right-12 md:right-36 w-[calc(100%-48px)] md:w-[614px] flex flex-col justify-center items-start text-left z-10 pointer-events-none pt-24 md:pt-28 ${(slides[activeIndex] as any).titleOffset || 'pb-48 md:pb-56'}`}>
+            <div className={`absolute inset-y-0 right-16 md:right-44 w-[calc(100%-48px)] md:w-[614px] flex flex-col justify-center items-start text-left z-10 pointer-events-none pt-24 md:pt-28 ${(slides[activeIndex] as any).titleOffset || 'pb-48 md:pb-56'}`}>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
