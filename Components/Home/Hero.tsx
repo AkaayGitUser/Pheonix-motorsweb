@@ -15,7 +15,7 @@ export default function Hero() {
   const slides = [
     {
       type: "image",
-      src: "/images/slide1.png",
+      src: "/hero/xpulse1.png",
       alt: "Hero Destini - Scooter Ka Hero",
       link: "/book",
     },
