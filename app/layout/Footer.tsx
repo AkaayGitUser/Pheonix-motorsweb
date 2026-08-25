@@ -14,7 +14,7 @@ export default function Footer() {
           <div className="lg:-mt-6">
             <div className="mb-2 -ml-1">
               <Image
-                src="/footer/footer-logo-motors.png"
+                src="/motors-logo.png"
                 alt="Phoenix Logo"
                 width={350}
                 height={110}
