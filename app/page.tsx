@@ -2,10 +2,10 @@ import Hero from "@/Components/Home/Hero";
 import Exploremore from "@/Components/Home/exploremore";
 import MomentsMotion from "@/Components/Home/momentsmotion";
 import EnquiryBanner from "@/Components/Home/EnquiryBanner";
-import Startjourney from "@/Components/Home/startjourney";
 import Chooseus from "@/Components/Home/chooseus";
 import BuildYourOwn from "@/Components/Home/buildyourown";
 import Footer from "./layout/Footer";
+import Gallery from "@/Components/Home/gallery";
 
 export default function Home() {
   return (
@@ -15,8 +15,8 @@ export default function Home() {
         <EnquiryBanner />
         <Exploremore />
         <MomentsMotion />
-        <Startjourney />
         <BuildYourOwn />
+        <Gallery/>
         <Chooseus />
       </main>
       <Footer />

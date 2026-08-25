@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import {
   Gauge,
   Zap,
@@ -9,6 +11,8 @@ import {
   Cog,
   ArrowRight,
   Check,
+  X,
+  ChevronDown,
 } from "lucide-react";
 
 /* =========================================================
@@ -300,20 +304,18 @@ function SmartImage({
     );
   };
 
-  const [candidates, setCandidates] = useState<string[]>(
-    getCandidates(src)
-  );
+  const candidates = getCandidates(src);
   const [candidateIndex, setCandidateIndex] = useState(0);
 
-  useEffect(() => {
-    setCandidates(getCandidates(src));
-    setCandidateIndex(0);
-  }, [src]);
+  const activeCandidateIndex = Math.min(candidateIndex, candidates.length - 1);
 
   return (
-    <img
-      src={candidates[candidateIndex]}
+    <Image
+      src={candidates[activeCandidateIndex]}
       alt={alt}
+      width={1000}
+      height={1000}
+      unoptimized
       draggable={false}
       className={className}
       style={style}
@@ -344,6 +346,7 @@ export default function MomentsMotion() {
 
   const [viewIndex, setViewIndex] = useState(0);
   const [isAutoRotatePaused, setIsAutoRotatePaused] = useState(false);
+  const [showTestRide, setShowTestRide] = useState(false);
 
   const vehicles = vehicleData[category];
 
@@ -355,6 +358,26 @@ export default function MomentsMotion() {
   // AUTO ROTATE:
   // changes the main vehicle image automatically to create
   // a 360-style rotating effect from your angle images.
+  useEffect(() => {
+    if (!showTestRide) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowTestRide(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [showTestRide]);
+
   useEffect(() => {
     if (selectedViews.length <= 1 || isAutoRotatePaused) return;
 
@@ -471,16 +494,19 @@ export default function MomentsMotion() {
             >
               <h2
                 className="
-                  text-[16px]
-                  font-semibold
+                  text-[17px]
+                  font-bold
                   uppercase
-                  leading-none
-                  tracking-[0.075em]
+                  leading-[1.05]
+                  tracking-[0.015em]
 
-                  sm:text-[17px]
-
-                  lg:text-[18px]
+                  sm:text-[18px]
+                  lg:text-[19px]
                 "
+                style={{
+                  fontFamily:
+                    '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
+                }}
               >
                 SELECT A VEHICLE
               </h2>
@@ -762,17 +788,21 @@ export default function MomentsMotion() {
               <div className="min-w-0">
                 <h1
                   className="
-                    text-[24px]
+                    text-[26px]
                     font-bold
                     uppercase
                     leading-[1.05]
-                    tracking-[-0.015em]
+                    tracking-[0.015em]
 
-                    sm:text-[26px]
-                    md:text-[27px]
-                    lg:text-[28px]
-                    xl:text-[29px]
+                    sm:text-[28px]
+                    md:text-[29px]
+                    lg:text-[30px]
+                    xl:text-[30px]
                   "
+                  style={{
+                    fontFamily:
+                      '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
+                  }}
                 >
                   {selectedVehicle.name}
                 </h1>
@@ -798,7 +828,14 @@ export default function MomentsMotion() {
 
               {/* COLOR SELECTOR */}
 
-              <div className="shrink-0 sm:min-w-[180px]">
+              <div
+                className="
+                  shrink-0
+                  pr-[8px]
+                  sm:min-w-[190px]
+                  sm:pr-[10px]
+                "
+              >
                 <p
                   className="
                     mb-[7px]
@@ -820,6 +857,7 @@ export default function MomentsMotion() {
                   className="
                     flex
                     flex-wrap
+                    items-start
                     gap-[9px]
 
                     sm:justify-end
@@ -830,111 +868,124 @@ export default function MomentsMotion() {
                       selectedColor.id === color.id;
 
                     return (
-                      <button
+                      <div
                         key={color.id}
-                        type="button"
-                        title={color.name}
-                        aria-label={`Select ${color.name}`}
-                        onClick={() => {
-                          setSelectedColor(color);
-                          setViewIndex(0);
-                        }}
-                        className={`
-                          relative
-
+                        className="
                           flex
-
-                          h-[34px]
-                          w-[34px]
-
+                          min-w-[38px]
+                          flex-col
                           items-center
-                          justify-center
-
-                          rounded-full
-
-                          bg-white
-
-                          transition-all
-                          duration-200
-
-                          ${
-                            active
-                              ? `
-                                  scale-105
-                                  border-2
-                                  border-black
-                                `
-                              : `
-                                  border
-                                  border-[#CFCFCF]
-                                  hover:border-black
-                                `
-                          }
-                        `}
+                        "
                       >
-                        <span
-                          className="
-                            h-[22px]
-                            w-[22px]
+                        <button
+                          type="button"
+                          title={color.name}
+                          aria-label={`Select ${color.name}`}
+                          onClick={() => {
+                            setSelectedColor(color);
+                            setViewIndex(0);
+                          }}
+                          className={`
+                            relative
+
+                            flex
+
+                            h-[34px]
+                            w-[34px]
+
+                            shrink-0
+
+                            items-center
+                            justify-center
 
                             rounded-full
 
-                            border
-                            border-black/10
-                          "
-                          style={{
-                            backgroundColor: color.hex,
-                          }}
-                        />
+                            bg-white
 
-                        {active && (
+                            transition-all
+                            duration-200
+
+                            ${
+                              active
+                                ? `
+                                    border-2
+                                    border-black
+                                  `
+                                : `
+                                    border
+                                    border-[#CFCFCF]
+                                    hover:border-black
+                                  `
+                            }
+                          `}
+                        >
                           <span
                             className="
-                              absolute
-                              -right-[4px]
-                              -top-[4px]
-
-                              flex
-                              h-[15px]
-                              w-[15px]
-
-                              items-center
-                              justify-center
+                              h-[22px]
+                              w-[22px]
 
                               rounded-full
 
-                              bg-[#000000]
-
-                              text-white
+                              border
+                              border-black/10
                             "
-                          >
-                            <Check
-                              size={9}
-                              strokeWidth={4}
-                            />
-                          </span>
-                        )}
-                      </button>
+                            style={{
+                              backgroundColor: color.hex,
+                            }}
+                          />
+
+                          {active && (
+                            <span
+                              className="
+                                absolute
+                                right-[-2px]
+                                top-[-3px]
+
+                                flex
+                                h-[15px]
+                                w-[15px]
+
+                                items-center
+                                justify-center
+
+                                rounded-full
+
+                                bg-[#000000]
+
+                                text-white
+                              "
+                            >
+                              <Check
+                                size={9}
+                                strokeWidth={4}
+                              />
+                            </span>
+                          )}
+                        </button>
+
+                        <span
+                          className={`
+                            mt-[5px]
+                            min-h-[10px]
+
+                            text-center
+                            text-[8px]
+                            font-medium
+                            uppercase
+                            leading-none
+                            tracking-[0.05em]
+
+                            text-black
+
+                            ${active ? "opacity-100" : "opacity-0"}
+                          `}
+                        >
+                          {color.name}
+                        </span>
+                      </div>
                     );
                   })}
                 </div>
-
-                <p
-                  className="
-                    mt-[6px]
-
-                    text-[8px]
-                    font-medium
-                    uppercase
-                    tracking-[0.06em]
-
-                    text-black
-
-                    sm:text-right
-                  "
-                >
-                  {selectedColor.name}
-                </p>
               </div>
             </div>
 
@@ -1050,7 +1101,7 @@ export default function MomentsMotion() {
 
                   w-full
 
-                  rounded-[4px]
+        
 
                   border
                   border-[#111111]
@@ -1081,6 +1132,7 @@ export default function MomentsMotion() {
 
               <button
                 type="button"
+                onClick={() => setShowTestRide(true)}
                 className="
                   group
 
@@ -1095,11 +1147,10 @@ export default function MomentsMotion() {
 
                   gap-5
 
-                  rounded-[4px]
 
                   bg-black
 
-                  px-6
+                  px-5
 
                   text-[10px]
                   font-semibold
@@ -1108,10 +1159,10 @@ export default function MomentsMotion() {
 
                   text-white
 
-                  transition-colors
+                  transition-all
                   duration-300
 
-                  hover:bg-black
+                  hover:bg-[#1a1a1a]
 
                   sm:w-[235px]
                   lg:w-[245px]
@@ -1134,6 +1185,35 @@ export default function MomentsMotion() {
           </main>
         </div>
       </div>
+
+      {/* TEST RIDE POPUP */}
+      {showTestRide && (
+        <div
+          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 p-2 sm:p-4"
+          onMouseDown={() => setShowTestRide(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Book a test ride"
+        >
+          <div
+            className="relative w-full max-w-[980px] max-h-[94vh] overflow-hidden rounded-[16px] bg-white shadow-[0_24px_80px_rgba(0,0,0,0.30)] sm:rounded-[20px]"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setShowTestRide(false)}
+              aria-label="Close test ride popup"
+              className="absolute right-2 top-2 z-[120] flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-sm backdrop-blur-sm transition hover:scale-110 hover:bg-white sm:right-3 sm:top-3 md:right-4 md:top-4"
+            >
+              <X size={24} strokeWidth={2} />
+            </button>
+
+            <div className="">
+              <TestRidePopupContent />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -1335,5 +1415,635 @@ function SpecBox({
         {spec.label}
       </span>
     </div>
+  );
+}
+
+/* =========================================================
+   TEST RIDE POPUP CONTENT
+   Embedded here so no import from app/test_ride/page.tsx is needed.
+========================================================= */
+
+function CompactDropdown({
+  label,
+  placeholder,
+  options,
+  direction = "down",
+}: {
+  label: string;
+  placeholder: string;
+  options: { value: string; label: string }[];
+  direction?: "up" | "down";
+}) {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState("");
+
+  const selectedLabel =
+    options.find((option) => option.value === selected)?.label ?? "";
+
+  return (
+    <div className="relative">
+      <label className="mb-1 block text-[10px] font-medium text-gray-800 sm:text-[11px]">
+        {label} <span className="text-red-500">*</span>
+      </label>
+
+      <button
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        className="
+          flex
+          h-9
+          w-full
+          items-center
+          justify-between
+          rounded-[5px]
+          border
+          border-[#D7DCE2]
+          bg-[#F6F7F8]
+          px-3
+          text-left
+          text-[10px]
+          font-medium
+          text-gray-800
+          outline-none
+          transition
+          hover:border-[#B9C1CC]
+          focus:border-[#0052A5]
+          focus:bg-white
+          sm:h-10
+          sm:text-[11px]
+        "
+      >
+        <span className={selectedLabel ? "text-gray-800" : "text-[#7C8798]"}>
+          {selectedLabel || placeholder}
+        </span>
+
+        <ChevronDown
+          size={16}
+          className={`shrink-0 text-[#6B7280] transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {open && (
+        <div
+          className={`
+            absolute
+            left-0
+            right-0
+            z-[250]
+            overflow-hidden
+            rounded-[6px]
+            border
+            border-[#D7DCE2]
+            bg-white
+            shadow-[0_10px_25px_rgba(0,0,0,0.14)]
+
+            ${
+              direction === "up"
+                ? "bottom-[calc(100%+6px)]"
+                : "top-[calc(100%+6px)]"
+            }
+          `}
+        >
+          {options.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => {
+                setSelected(option.value);
+                setOpen(false);
+              }}
+              className="
+                block
+                w-full
+                border-b
+                border-[#EEF1F4]
+                px-3
+                py-2.5
+                text-left
+                text-[10px]
+                font-medium
+                text-gray-800
+                transition
+                last:border-b-0
+                hover:bg-[#F5F7FA]
+                sm:text-[11px]
+              "
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+function TestRidePopupContent() {
+  const vehicleOptions = [
+    { value: "splendor-plus", label: "Splendor Plus" },
+    { value: "xtreme-160r", label: "Xtreme 160R" },
+    { value: "karizma-xmr", label: "Karizma XMR" },
+    { value: "destini-110", label: "Destini 110" },
+  ];
+
+  const showroomOptions = [
+    { value: "madhapur", label: "Phoenix Motors - Madhapur" },
+    { value: "kukatpally", label: "Phoenix Motors - Kukatpally" },
+    { value: "gachibowli", label: "Phoenix Motors - Gachibowli" },
+    { value: "banjara-hills", label: "Phoenix Motors - Banjara Hills" },
+  ];
+
+  return (
+    <section
+      className="relative w-full overflow-hidden bg-[#111] text-black"
+      style={{
+        fontFamily:
+          '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
+      }}
+    >
+      {/* ================= BACKGROUND ================= */}
+      <div className="absolute inset-0">
+        <SmartImage
+          src="/images/momentsinmotion/test.png"
+          alt="Book a test ride"
+          className="
+            h-full
+            w-full
+            object-cover
+
+            object-[40%_center]
+
+            sm:object-[42%_center]
+            md:object-[45%_center]
+            lg:object-[47%_center]
+          "
+        />
+
+        {/* DARK OVERLAY */}
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-black/20
+
+            md:bg-gradient-to-r
+            md:from-black/35
+            md:via-black/10
+            md:to-black/5
+          "
+        />
+      </div>
+
+      {/* ================= PHOENIX LOGO ================= */}
+      <div
+        className="
+          absolute
+          left-4
+          top-4
+          z-30
+
+          sm:left-6
+          sm:top-5
+
+          md:left-8
+          md:top-7
+
+          lg:left-10
+          lg:top-8
+        "
+      >
+        <Image
+          src="/images/momentsinmotion/logo.png"
+          alt="Phoenix Motors"
+          width={100}
+          height={40}
+          unoptimized
+          className="
+            h-auto
+            w-[72px]
+            object-contain
+
+            sm:w-[82px]
+            md:w-[92px]
+            lg:w-[100px]
+          "
+        />
+      </div>
+
+      {/* ================= CONTENT ================= */}
+      <div
+        className="
+          relative
+          z-10
+
+          flex
+
+          max-h-[94vh]
+          min-h-[600px]
+          w-full
+
+          flex-col
+
+          overflow-y-auto
+
+          md:min-h-[610px]
+          md:flex-row
+          md:items-stretch
+          md:justify-between
+          md:overflow-visible
+        "
+      >
+        {/* ================= LEFT SIDE ================= */}
+        <div
+          className="
+            flex
+
+            min-h-[205px]
+            w-full
+
+            flex-col
+            justify-end
+
+            px-5
+            pb-5
+            pt-20
+
+            text-white
+
+            sm:min-h-[240px]
+            sm:px-7
+            sm:pb-7
+            sm:pt-24
+
+            md:min-h-[610px]
+            md:w-[48%]
+            md:px-8
+            md:pb-10
+            md:pt-28
+
+            lg:px-10
+            lg:pb-12
+          "
+        >
+          <p
+            className="
+              text-[10px]
+              font-semibold
+              uppercase
+              tracking-[0.15em]
+              text-white/85
+
+              sm:text-[11px]
+            "
+          >
+            Phoenix Motors
+          </p>
+
+          <h4
+            className="
+              mt-2
+              max-w-[300px]
+
+              text-[20px]
+              font-medium
+              leading-[1.12]
+
+              sm:text-[24px]
+              md:text-[28px]
+            "
+          >
+            Find Your Perfect Ride
+          </h4>
+
+          <p
+            className="
+              mt-2
+              max-w-[340px]
+
+              text-[11px]
+              font-normal
+              leading-[1.45]
+              text-white/90
+
+              sm:text-[12px]
+              md:text-[13px]
+            "
+          >
+            Book your test ride and experience your preferred motorcycle
+            before you decide.
+          </p>
+        </div>
+
+        {/* ================= RIGHT FORM ================= */}
+        <div
+          className="
+            flex
+
+            w-full
+
+            items-center
+            justify-center
+
+            px-3
+            pb-3
+
+            sm:px-4
+            sm:pb-4
+
+            md:min-h-[610px]
+            md:w-[52%]
+            md:items-center
+            md:justify-end
+            md:px-6
+            md:py-4
+
+            lg:px-8
+          "
+        >
+          <div
+            className="
+              relative
+
+              mx-auto
+
+              w-full
+              max-w-[445px]
+
+              overflow-visible
+
+              rounded-[14px]
+
+              bg-white
+
+              px-4
+              py-5
+
+              shadow-[0_14px_45px_rgba(0,0,0,0.22)]
+
+              sm:rounded-[16px]
+              sm:px-6
+              sm:py-6
+
+              md:mx-0
+              md:px-7
+              md:py-6
+            "
+          >
+            {/* FORM MAIN HEADING */}
+            <h2
+              className="
+                mb-3
+                text-center
+
+                text-[21px]
+                font-bold
+                leading-tight
+
+                sm:mb-4
+                sm:text-[24px]
+
+                md:text-[25px]
+              "
+            >
+              Start Your Journey
+            </h2>
+
+            {/* FORM SUB HEADING */}
+            <h3
+              className="
+                mb-3
+
+                text-left
+                text-[17px]
+                font-bold
+                leading-tight
+
+                sm:mb-4
+                sm:text-[19px]
+              "
+            >
+              Find Your Perfect Ride
+            </h3>
+
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="
+                w-full
+                space-y-2.5
+                sm:space-y-3
+              "
+            >
+              {/* NAME */}
+              <div>
+                <label
+                  className="
+                    mb-1
+                    block
+
+                    text-[10px]
+                    font-medium
+                    text-gray-800
+
+                    sm:text-[11px]
+                  "
+                >
+                  Name <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="Enter your name"
+                  className="
+                    h-9
+                    w-full
+
+                    rounded-[5px]
+
+                    border
+                    border-[#D7DCE2]
+
+                    bg-[#F6F7F8]
+
+                    px-3
+
+                    text-[10px]
+                    font-medium
+                    text-gray-800
+
+                    outline-none
+
+                    placeholder:text-[#98A2B3]
+
+                    transition
+
+                    focus:border-[#0052A5]
+                    focus:bg-white
+
+                    sm:h-10
+                    sm:text-[11px]
+                  "
+                />
+              </div>
+
+              {/* PHONE */}
+              <div>
+                <label
+                  className="
+                    mb-1
+                    block
+
+                    text-[10px]
+                    font-medium
+                    text-gray-800
+
+                    sm:text-[11px]
+                  "
+                >
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  maxLength={10}
+                  placeholder="Enter your number"
+                  className="
+                    h-9
+                    w-full
+
+                    rounded-[5px]
+
+                    border
+                    border-[#D7DCE2]
+
+                    bg-[#F6F7F8]
+
+                    px-3
+
+                    text-[10px]
+                    font-medium
+                    text-gray-800
+
+                    outline-none
+
+                    placeholder:text-[#98A2B3]
+
+                    transition
+
+                    focus:border-[#0052A5]
+                    focus:bg-white
+
+                    sm:h-10
+                    sm:text-[11px]
+                  "
+                />
+              </div>
+
+              {/* EMAIL */}
+              <div>
+                <label
+                  className="
+                    mb-1
+                    block
+
+                    text-[10px]
+                    font-medium
+                    text-gray-800
+
+                    sm:text-[11px]
+                  "
+                >
+                  Email ID <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="
+                    h-9
+                    w-full
+
+                    rounded-[5px]
+
+                    border
+                    border-[#D7DCE2]
+
+                    bg-[#F6F7F8]
+
+                    px-3
+
+                    text-[10px]
+                    font-medium
+                    text-gray-800
+
+                    outline-none
+
+                    placeholder:text-[#98A2B3]
+
+                    transition
+
+                    focus:border-[#0052A5]
+                    focus:bg-white
+
+                    sm:h-10
+                    sm:text-[11px]
+                  "
+                />
+              </div>
+
+              {/* VEHICLE */}
+              <CompactDropdown
+                label="Vehicle Model"
+                placeholder="Select vehicle model"
+                options={vehicleOptions}
+                direction="down"
+              />
+
+              {/* SHOWROOM */}
+              <CompactDropdown
+                label="Showroom"
+                placeholder="Select showroom"
+                options={showroomOptions}
+                direction="up"
+              />
+
+              {/* SUBMIT */}
+              <button
+                type="submit"
+                className="
+                  mt-2
+
+                  h-10
+                  w-full
+
+                  rounded-[5px]
+
+                  bg-[#0052A5]
+
+                  text-[11px]
+                  font-semibold
+                  text-white
+
+                  transition-all
+                  duration-300
+
+                  hover:bg-[#003D7C]
+                  hover:shadow-[0_5px_16px_rgba(0,82,165,0.25)]
+
+                  sm:h-11
+                  sm:text-[12px]
+                "
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
