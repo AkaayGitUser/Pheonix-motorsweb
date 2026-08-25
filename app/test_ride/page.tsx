@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type DropdownOption = {
   value: string;
@@ -13,10 +14,12 @@ function CompactDropdown({
   label,
   placeholder,
   options,
+  direction = "down",
 }: {
   label: string;
   placeholder: string;
   options: DropdownOption[];
+  direction?: "up" | "down";
 }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState("");
@@ -26,8 +29,22 @@ function CompactDropdown({
 
   return (
     <div className="relative w-full">
-      <label className="mb-1 block text-[11px] font-medium text-gray-800 sm:text-[12px]">
-        {label} <span className="text-red-500">*</span>
+      <label
+        className="
+          mb-[2px]
+          block
+          text-[9px]
+          font-medium
+          text-gray-800
+
+          min-[390px]:text-[10px]
+
+          sm:mb-1
+          sm:text-[11px]
+        "
+      >
+        {label}
+        <span className="ml-[2px] text-red-500">*</span>
       </label>
 
       <button
@@ -35,56 +52,93 @@ function CompactDropdown({
         onClick={() => setOpen((prev) => !prev)}
         className="
           flex
-          h-10
+          h-[32px]
           w-full
           items-center
           justify-between
-          rounded-[5px]
+
+          rounded-[4px]
+
           border
           border-[#D7DCE2]
+
           bg-[#F6F7F8]
-          px-3
+
+          px-2.5
+
           text-left
-          text-[11px]
+          text-[9px]
           font-medium
           text-gray-800
+
           outline-none
           transition
+
           hover:border-[#B9C1CC]
+
           focus:border-[#0052A5]
           focus:bg-white
-          sm:h-11
-          sm:text-[12px]
+
+          min-[390px]:h-[34px]
+          min-[390px]:text-[10px]
+
+          sm:h-[38px]
+          sm:px-3
+          sm:text-[11px]
+
+          lg:h-[40px]
         "
       >
-        <span className={selectedLabel ? "text-gray-800" : "text-[#7C8798]"}>
+        <span
+          className={
+            selectedLabel
+              ? "truncate text-gray-800"
+              : "truncate text-[#7C8798]"
+          }
+        >
           {selectedLabel || placeholder}
         </span>
 
         <ChevronDown
-          size={16}
-          className={`shrink-0 text-[#6B7280] transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
+          size={15}
+          className={`
+            ml-2
+            shrink-0
+            text-[#6B7280]
+            transition-transform
+            duration-200
+
+            ${open ? "rotate-180" : ""}
+          `}
         />
       </button>
 
       {open && (
         <div
-          className="
+          className={`
             absolute
             left-0
             right-0
-            top-[calc(100%+6px)]
-            z-[100]
-            max-h-[180px]
+            z-[200]
+
+            max-h-[125px]
             overflow-y-auto
-            rounded-[6px]
+
+            rounded-[4px]
+
             border
             border-[#D7DCE2]
+
             bg-white
-            shadow-[0_10px_25px_rgba(0,0,0,0.14)]
-          "
+
+            shadow-[0_8px_20px_rgba(0,0,0,0.14)]
+
+            ${
+              direction === "up"
+                ? "bottom-[calc(100%+4px)]"
+                : "top-[calc(100%+4px)]"
+            }
+          `}
         >
           {options.map((option) => (
             <button
@@ -97,18 +151,26 @@ function CompactDropdown({
               className="
                 block
                 w-full
+
                 border-b
                 border-[#EEF1F4]
-                px-3
-                py-2.5
+
+                px-2.5
+                py-[7px]
+
                 text-left
-                text-[11px]
+                text-[9px]
                 font-medium
                 text-gray-800
+
                 transition
+
                 last:border-b-0
+
                 hover:bg-[#F5F7FA]
-                sm:text-[12px]
+
+                sm:px-3
+                sm:text-[10px]
               "
             >
               {option.label}
@@ -121,28 +183,56 @@ function CompactDropdown({
 }
 
 export default function TestRidePage() {
+  const router=useRouter();
   const vehicleOptions: DropdownOption[] = [
-    { value: "splendor-plus", label: "Splendor Plus" },
-    { value: "xtreme-160r", label: "Xtreme 160R" },
-    { value: "karizma-xmr", label: "Karizma XMR" },
-    { value: "destini-110", label: "Destini 110" },
+    {
+      value: "splendor-plus",
+      label: "Splendor Plus",
+    },
+    {
+      value: "xtreme-160r",
+      label: "Xtreme 160R",
+    },
+    {
+      value: "karizma-xmr",
+      label: "Karizma XMR",
+    },
+    {
+      value: "destini-110",
+      label: "Destini 110",
+    },
   ];
 
   const showroomOptions: DropdownOption[] = [
-    { value: "madhapur", label: "Phoenix Motors - Madhapur" },
-    { value: "kukatpally", label: "Phoenix Motors - Kukatpally" },
-    { value: "gachibowli", label: "Phoenix Motors - Gachibowli" },
-    { value: "banjara-hills", label: "Phoenix Motors - Banjara Hills" },
+    {
+      value: "madhapur",
+      label: "Phoenix Motors - Madhapur",
+    },
+    {
+      value: "kukatpally",
+      label: "Phoenix Motors - Kukatpally",
+    },
+    {
+      value: "gachibowli",
+      label: "Phoenix Motors - Gachibowli",
+    },
+    {
+      value: "banjara-hills",
+      label: "Phoenix Motors - Banjara Hills",
+    },
   ];
 
   return (
     <main
       className="
         relative
-        min-h-[100dvh]
+        h-[100dvh]
         w-full
-        overflow-x-hidden
+
+        overflow-hidden
+
         bg-[#111]
+
         text-black
       "
       style={{
@@ -150,48 +240,70 @@ export default function TestRidePage() {
           '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
       }}
     >
-      {/* FULL PAGE BACKGROUND */}
-      <div className="absolute inset-0">
+      {/* =====================================================
+          BACKGROUND IMAGE
+      ===================================================== */}
+
+      <div
+        className="
+          absolute
+          inset-0
+          z-0
+          overflow-hidden
+          bg-black
+        "
+      >
         <Image
           src="/images/momentsinmotion/test.png"
-          alt="Book a test ride background"
+          alt="Phoenix Motors test ride"
           fill
           priority
           sizes="100vw"
           className="
-            object-top
             object-cover
-            object-[42%_center]
-            sm:object-[44%_center]
-            md:object-cover
+
+            object-[45%_center]
+
+            sm:object-top
+
             md:object-top
           "
         />
+
+        {/* DARK OVERLAY */}
 
         <div
           className="
             absolute
             inset-0
+
             bg-black/30
+
             md:bg-gradient-to-r
-            md:from-black/45
+            md:from-black/40
             md:via-black/15
             md:to-black/10
           "
         />
       </div>
 
-      {/* LOGO */}
+      {/* =====================================================
+          LOGO
+      ===================================================== */}
+
       <div
         className="
           absolute
-          left-4
-          top-4
+          left-3
+          top-3
           z-30
-          sm:left-6
-          sm:top-5
-          md:left-8
-          md:top-7
+
+          sm:left-5
+          sm:top-4
+
+          md:left-7
+          md:top-6
+
           lg:left-10
           lg:top-8
         "
@@ -204,284 +316,539 @@ export default function TestRidePage() {
           priority
           className="
             h-auto
-            w-[72px]
+            w-[58px]
             object-contain
-            sm:w-[82px]
-            md:w-[92px]
+
+            min-[390px]:w-[64px]
+
+            sm:w-[76px]
+
+            md:w-[88px]
+
             lg:w-[100px]
           "
         />
       </div>
 
-      {/* PAGE CONTENT */}
+      {/* =====================================================
+          WHOLE SCREEN LAYOUT
+      ===================================================== */}
+
       <div
         className="
           relative
           z-10
+
           grid
-          min-h-[100dvh]
+
+          h-full
           w-full
+
           grid-cols-1
-          overflow-x-hidden
-          md:grid-cols-[minmax(0,48%)_minmax(0,52%)]
+          grid-rows-[34%_66%]
+
+          overflow-hidden
+
+          md:grid-cols-[48%_52%]
+          md:grid-rows-1
         "
       >
-        {/* LEFT CONTENT */}
+        {/* =================================================
+            LEFT TEXT SECTION
+        ================================================= */}
+
         <section
           className="
             flex
-            min-h-[260px]
+            h-full
+            min-h-0
             w-full
+
             flex-col
             justify-end
-            px-5
-            pb-6
-            pt-24
+
+            overflow-hidden
+
+            px-4
+            pb-3
+            pt-14
+
             text-white
-            sm:min-h-[300px]
+
+            min-[390px]:px-5
+            min-[390px]:pb-4
+
             sm:px-7
-            sm:pb-8
-            sm:pt-28
-            md:min-h-[100dvh]
+            sm:pb-5
+            sm:pt-20
+
             md:px-8
-            md:pb-10
-            md:pt-28
+            md:pb-8
+            md:pt-24
+
             lg:px-10
-            lg:pb-12
+            lg:pb-10
+
+            xl:px-12
+            xl:pb-12
           "
         >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/85 sm:text-[11px]">
-            Phoenix Motors
-          </p>
+          <div className="max-w-[380px]">
+            <p
+              className="
+                text-[8px]
+                font-semibold
+                uppercase
+                tracking-[0.14em]
+                text-white/90
 
-          <h1
-            className="
-              mt-2
-              max-w-[320px]
-              text-[22px]
-              font-medium
-              leading-[1.12]
-              sm:text-[26px]
-              md:text-[30px]
-              lg:text-[28px]
-            "
-          >
-            Find Your Perfect Ride
-          </h1>
+                min-[390px]:text-[9px]
 
-          <p
-            className="
-              mt-3
-              max-w-[360px]
-              text-[11px]
-              font-normal
-              leading-[1.5]
-              text-white/90
-              sm:text-[12px]
-              md:text-[13px]
-            "
-          >
-            Book your test ride and experience your preferred motorcycle
-            before you decide.
-          </p>
+                sm:text-[10px]
+
+                lg:text-[11px]
+              "
+            >
+              Phoenix Motors
+            </p>
+
+            <h1
+              className="
+                mt-1
+
+                max-w-[320px]
+
+                text-[19px]
+                font-medium
+                leading-[1.05]
+
+                min-[390px]:text-[21px]
+
+                sm:mt-2
+                sm:text-[25px]
+
+                md:text-[28px]
+
+                lg:text-[28px]
+              "
+            >
+              Find Your Perfect Ride
+            </h1>
+
+            <p
+              className="
+                mt-1.5
+
+                max-w-[350px]
+
+                text-[8px]
+                font-normal
+                leading-[1.4]
+                text-white/90
+
+                min-[390px]:text-[9px]
+
+                sm:mt-2
+                sm:text-[10px]
+
+                md:text-[11px]
+
+                lg:text-[12px]
+              "
+            >
+              Book your test ride and experience your preferred
+              motorcycle before you decide.
+            </p>
+          </div>
         </section>
 
-        {/* RIGHT FORM */}
+        {/* =================================================
+            RIGHT FORM SECTION
+        ================================================= */}
+
         <section
+          className="
+            flex
+            h-full
+            min-h-0
+            w-full
+            min-w-0
+
+            items-center
+            justify-center
+
+            overflow-visible
+
+            px-2
+            pb-2
+
+            min-[390px]:px-3
+
+            sm:px-4
+            sm:pb-3
+
+            md:justify-end
+            md:p-4
+
+            lg:p-6
+
+            xl:px-8
+          "
+        >
+          {/* FORM CARD */}
+
+          <div
   className="
+    relative
+    mx-auto
     flex
-    h-full
+    max-h-full
     w-full
-    min-w-0
-    items-center
+    max-w-[420px]
+    flex-col
     justify-center
-    p-2
-    sm:p-4
-    md:justify-end
-    md:p-6
-    lg:p-8
+    overflow-visible
+    rounded-[10px]
+    bg-white
+    px-3
+    py-2.5
+    shadow-[0_14px_45px_rgba(0,0,0,0.25)]
+
+    min-[390px]:px-4
+    min-[390px]:py-3
+
+    sm:rounded-[14px]
+    sm:px-5
+    sm:py-4
+
+    md:mx-0
+    md:px-5
+    md:py-4
+
+    lg:max-w-[430px]
+    lg:px-6
+    lg:py-5
   "
 >
-  <div
+  {/* =====================================================
+      BACK BUTTON
+  ===================================================== */}
+
+  <button
+    type="button"
+    onClick={() => router.back()}
     className="
-      relative
-      mx-auto
+      mb-1.5
       flex
-      w-full
-      max-w-[420px]
-      flex-col
-      justify-center
-      rounded-[14px]
-      bg-white
-      p-3.5
-      shadow-[0_14px_45px_rgba(0,0,0,0.25)]
-      sm:rounded-[16px]
-      sm:p-5
-      md:mx-0
-      md:p-6
+      w-fit
+      items-center
+      gap-1
+      text-[9px]
+      font-medium
+      text-gray-600
+      transition-colors
+      duration-200
+
+      hover:text-[#0052A5]
+
+      min-[390px]:text-[10px]
+
+      sm:mb-2
+      sm:text-[11px]
     "
   >
-    <h2
-      className="
-        mb-0.5
-        text-center
-        text-base
-        font-bold
-        leading-tight
-        text-gray-900
-        sm:mb-1
-        sm:text-lg
-        md:text-xl
-      "
+    {/* BACK ARROW */}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="shrink-0"
     >
-      Start Your Journey
-    </h2>
+      <path d="M19 12H5" />
+      <path d="M12 19l-7-7 7-7" />
+    </svg>
 
-    <h3
-      className="
-        mb-2
-        text-left
-        text-xs
-        font-bold
-        leading-tight
-        text-gray-700
-        sm:mb-3
-        sm:text-sm
-      "
-    >
-      Find Your Perfect Ride
-    </h3>
+    <span>Back</span>
+  </button>
 
-    <form
-      onSubmit={(e) => e.preventDefault()}
-      className="w-full space-y-1.5 sm:space-y-2.5"
-    >
-      <div>
-        <label className="mb-0.5 block text-[11px] font-medium text-gray-800 sm:text-xs">
-          Name <span className="text-red-500">*</span>
-        </label>
+  {/* =====================================================
+      MAIN TITLE
+  ===================================================== */}
 
-        <input
-          type="text"
-          placeholder="Enter your name"
-          className="
-            h-8
-            w-full
-            rounded-[5px]
-            border
-            border-[#D7DCE2]
-            bg-[#F6F7F8]
-            px-2.5
-            text-xs
-            font-medium
-            text-gray-800
-            outline-none
-            transition
-            placeholder:text-[#98A2B3]
-            focus:border-[#0052A5]
-            focus:bg-white
-            sm:h-9
-          "
-        />
-      </div>
+  <h2
+    className="
+      mb-[2px]
+      text-center
+      text-[15px]
+      font-bold
+      leading-tight
+      text-gray-900
 
-      <div>
-        <label className="mb-0.5 block text-[11px] font-medium text-gray-800 sm:text-xs">
-          Phone Number <span className="text-red-500">*</span>
-        </label>
+      min-[390px]:text-[16px]
 
-        <input
-          type="tel"
-          inputMode="numeric"
-          maxLength={10}
-          placeholder="Enter your number"
-          className="
-            h-8
-            w-full
-            rounded-[5px]
-            border
-            border-[#D7DCE2]
-            bg-[#F6F7F8]
-            px-2.5
-            text-xs
-            font-medium
-            text-gray-800
-            outline-none
-            transition
-            placeholder:text-[#98A2B3]
-            focus:border-[#0052A5]
-            focus:bg-white
-            sm:h-9
-          "
-        />
-      </div>
+      sm:mb-1
+      sm:text-[18px]
 
-      <div>
-        <label className="mb-0.5 block text-[11px] font-medium text-gray-800 sm:text-xs">
-          Email ID <span className="text-red-500">*</span>
-        </label>
+      md:text-[19px]
 
-        <input
-          type="email"
-          placeholder="Enter your email"
-          className="
-            h-8
-            w-full
-            rounded-[5px]
-            border
-            border-[#D7DCE2]
-            bg-[#F6F7F8]
-            px-2.5
-            text-xs
-            font-medium
-            text-gray-800
-            outline-none
-            transition
-            placeholder:text-[#98A2B3]
-            focus:border-[#0052A5]
-            focus:bg-white
-            sm:h-9
-          "
-        />
-      </div>
+      lg:text-[20px]
+    "
+  >
+    Start Your Journey
+  </h2>
 
-      <CompactDropdown
-        label="Vehicle Model"
-        placeholder="Select vehicle model"
-        options={vehicleOptions}
-      />
+  {/* =====================================================
+      SUB TITLE
+  ===================================================== */}
 
-      <CompactDropdown
-        label="Showroom"
-        placeholder="Select showroom"
-        options={showroomOptions}
-      />
+  <h3
+    className="
+      mb-1.5
+      text-left
+      text-[11px]
+      font-bold
+      leading-tight
+      text-gray-700
 
-      <button
-        type="submit"
+      min-[390px]:text-[12px]
+
+      sm:mb-2
+      sm:text-[13px]
+
+      lg:text-[14px]
+    "
+  >
+    Find Your Perfect Ride
+  </h3>
+
+  {/* =====================================================
+      FORM
+  ===================================================== */}
+
+  <form
+    onSubmit={(e) => e.preventDefault()}
+    className="
+      w-full
+      space-y-[5px]
+
+      min-[390px]:space-y-[6px]
+
+      sm:space-y-[7px]
+
+      lg:space-y-2
+    "
+  >
+    {/* NAME */}
+
+    <div>
+      <label
         className="
-          mt-1.5
-          h-8
-          w-full
-          rounded-[5px]
-          bg-[#0052A5]
-          text-xs
-          font-semibold
-          text-white
-          transition-all
-          duration-300
-          hover:bg-[#003D7C]
-          hover:shadow-[0_5px_16px_rgba(0,82,165,0.25)]
-          sm:mt-2
-          sm:h-9
+          mb-[2px]
+          block
+          text-[9px]
+          font-medium
+          text-gray-800
+
+          min-[390px]:text-[10px]
+
+          sm:text-[11px]
         "
       >
-        Submit
-      </button>
-    </form>
-  </div>
-</section>
-      </div>v
+        Name <span className="text-red-500">*</span>
+      </label>
+
+      <input
+        type="text"
+        placeholder="Enter your name"
+        className="
+          h-[30px]
+          w-full
+          rounded-[4px]
+          border
+          border-[#D7DCE2]
+          bg-[#F6F7F8]
+          px-2.5
+          text-[9px]
+          font-medium
+          text-gray-800
+          outline-none
+          placeholder:text-[#98A2B3]
+          transition
+          focus:border-[#0052A5]
+          focus:bg-white
+
+          min-[390px]:h-[32px]
+          min-[390px]:text-[10px]
+
+          sm:h-[36px]
+          sm:text-[11px]
+
+          lg:h-[38px]
+        "
+      />
+    </div>
+
+    {/* PHONE */}
+
+    <div>
+      <label
+        className="
+          mb-[2px]
+          block
+          text-[9px]
+          font-medium
+          text-gray-800
+
+          min-[390px]:text-[10px]
+
+          sm:text-[11px]
+        "
+      >
+        Phone Number
+        <span className="ml-[2px] text-red-500">*</span>
+      </label>
+
+      <input
+        type="tel"
+        inputMode="numeric"
+        maxLength={10}
+        placeholder="Enter your number"
+        className="
+          h-[30px]
+          w-full
+          rounded-[4px]
+          border
+          border-[#D7DCE2]
+          bg-[#F6F7F8]
+          px-2.5
+          text-[9px]
+          font-medium
+          text-gray-800
+          outline-none
+          placeholder:text-[#98A2B3]
+          transition
+          focus:border-[#0052A5]
+          focus:bg-white
+
+          min-[390px]:h-[32px]
+          min-[390px]:text-[10px]
+
+          sm:h-[36px]
+          sm:text-[11px]
+
+          lg:h-[38px]
+        "
+      />
+    </div>
+
+    {/* EMAIL */}
+
+    <div>
+      <label
+        className="
+          mb-[2px]
+          block
+          text-[9px]
+          font-medium
+          text-gray-800
+
+          min-[390px]:text-[10px]
+
+          sm:text-[11px]
+        "
+      >
+        Email ID
+        <span className="ml-[2px] text-red-500">*</span>
+      </label>
+
+      <input
+        type="email"
+        placeholder="Enter your email"
+        className="
+          h-[30px]
+          w-full
+          rounded-[4px]
+          border
+          border-[#D7DCE2]
+          bg-[#F6F7F8]
+          px-2.5
+          text-[9px]
+          font-medium
+          text-gray-800
+          outline-none
+          placeholder:text-[#98A2B3]
+          transition
+          focus:border-[#0052A5]
+          focus:bg-white
+
+          min-[390px]:h-[32px]
+          min-[390px]:text-[10px]
+
+          sm:h-[36px]
+          sm:text-[11px]
+
+          lg:h-[38px]
+        "
+      />
+    </div>
+
+    {/* VEHICLE MODEL */}
+
+    <CompactDropdown
+      label="Vehicle Model"
+      placeholder="Select vehicle model"
+      options={vehicleOptions}
+      direction="down"
+    />
+
+    {/* SHOWROOM */}
+
+    <CompactDropdown
+      label="Showroom"
+      placeholder="Select showroom"
+      options={showroomOptions}
+      direction="up"
+    />
+
+    {/* SUBMIT */}
+
+    <button
+      type="submit"
+      className="
+        mt-1
+        h-[30px]
+        w-full
+        rounded-[4px]
+        bg-[#0052A5]
+        text-[9px]
+        font-semibold
+        text-white
+        transition-all
+        duration-300
+
+        hover:bg-[#003D7C]
+
+        min-[390px]:h-[32px]
+        min-[390px]:text-[10px]
+
+        sm:h-[36px]
+        sm:text-[11px]
+
+        lg:h-[38px]
+      "
+    >
+      Submit
+    </button>
+  </form>
+</div>
+        </section>
+      </div>
     </main>
   );
 }
