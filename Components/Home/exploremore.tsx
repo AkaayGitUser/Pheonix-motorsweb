@@ -19,7 +19,7 @@ export default function Exploremore() {
       tabLabel: "Sale",
       image: "/design-images/sale.jpg",
       description:
-        "Looking for stress-free vehicle maintenance? Enjoy discounts on labour and parts during your service journey with our Annual Maintenance Contract (AMC). Choose peace of mind by choosing a package that suits your needs and offers you better savings.",
+        "Looking for stress-free vehicle maintenance? Enjoy discounts on labour and parts during your service journey with our Annual Maintenance Contract (AMC).",
 
     },
     {
@@ -27,7 +27,7 @@ export default function Exploremore() {
       tabLabel: "Service",
       image: "/design-images/service.jpg",
       description:
-        "Love to ride but worried about breakdown? Simply dial our 24X7 toll-free number: 1800 258 7111 and help will be on its way. Choose the convenience of RSA with benefits, such as water and refreshment services, helmet, and document assistance, and more.",
+        "Love to ride but worried about breakdown? Simply dial our 24X7 toll-free number: 1800 258 7111 and help will be on its way. Choose the convenience of RSA with benefits.",
       
     },
     {
@@ -35,14 +35,14 @@ export default function Exploremore() {
       tabLabel: "Finance & Service",
       image: "/design-images/finance.jpg",
      description:
-        "Because you deserve only the best, TVS Genuine Parts & TRU4 Oil ensure longer product lifespans, perfect compatibility, and higher resistance to wear and tear. Sign up for our Annual Maintenance Contracts and avail an additional discount on genuine parts.",
+        "Because you deserve only the best, TVS Genuine Parts & TRU4 Oil ensure longer product lifespans, perfect compatibility, and higher resistance to wear and tear.",
     },
     {
       id: "member",
       tabLabel: "Member Engagement",
       image: "/design-images/member.jpg",
        description:
-        "Our Proactive Inspection service prevents issues before they arise. This service identifies potential problems early, enabling timely maintenance. This approach ensures optimal performance, enhances safety, and extends the lifespan of your vehicles.",
+        "Our Proactive Inspection service prevents issues before they arise. This service identifies potential problems early, enabling timely maintenance.",
     },
 
   ];
@@ -124,8 +124,8 @@ export default function Exploremore() {
                   className="object-cover"
                   priority={idx === 0}
                 />
-                {/* Gradient Overlay applied directly on top of the image */}
-                <div className="absolute bottom-0 left-0 right-0 h-[50%] bg-linear-to-t from-black/90 via-black/40 to-transparent z-20 pointer-events-none" />
+                {/* Gradient Overlay applied directly on top of the image for better contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-20 pointer-events-none" />
                 
                 {/* Centered Content Overlay (Description + Button) */}
                 <div className="absolute bottom-6 inset-x-6 z-30 flex flex-col items-center gap-3 sm:gap-4 text-center">
@@ -134,7 +134,7 @@ export default function Exploremore() {
                       {item.description}
                     </p>
                   )}
-                  <button className="px-8 h-[46px] sm:h-[48px] bg-[#0056A6] hover:bg-[#00407C] text-white text-[15px] sm:text-[16px] font-medium font-Neurial_Grotesk rounded-sm transition-all duration-300 shadow-md cursor-pointer tracking-wider hover:scale-[1.03] active:scale-95">
+                  <button className="px-8 h-[46px] sm:h-[48px] bg-[#0056A6] hover:bg-[#00407C] text-white text-[15px] sm:text-[16px] font-medium font-Neurial_Grotesk rounded-none transition-all duration-300 shadow-md cursor-pointer tracking-wider hover:scale-[1.03] active:scale-95">
                     Explore More
                   </button>
                 </div>
