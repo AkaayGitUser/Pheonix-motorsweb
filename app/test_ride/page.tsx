@@ -288,206 +288,199 @@ export default function TestRidePage() {
 
         {/* RIGHT FORM */}
         <section
+  className="
+    flex
+    h-full
+    w-full
+    min-w-0
+    items-center
+    justify-center
+    p-2
+    sm:p-4
+    md:justify-end
+    md:p-6
+    lg:p-8
+  "
+>
+  <div
+    className="
+      relative
+      mx-auto
+      flex
+      w-full
+      max-w-[420px]
+      flex-col
+      justify-center
+      rounded-[14px]
+      bg-white
+      p-3.5
+      shadow-[0_14px_45px_rgba(0,0,0,0.25)]
+      sm:rounded-[16px]
+      sm:p-5
+      md:mx-0
+      md:p-6
+    "
+  >
+    <h2
+      className="
+        mb-0.5
+        text-center
+        text-base
+        font-bold
+        leading-tight
+        text-gray-900
+        sm:mb-1
+        sm:text-lg
+        md:text-xl
+      "
+    >
+      Start Your Journey
+    </h2>
+
+    <h3
+      className="
+        mb-2
+        text-left
+        text-xs
+        font-bold
+        leading-tight
+        text-gray-700
+        sm:mb-3
+        sm:text-sm
+      "
+    >
+      Find Your Perfect Ride
+    </h3>
+
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      className="w-full space-y-1.5 sm:space-y-2.5"
+    >
+      <div>
+        <label className="mb-0.5 block text-[11px] font-medium text-gray-800 sm:text-xs">
+          Name <span className="text-red-500">*</span>
+        </label>
+
+        <input
+          type="text"
+          placeholder="Enter your name"
           className="
-            flex
+            h-8
             w-full
-            min-w-0
-            items-start
-            justify-center
-            px-3
-            pb-5
-            sm:px-5
-            sm:pb-6
-            md:min-h-[100dvh]
-            md:items-center
-            md:justify-end
-            md:px-6
-            md:py-6
-            lg:px-8
+            rounded-[5px]
+            border
+            border-[#D7DCE2]
+            bg-[#F6F7F8]
+            px-2.5
+            text-xs
+            font-medium
+            text-gray-800
+            outline-none
+            transition
+            placeholder:text-[#98A2B3]
+            focus:border-[#0052A5]
+            focus:bg-white
+            sm:h-9
           "
-        >
-          <div
-            className="
-              relative
-              mx-auto
-              w-full
-              max-w-[460px]
-              rounded-[14px]
-              bg-white
-              px-4
-              py-5
-              shadow-[0_14px_45px_rgba(0,0,0,0.25)]
-              sm:rounded-[16px]
-              sm:px-6
-              sm:py-6
-              md:mx-0
-              md:max-h-[calc(100dvh-48px)]
-              md:overflow-y-auto
-              md:px-7
-              md:py-6
-            "
-          >
-            <h2
-              className="
-                mb-3
-                text-center
-                text-[21px]
-                font-bold
-                leading-tight
-                sm:mb-4
-                sm:text-[24px]
-                md:text-[25px]
-              "
-            >
-              Start Your Journey
-            </h2>
+        />
+      </div>
 
-            <h3
-              className="
-                mb-3
-                text-left
-                text-[17px]
-                font-bold
-                leading-tight
-                sm:mb-4
-                sm:text-[19px]
-              "
-            >
-              Find Your Perfect Ride
-            </h3>
+      <div>
+        <label className="mb-0.5 block text-[11px] font-medium text-gray-800 sm:text-xs">
+          Phone Number <span className="text-red-500">*</span>
+        </label>
 
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="w-full space-y-2.5 sm:space-y-3"
-            >
-              <div>
-                <label className="mb-1 block text-[11px] font-medium text-gray-800 sm:text-[12px]">
-                  Name <span className="text-red-500">*</span>
-                </label>
+        <input
+          type="tel"
+          inputMode="numeric"
+          maxLength={10}
+          placeholder="Enter your number"
+          className="
+            h-8
+            w-full
+            rounded-[5px]
+            border
+            border-[#D7DCE2]
+            bg-[#F6F7F8]
+            px-2.5
+            text-xs
+            font-medium
+            text-gray-800
+            outline-none
+            transition
+            placeholder:text-[#98A2B3]
+            focus:border-[#0052A5]
+            focus:bg-white
+            sm:h-9
+          "
+        />
+      </div>
 
-                <input
-                  type="text"
-                  placeholder="Enter your name"
-                  className="
-                    h-10
-                    w-full
-                    rounded-[5px]
-                    border
-                    border-[#D7DCE2]
-                    bg-[#F6F7F8]
-                    px-3
-                    text-[11px]
-                    font-medium
-                    text-gray-800
-                    outline-none
-                    placeholder:text-[#98A2B3]
-                    transition
-                    focus:border-[#0052A5]
-                    focus:bg-white
-                    sm:h-11
-                    sm:text-[12px]
-                  "
-                />
-              </div>
+      <div>
+        <label className="mb-0.5 block text-[11px] font-medium text-gray-800 sm:text-xs">
+          Email ID <span className="text-red-500">*</span>
+        </label>
 
-              <div>
-                <label className="mb-1 block text-[11px] font-medium text-gray-800 sm:text-[12px]">
-                  Phone Number <span className="text-red-500">*</span>
-                </label>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          className="
+            h-8
+            w-full
+            rounded-[5px]
+            border
+            border-[#D7DCE2]
+            bg-[#F6F7F8]
+            px-2.5
+            text-xs
+            font-medium
+            text-gray-800
+            outline-none
+            transition
+            placeholder:text-[#98A2B3]
+            focus:border-[#0052A5]
+            focus:bg-white
+            sm:h-9
+          "
+        />
+      </div>
 
-                <input
-                  type="tel"
-                  inputMode="numeric"
-                  maxLength={10}
-                  placeholder="Enter your number"
-                  className="
-                    h-10
-                    w-full
-                    rounded-[5px]
-                    border
-                    border-[#D7DCE2]
-                    bg-[#F6F7F8]
-                    px-3
-                    text-[11px]
-                    font-medium
-                    text-gray-800
-                    outline-none
-                    placeholder:text-[#98A2B3]
-                    transition
-                    focus:border-[#0052A5]
-                    focus:bg-white
-                    sm:h-11
-                    sm:text-[12px]
-                  "
-                />
-              </div>
+      <CompactDropdown
+        label="Vehicle Model"
+        placeholder="Select vehicle model"
+        options={vehicleOptions}
+      />
 
-              <div>
-                <label className="mb-1 block text-[11px] font-medium text-gray-800 sm:text-[12px]">
-                  Email ID <span className="text-red-500">*</span>
-                </label>
+      <CompactDropdown
+        label="Showroom"
+        placeholder="Select showroom"
+        options={showroomOptions}
+      />
 
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="
-                    h-10
-                    w-full
-                    rounded-[5px]
-                    border
-                    border-[#D7DCE2]
-                    bg-[#F6F7F8]
-                    px-3
-                    text-[11px]
-                    font-medium
-                    text-gray-800
-                    outline-none
-                    placeholder:text-[#98A2B3]
-                    transition
-                    focus:border-[#0052A5]
-                    focus:bg-white
-                    sm:h-11
-                    sm:text-[12px]
-                  "
-                />
-              </div>
-
-              <CompactDropdown
-                label="Vehicle Model"
-                placeholder="Select vehicle model"
-                options={vehicleOptions}
-              />
-
-              <CompactDropdown
-                label="Showroom"
-                placeholder="Select showroom"
-                options={showroomOptions}
-              />
-
-              <button
-                type="submit"
-                className="
-                  mt-2
-                  h-10
-                  w-full
-                  rounded-[5px]
-                  bg-[#0052A5]
-                  text-[11px]
-                  font-semibold
-                  text-white
-                  transition-all
-                  duration-300
-                  hover:bg-[#003D7C]
-                  hover:shadow-[0_5px_16px_rgba(0,82,165,0.25)]
-                  sm:h-11
-                  sm:text-[12px]
-                "
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-        </section>
+      <button
+        type="submit"
+        className="
+          mt-1.5
+          h-8
+          w-full
+          rounded-[5px]
+          bg-[#0052A5]
+          text-xs
+          font-semibold
+          text-white
+          transition-all
+          duration-300
+          hover:bg-[#003D7C]
+          hover:shadow-[0_5px_16px_rgba(0,82,165,0.25)]
+          sm:mt-2
+          sm:h-9
+        "
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</section>
       </div>v
     </main>
   );
