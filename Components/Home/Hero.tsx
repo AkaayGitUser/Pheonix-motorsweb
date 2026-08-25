@@ -13,42 +13,13 @@ export default function Hero() {
   const [isHovered, setIsHovered] = useState(false);
 
   const slides = [
-    {
-      type: "image",
-      src: "/hero/xpulse1.png",
-      alt: "Hero Destini - Scooter Ka Hero",
-      link: "/book",
-    },
-    {
-      type: "image",
-      src: "/images/ev.png",
-      alt: "Hero Motorcycles - Premium Lineup",
-      link: "/book",
-      title: "Electric. Effortless. Yours.",
-
-    },
-    {
-      type: "image",
-      src: "/hero/hero-1.png",
-      alt: "Hero Xtreme - Unleash the Beast",
-      link: "/book",
-      title: "Ride Into The Future",
-      titleOffset: "pb-96 md:pb-[28rem]"
-    },
-    {
-      type: "image",
-      src: "/hero/hero-5.png",
-      alt: "Hero Xtreme - Unleash the Beast",
-      link: "/book",
-      position: "object-top",
-      buttonText: "Participate Now",
-      buttonTitle: "Power Your Everyday",
-    },
+   
     {
       type: "video",
       src: "/hero/hero.mp4",
       alt: "Hero Adventure Journey",
       link: "/book",
+      position: "object-center",
     },
   ];
 
@@ -116,7 +87,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
-                className="text-white text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight max-w-4xl font-sans uppercase leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)]"
+                className="text-white text-2xl md:text-4xl lg:text-6xl font-semibold tracking-tight max-w-4xl font-sans uppercase leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)] mt-5"
               >
                 Your Next Adventure Starts in Style
               </motion.h1>
@@ -136,16 +107,32 @@ export default function Hero() {
                 transition={{ delay: 0.5, duration: 0.4 }}
                 className="pointer-events-auto mt-8"
               >
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    router.push("/book");
-                  }}
-                  className="px-8 py-3 bg-[#0056A6] text-white font-medium hover:bg-[#00407C] transition-all duration-300 uppercase tracking-widest text-xs md:text-sm rounded-sm shadow-2xl flex items-center gap-2 group border border-white/10 cursor-pointer"
-                >
-                  Start Your Adventure
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </button>
+               
+                 <div className="flex gap-4">
+      {/* Request Call Back */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          router.push("/book");
+        }}
+        className="px-6 py-3 bg-[#0056A6] text-white font-medium hover:bg-[#00407C] transition-all duration-300 uppercase tracking-widest text-xs md:text-sm rounded-full shadow-2xl flex items-center gap-2 group border border-white/10 cursor-pointer"
+      >
+        Request call back
+        
+      </button>
+
+      {/* Book Test Ride */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          router.push("/test_ride");
+        }}
+        className="px-6 py-3 bg-black text-white font-medium  transition-all duration-300 uppercase tracking-widest text-xs md:text-sm rounded-full shadow-2xl flex items-center gap-2 group border border-white/10 cursor-pointer"
+      >
+        Book a testride
+        
+      </button>
+    </div>
               </motion.div>
             </div>
           )}
