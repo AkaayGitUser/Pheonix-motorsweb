@@ -53,20 +53,28 @@ export default function BotScript() {
             }
         };
 
-        Object.assign(container.style, {
-            position: "fixed",
-            bottom: "0px",
-            right: "0px",
-            width: "100px",
-            maxWidth: "100px",
-            height: "100px",
-            maxHeight: "100px",
-            zIndex: "999999",
-            border: "none",
-            overflow: "visible",
-            transition: "width 0.25s cubic-bezier(0.4, 0, 0.2, 1), height 0.25s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-            background: "transparent",
-        });
+       Object.assign(container.style, {
+    position: "fixed",
+    bottom: "0px",
+    right: "0px",
+    width: "100px",
+    maxWidth: "100px",
+    height: "100px",
+    maxHeight: "100px",
+    zIndex: "999999",
+
+    border: "none",
+    outline: "none",
+    boxShadow: "none",
+
+    overflow: "visible",
+
+    transition:
+        "width 0.25s cubic-bezier(0.4, 0, 0.2, 1), height 0.25s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+
+    background: "transparent",
+    backgroundColor: "transparent",
+});
 
         // ── Iframe ───────────────────────────────────────────────────────────────
         const iframe = document.createElement("iframe");
@@ -78,8 +86,11 @@ export default function BotScript() {
             height: "100%",
             border: "none",
             background: "transparent",
+            backgroundColor: "transparent",
         });
         iframe.setAttribute("scrolling", "no");
+        iframe.setAttribute("frameBorder", "0");
+        
         iframe.setAttribute("allowtransparency", "true");
         iframe.setAttribute("allow", "accelerometer; autoplay; camera; gyroscope; microphone;");
 
