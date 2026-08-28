@@ -134,9 +134,9 @@ export default function Exploremore() {
                       {item.description}
                     </p>
                   )}
-                  <button className="px-8 h-[46px] sm:h-[48px] bg-[#0056A6] hover:bg-[#00407C] text-white text-[15px] sm:text-[16px] font-medium font-Neurial_Grotesk rounded-none transition-all duration-300 shadow-md cursor-pointer tracking-wider hover:scale-[1.03] active:scale-95">
-                    Explore More
-                  </button>
+                 <button className="px-8 h-[44px] sm:h-[40px] bg-[#0056A6] hover:bg-[#00407C] text-white text-[15px] sm:text-[16px] font-medium font-Neurial_Grotesk rounded-none transition-all duration-300 shadow-md cursor-pointer tracking-wider hover:scale-[1.03] active:scale-95">
+  Explore More
+</button>
                 </div>
               </div>
             ))}

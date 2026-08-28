@@ -7,12 +7,27 @@ import Header from "./../../app/layout/header";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, RefreshCw, MapPin, Headphones, Tag } from "lucide-react";
 
+type Slide = {
+  type: "video" | "image";
+  src: string;
+  alt: string;
+  link: string;
+  position?: string;
+  title?: string;
+  description?: string;
+  tagline?: string;
+  titleOffset?: string;
+  buttonText?: string;
+  buttonTitle?: string;
+  buttonLink?: string;
+};
+
 export default function Hero() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+  
 
-  const slides = [
+  const slides: Slide[] = [
    
     {
       type: "video",
@@ -24,15 +39,15 @@ export default function Hero() {
   ];
 
   // Auto-rotation effect
-  useEffect(() => {
-    if (isHovered) return;
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % slides.length);
-    }, 7000); // Change slide every 7 seconds
-    return () => clearInterval(interval);
-  }, [isHovered, slides.length]);
+useEffect(() => {
+  if (slides.length <= 1) return;
 
+  const interval = setInterval(() => {
+    setActiveIndex((prev) => (prev + 1) % slides.length);
+  }, 7000);
 
+  return () => clearInterval(interval);
+}, [slides.length]);
 
   return (
     <div className="relative w-full">
@@ -40,7 +55,9 @@ export default function Hero() {
       <Header />
 
       {/* 1. Fullscreen Media Slider Viewport (Adjusted height to account for header) */}
-      <section className="relative w-full h-[calc(100dvh-48px)] md:h-[calc(100dvh-56px)] min-h-[500px] flex flex-col justify-between bg-black overflow-hidden select-none">
+      <section 
+        id="hero-section" 
+      className="relative w-full h-[calc(100dvh-48px)] md:h-[calc(100dvh-56px)] min-h-[500px] flex flex-col justify-between bg-black overflow-hidden select-none">
 
         {/* Background media wrapper */}
         <div
@@ -87,7 +104,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
-                className="text-white text-2xl md:text-4xl lg:text-6xl font-semibold tracking-tight max-w-4xl font-sans uppercase leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)] mt-5"
+                className="text-white text-2xl md:text-4xl lg:text-6xl font-semibold tracking-tight max-w-3xl font-sans uppercase leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)] mt-5"
               >
                 Your Next Adventure Starts in Style
               </motion.h1>
@@ -105,34 +122,80 @@ export default function Hero() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ delay: 0.5, duration: 0.4 }}
-                className="pointer-events-auto mt-8"
+                className="pointer-events-auto mt-12 sm:mt-14 md:mt-16 lg:mt-20"
               >
-               
-                 <div className="flex gap-4">
-      {/* Request Call Back */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          router.push("/book");
-        }}
-        className="px-6 py-3 bg-[#0056A6] text-white font-medium hover:bg-[#00407C] transition-all duration-300 uppercase tracking-widest text-xs md:text-sm rounded-full shadow-2xl flex items-center gap-2 group border border-white/10 cursor-pointer"
-      >
-        Request call back
-        
-      </button>
+               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
 
-      {/* Book Test Ride */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          router.push("/test_ride");
-        }}
-        className="px-6 py-3 bg-black text-white font-medium  transition-all duration-300 uppercase tracking-widest text-xs md:text-sm rounded-full shadow-2xl flex items-center gap-2 group border border-white/10 cursor-pointer"
-      >
-        Book a testride
-        
-      </button>
-    </div>
+  <button
+    type="button"
+    onClick={(e) => {
+      e.stopPropagation();
+      router.push("/book");
+    }}
+    className="
+      w-[180px]
+      sm:w-[190px]
+      md:w-[200px]
+      h-[44px]
+      md:h-[46px]
+      flex
+      items-center
+      justify-center
+      bg-[#0056A6]
+      hover:bg-[#00407C]
+      text-white
+      font-medium
+      uppercase
+      tracking-widest
+      text-xs
+      md:text-sm
+      border
+      border-white/10
+      shadow-2xl
+      cursor-pointer
+      transition-all
+      duration-300
+    "
+  >
+    Request Call Back
+  </button>
+
+  <button
+    type="button"
+    onClick={(e) => {
+      e.stopPropagation();
+      router.push("/test_ride");
+    }}
+    className="
+      w-[180px]
+      sm:w-[190px]
+      md:w-[195px]
+      h-[44px]
+      md:h-[46px]
+      flex
+      items-center
+      justify-center
+      bg-black
+      hover:bg-black/80
+      text-white
+      font-medium
+      uppercase
+      tracking-widest
+      text-xs
+      md:text-sm
+      border
+      border-white/10
+      shadow-2xl
+      cursor-pointer
+      transition-all
+      duration-300
+    "
+  >
+    Book A Testride
+  </button>
+
+</div>
+                 
               </motion.div>
             </div>
           )}
@@ -140,8 +203,8 @@ export default function Hero() {
 
         {/* Slide Description Overlay (Active for slides with custom title/description) */}
         <AnimatePresence>
-          {!(slides[activeIndex].type === "video") && (slides[activeIndex] as any).title && (
-            <div className={`absolute inset-y-0 right-16 md:right-44 w-[calc(100%-48px)] md:w-[614px] flex flex-col justify-center items-start text-left z-10 pointer-events-none pt-24 md:pt-28 ${(slides[activeIndex] as any).titleOffset || 'pb-48 md:pb-56'}`}>
+          {slides[activeIndex].type !== "video" && slides[activeIndex].title && (
+            <div className={`absolute inset-y-0 right-16 md:right-44 w-[calc(100%-48px)] md:w-[614px] flex flex-col justify-center items-start text-left z-10 pointer-events-none pt-24 md:pt-28 ${slides[activeIndex].titleOffset || 'pb-48 md:pb-56'}`}>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -156,7 +219,7 @@ export default function Hero() {
                   transition={{ delay: 0.2, duration: 0.6 }}
                   className="text-white text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase leading-tight font-sans drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] max-w-none md:max-w-none md:whitespace-nowrap"
                 >
-                  {(slides[activeIndex] as any).title}
+                  {slides[activeIndex].title}
                 </motion.h1>
 
                 {/* Description */}
@@ -166,23 +229,23 @@ export default function Hero() {
                   transition={{ delay: 0.3, duration: 0.6 }}
                   className="text-white/90 text-sm md:text-xl mt-4 font-sans leading-snug drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-sm md:max-w-md"
                 >
-                  {(slides[activeIndex] as any).description}
+                  {slides[activeIndex].description}
                 </motion.p>
 
                 {/* Tagline */}
-                {(slides[activeIndex] as any).tagline && (
+                {slides[activeIndex].tagline && (
                   <motion.p
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
                     className="text-white/80 text-xs md:text-base mt-1 font-sans leading-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-sm md:max-w-md"
                   >
-                    {(slides[activeIndex] as any).tagline}
+                    {slides[activeIndex].tagline}
                   </motion.p>
                 )}
 
                 {/* CTA Button */}
-                {(slides[activeIndex] as any).title !== "Ride Into The Future" && (
+                {slides[activeIndex].title !== "Ride Into The Future" && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -192,7 +255,7 @@ export default function Hero() {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        router.push((slides[activeIndex] as any).link);
+                        router.push(slides[activeIndex].link);
                       }}
                       className="px-8 py-3 bg-[#0056A6] text-white font-medium hover:bg-[#00407C] transition-all duration-300 uppercase tracking-widest text-xs md:text-sm rounded-sm shadow-2xl flex items-center gap-2 group border border-white/10 cursor-pointer"
                     >
@@ -208,7 +271,7 @@ export default function Hero() {
 
         {/* Custom Slide Button Overlay (Active for slides with custom buttonText) */}
         <AnimatePresence>
-          {(slides[activeIndex] as any).buttonText && (
+          {slides[activeIndex].buttonText && (
             <div className="absolute inset-y-0 right-6 md:right-16 w-[calc(100%-48px)] md:w-[614px] flex flex-col justify-center items-start text-left z-10 pointer-events-none pt-24 md:pt-28 pb-32 md:pb-36">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -217,24 +280,24 @@ export default function Hero() {
                 transition={{ delay: 0.2, duration: 0.4 }}
                 className="pointer-events-auto mt-8 self-center flex flex-col items-center gap-4"
               >
-                {(slides[activeIndex] as any).buttonTitle && (
+                {slides[activeIndex].buttonTitle && (
                   <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15, duration: 0.6 }}
                     className="text-white text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase leading-tight font-sans drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] text-center"
                   >
-                    {(slides[activeIndex] as any).buttonTitle}
+                    {slides[activeIndex].buttonTitle}
                   </motion.h1>
                 )}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    router.push((slides[activeIndex] as any).buttonLink || slides[activeIndex].link);
+                    router.push(slides[activeIndex].buttonLink || slides[activeIndex].link);
                   }}
                   className="px-8 py-3 bg-[#0056A6] text-white font-medium hover:bg-[#00407C] transition-all duration-300 uppercase tracking-widest text-xs md:text-sm rounded-sm shadow-2xl flex items-center gap-2 group border border-white/10 cursor-pointer"
                 >
-                  {(slides[activeIndex] as any).buttonText}
+                  {slides[activeIndex].buttonText}
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </motion.div>
@@ -242,63 +305,6 @@ export default function Hero() {
           )}
         </AnimatePresence>
 
-        {/* Right Side: Thumbnail Controls & Counter below them - Positioned in the slider viewport */}
-        <div
-          className="absolute bottom-6 sm:bottom-8 md:bottom-12 right-6 md:right-16 z-20 flex flex-col pointer-events-auto"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          {/* Slide Thumbnails Row */}
-          <div className="flex gap-4">
-            {slides.map((slide, idx) => (
-              <button
-                key={idx}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveIndex(idx);
-                }}
-                className="relative flex flex-col cursor-pointer focus:outline-none"
-              >
-                {/* Thumbnail Image Container */}
-                <div
-                  className={`
-                    w-[80px] h-[45px] sm:w-[95px] sm:h-[54px] md:w-[110px] md:h-[62px] 
-                    overflow-hidden transition-all duration-300
-                    ${activeIndex === idx
-                      ? "opacity-100 scale-[1.02]"
-                      : "opacity-45 hover:opacity-85"
-                    }
-                  `}
-                >
-                  {slide.type === "video" ? (
-                    <video
-                      src={slide.src}
-                      muted
-                      loop
-                      autoPlay
-                      playsInline
-                      className="w-full h-full object-cover pointer-events-none"
-                    />
-                  ) : (
-                    <img
-                      src={slide.src}
-                      alt={`Thumbnail ${idx + 1}`}
-                      className="w-full h-full object-cover pointer-events-none"
-                    />
-                  )}
-                </div>
-                {/* Active progress bar indicator at the bottom edge */}
-                {activeIndex === idx && (
-                  <div
-                    className="h-[3px] bg-white w-full origin-left mt-1.5"
-                    style={{ animation: "thumbnail-progress 7000ms linear infinite" }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-
-        </div>
       </section>
 
       {/* 2. Scrolling Reveal Help Widget (Positioned below the viewport fold, overlapping the bottom of the slider) */}

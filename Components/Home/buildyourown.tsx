@@ -126,8 +126,8 @@ export default function BuildYourOwn() {
               mt-7
 
               flex
-              h-[44px]
-              w-[190px]
+              h-[40px]
+              w-[150px]
 
               items-center
               justify-between
@@ -156,10 +156,10 @@ export default function BuildYourOwn() {
               hover:bg-[#07131D]
               hover:text-white
 
-              sm:w-[195px]
+              sm:w-[165px]
               sm:hover:w-[210px]
 
-              lg:w-[190px]
+              lg:w-[170px]
               lg:hover:w-[205px]
             "
           >

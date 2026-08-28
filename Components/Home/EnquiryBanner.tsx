@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+
 import {
   X,
   MessageCircleMore,
@@ -11,11 +13,19 @@ import {
   ChevronDown,
 } from "lucide-react";
 
+/* =========================================================
+   ENQUIRY OPTIONS
+========================================================= */
+
 const enquiryOptions = [
   "New Vehicle Enquiry",
   "Service Appointment",
   "Finance Assistance",
 ];
+
+/* =========================================================
+   COMMON STYLES
+========================================================= */
 
 const labelClass =
   "mb-[5px] block text-[11px] font-medium text-[#222222] sm:text-[11.5px]";
@@ -27,6 +37,10 @@ const inputClass =
   "transition-all duration-200 " +
   "focus:border-[#075AA8] focus:bg-white " +
   "sm:h-[40px]";
+
+/* =========================================================
+   COMMON INPUT FIELD
+========================================================= */
 
 const Field = ({
   label,
@@ -41,6 +55,7 @@ const Field = ({
     <div className="w-full">
       <label className={labelClass}>
         {label}
+
         <span className="ml-[2px] text-red-500">*</span>
       </label>
 
@@ -53,34 +68,137 @@ const Field = ({
   );
 };
 
+/* =========================================================
+   MAIN COMPONENT
+========================================================= */
+
 export default function EnquiryBanner() {
-  const [visible, setVisible] = useState(true);
+  const pathname = usePathname();
+
+  /* =========================================================
+     STATES
+  ========================================================= */
+
+  const [showEnquiryButton, setShowEnquiryButton] =
+    useState(false);
+
   const [showPopup, setShowPopup] = useState(false);
 
   const [enquiryOpen, setEnquiryOpen] = useState(false);
-  const [selectedEnquiry, setSelectedEnquiry] = useState("");
+
+  const [selectedEnquiry, setSelectedEnquiry] =
+    useState("");
+
+  /* =========================================================
+     SHOW ENQUIRY BUTTON EVERYWHERE EXCEPT HERO SECTION
+
+     BEHAVIOUR:
+
+     Hero visible
+     -> button hidden
+
+     Scroll below Hero
+     -> button visible
+
+     Other pages without #hero-section
+     -> button visible
+
+     Route change
+     -> automatically checks again
+  ========================================================= */
+
+  useEffect(() => {
+    let observer: IntersectionObserver | null = null;
+
+    const timer = window.setTimeout(() => {
+      const heroSection =
+        document.getElementById("hero-section");
+
+      /*
+       * No Hero section on this page.
+       *
+       * Examples:
+       * /motorcycles
+       * /scooters
+       * /vida
+       * /events
+       *
+       * Show Enquiry Now immediately.
+       */
+      if (!heroSection) {
+        setShowEnquiryButton(true);
+        return;
+      }
+
+      /*
+       * This page contains the Hero.
+       *
+       * Watch only that section.
+       */
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          /*
+           * Hero visible
+           * -> hide Enquiry Now
+           *
+           * Hero not visible
+           * -> show Enquiry Now
+           */
+          setShowEnquiryButton(
+            !entry.isIntersecting
+          );
+        },
+        {
+          threshold: 0.05,
+        }
+      );
+
+      observer.observe(heroSection);
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timer);
+
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [pathname]);
 
   /* =========================================================
      STOP BODY SCROLL WHEN POPUP IS OPEN
   ========================================================= */
+
   useEffect(() => {
     if (!showPopup) return;
 
-    const oldOverflow = document.body.style.overflow;
+    const oldOverflow =
+      document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
 
-    const handleEscape = (event: KeyboardEvent) => {
+    const handleEscape = (
+      event: KeyboardEvent
+    ) => {
       if (event.key === "Escape") {
         setShowPopup(false);
         setEnquiryOpen(false);
       }
     };
 
-    window.addEventListener("keydown", handleEscape);
+    window.addEventListener(
+      "keydown",
+      handleEscape
+    );
 
     return () => {
-      document.body.style.overflow = oldOverflow;
-      window.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow =
+        oldOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        handleEscape
+      );
     };
   }, [showPopup]);
 
@@ -94,17 +212,24 @@ export default function EnquiryBanner() {
       label: "Quick response from our team",
       icon: CircleUserRound,
     },
+
     {
       id: "secure",
       label: "100% secure & spam free",
       icon: ShieldCheck,
     },
+
     {
       id: "help",
-      label: "Personalised assistance just for you",
+      label:
+        "Personalised assistance just for you",
       icon: Handshake,
     },
   ];
+
+  /* =========================================================
+     RETURN
+  ========================================================= */
 
   return (
     <>
@@ -113,84 +238,101 @@ export default function EnquiryBanner() {
       ===================================================== */}
 
       <AnimatePresence>
-        {visible && !showPopup && (
-          <motion.button
-            type="button"
-            onClick={() => {
-              setShowPopup(true);
-            }}
-            initial={{
-              opacity: 0,
-              x: -50,
-            }}
-            animate={{
-              opacity: 1,
-              x: 0,
-            }}
-            exit={{
-              opacity: 0,
-              x: -50,
-            }}
-            transition={{
-              duration: 0.35,
-              ease: "easeOut",
-            }}
-            whileHover={{
-              x: 3,
-            }}
-            whileTap={{
-              scale: 0.97,
-            }}
-            aria-label="Enquiry Now"
-            className="
-              fixed
-              left-0
-              top-1/2
-              z-[999]
-              flex
-              h-[108px]
-              w-[34px]
-              -translate-y-1/2
-              items-center
-              justify-center
-              bg-[#075AA8]
-              text-white
-              shadow-[4px_0_15px_rgba(0,0,0,0.25)]
-              transition-colors
-              duration-300
-              hover:bg-[#064B8E]
-
-              sm:h-[120px]
-              sm:w-[38px]
-
-              md:h-[132px]
-              md:w-[40px]
-            "
-          >
-            <span
-              className="
-                whitespace-nowrap
-                text-[9px]
-                font-semibold
-                uppercase
-                tracking-[0.12em]
-
-                sm:text-[10px]
-              "
-              style={{
-                writingMode: "vertical-rl",
-                transform: "rotate(180deg)",
-                fontFamily: "Arial, Helvetica, sans-serif",
+        {showEnquiryButton &&
+          !showPopup && (
+            <motion.button
+              type="button"
+              onClick={() => {
+                setShowPopup(true);
               }}
+              initial={{
+                opacity: 0,
+                x: -50,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              exit={{
+                opacity: 0,
+                x: -50,
+              }}
+              transition={{
+                duration: 0.35,
+                ease: "easeOut",
+              }}
+              whileHover={{
+                x: 3,
+              }}
+              whileTap={{
+                scale: 0.97,
+              }}
+              aria-label="Enquiry Now"
+              className="
+                fixed
+                left-0
+                top-1/2
+                z-[999]
+
+                flex
+                h-[108px]
+                w-[34px]
+                -translate-y-1/2
+
+                items-center
+                justify-center
+
+                bg-[#075AA8]
+                text-white
+
+                shadow-[4px_0_15px_rgba(0,0,0,0.25)]
+
+                transition-colors
+                duration-300
+
+                hover:bg-[#064B8E]
+
+                sm:h-[120px]
+                sm:w-[38px]
+
+                md:h-[132px]
+                md:w-[40px]
+              "
             >
-              ENQUIRY NOW
-            </span>
-          </motion.button>
-        )}
+              <span
+                className="
+                  whitespace-nowrap
+
+                  text-[9px]
+                  font-semibold
+                  uppercase
+
+                  tracking-[0.12em]
+
+                  sm:text-[10px]
+                "
+                style={{
+                  writingMode:
+                    "vertical-rl",
+
+                  transform:
+                    "rotate(180deg)",
+
+                  fontFamily:
+                    "Arial, Helvetica, sans-serif",
+                }}
+              >
+                ENQUIRY NOW
+              </span>
+            </motion.button>
+          )}
       </AnimatePresence>
 
       {/* =====================================================
           FULL SCREEN POPUP
+
+          IMPORTANT:
+          This must use showPopup.
       ===================================================== */}
 
       <AnimatePresence>
@@ -209,8 +351,10 @@ export default function EnquiryBanner() {
               fixed
               inset-0
               z-[99999]
+
               min-h-[100dvh]
               w-full
+
               overflow-y-auto
             "
           >
@@ -222,23 +366,31 @@ export default function EnquiryBanner() {
               className="
                 fixed
                 inset-0
+
                 h-full
                 w-full
+
                 bg-cover
                 bg-center
                 bg-no-repeat
               "
               style={{
-                backgroundImage: "url('/Hero.png')",
+                backgroundImage:
+                  "url('/Hero.png')",
               }}
             />
 
-            {/* DARK OVERLAY */}
+            {/* =================================================
+                DARK OVERLAY
+            ================================================= */}
+
             <div
               className="
                 fixed
                 inset-0
+
                 bg-black/40
+
                 backdrop-brightness-[0.80]
               "
             />
@@ -251,11 +403,15 @@ export default function EnquiryBanner() {
               className="
                 relative
                 z-20
+
                 flex
+
                 min-h-[100dvh]
                 w-full
+
                 items-center
                 justify-center
+
                 p-[10px]
 
                 sm:p-[16px]
@@ -264,6 +420,7 @@ export default function EnquiryBanner() {
               "
               onMouseDown={() => {
                 setShowPopup(false);
+
                 setEnquiryOpen(false);
               }}
             >
@@ -296,20 +453,27 @@ export default function EnquiryBanner() {
                 }}
                 className="
                   relative
+
                   w-full
                   max-w-[600px]
+
                   bg-white
+
                   shadow-[0_22px_65px_rgba(0,0,0,0.38)]
 
                   max-h-[94dvh]
+
                   overflow-y-auto
 
                   md:h-[442px]
+
                   md:max-h-none
+
                   md:overflow-visible
                 "
                 style={{
-                  fontFamily: "Arial, Helvetica, sans-serif",
+                  fontFamily:
+                    "Arial, Helvetica, sans-serif",
                 }}
               >
                 {/* =================================================
@@ -320,21 +484,30 @@ export default function EnquiryBanner() {
                   type="button"
                   onClick={() => {
                     setShowPopup(false);
+
                     setEnquiryOpen(false);
                   }}
                   aria-label="Close enquiry popup"
                   className="
                     absolute
+
                     right-[10px]
                     top-[10px]
+
                     z-[100]
+
                     flex
+
                     h-[28px]
                     w-[28px]
+
                     items-center
                     justify-center
+
                     bg-transparent
+
                     text-[#303030]
+
                     transition-transform
                     duration-200
 
@@ -357,10 +530,13 @@ export default function EnquiryBanner() {
                 <div
                   className="
                     grid
+
                     w-full
+
                     grid-cols-1
 
                     md:h-full
+
                     md:grid-cols-[205px_minmax(0,395px)]
                   "
                 >
@@ -371,33 +547,46 @@ export default function EnquiryBanner() {
                   <div
                     className="
                       relative
+
                       min-h-[250px]
+
                       bg-[#E8F6FF]
+
                       px-[24px]
                       py-[24px]
 
                       sm:min-h-[260px]
+
                       sm:px-[26px]
                       sm:py-[25px]
 
                       md:h-full
                       md:min-h-0
+
                       md:px-[25px]
                       md:py-[24px]
                     "
                   >
-                    {/* CHAT ICON */}
+                    {/* ===============================================
+                        CHAT ICON
+                    =============================================== */}
 
                     <div
                       className="
                         mb-[13px]
+
                         flex
+
                         h-[43px]
                         w-[43px]
+
                         items-center
                         justify-center
+
                         rounded-full
+
                         bg-[#CDEBFF]
+
                         text-[#0075C9]
                       "
                     >
@@ -407,13 +596,17 @@ export default function EnquiryBanner() {
                       />
                     </div>
 
-                    {/* TITLE */}
+                    {/* ===============================================
+                        TITLE
+                    =============================================== */}
 
                     <h2
                       className="
                         text-[18px]
                         font-medium
+
                         leading-[1.2]
+
                         text-[#191919]
 
                         sm:text-[19px]
@@ -424,81 +617,115 @@ export default function EnquiryBanner() {
                       Lets Connect!!
                     </h2>
 
-                    {/* TEXT */}
+                    {/* ===============================================
+                        TEXT
+                    =============================================== */}
 
                     <p
                       className="
                         mt-[12px]
+
                         max-w-[160px]
+
                         text-[10px]
                         font-normal
+
                         leading-[1.45]
+
                         text-[#222222]
                       "
                     >
-                      Share your details and our team will get in touch
-                      with you shortly.
+                      Share your details and our
+                      team will get in touch with
+                      you shortly.
                     </p>
 
-                    {/* FEATURES */}
+                    {/* ===============================================
+                        FEATURES
+                    =============================================== */}
 
                     <div
                       className="
                         mt-[24px]
+
                         flex
                         flex-col
+
                         gap-[18px]
 
                         md:mt-[25px]
                         md:gap-[20px]
                       "
                     >
-                      {features.map((item) => {
-                        const Icon = item.icon;
+                      {features.map(
+                        (item) => {
+                          const Icon =
+                            item.icon;
 
-                        return (
-                          <div
-                            key={item.id}
-                            className="
-                              flex
-                              items-start
-                              gap-[9px]
-                            "
-                          >
+                          return (
                             <div
+                              key={
+                                item.id
+                              }
                               className="
                                 flex
-                                h-[21px]
-                                w-[21px]
-                                shrink-0
-                                items-center
-                                justify-center
-                                rounded-full
-                                bg-[#D4EFFF]
-                                text-[#0875C7]
-                              "
-                            >
-                              <Icon
-                                size={12}
-                                strokeWidth={1.7}
-                              />
-                            </div>
 
-                            <span
-                              className="
-                                max-w-[135px]
-                                pt-[2px]
-                                text-[9px]
-                                font-normal
-                                leading-[1.35]
-                                text-[#333333]
+                                items-start
+
+                                gap-[9px]
                               "
                             >
-                              {item.label}
-                            </span>
-                          </div>
-                        );
-                      })}
+                              <div
+                                className="
+                                  flex
+
+                                  h-[21px]
+                                  w-[21px]
+
+                                  shrink-0
+
+                                  items-center
+                                  justify-center
+
+                                  rounded-full
+
+                                  bg-[#D4EFFF]
+
+                                  text-[#0875C7]
+                                "
+                              >
+                                <Icon
+                                  size={
+                                    12
+                                  }
+                                  strokeWidth={
+                                    1.7
+                                  }
+                                />
+                              </div>
+
+                              <span
+                                className="
+                                  max-w-[135px]
+
+                                  pt-[2px]
+
+                                  text-[9px]
+                                  font-normal
+
+                                  leading-[1.35]
+
+                                  text-[#333333]
+                                "
+                              >
+                                {
+                                  item.label
+                                }
+                              </span>
+                            </div>
+                          );
+                        }
+                      )}
                     </div>
                   </div>
 
@@ -509,8 +736,11 @@ export default function EnquiryBanner() {
                   <div
                     className="
                       relative
+
                       min-w-0
+
                       bg-white
+
                       px-[20px]
                       py-[23px]
 
@@ -518,19 +748,26 @@ export default function EnquiryBanner() {
                       sm:py-[24px]
 
                       md:h-full
+
                       md:px-[24px]
                       md:py-[24px]
                     "
                   >
-                    {/* TITLE */}
+                    {/* ===============================================
+                        TITLE
+                    =============================================== */}
 
                     <h3
                       className="
                         mb-[20px]
+
                         pr-[35px]
+
                         text-[19px]
                         font-normal
+
                         leading-tight
+
                         text-[#222222]
 
                         sm:text-[20px]
@@ -549,41 +786,63 @@ export default function EnquiryBanner() {
                       onSubmit={(e) => {
                         e.preventDefault();
 
-                        if (!selectedEnquiry) {
-                          setEnquiryOpen(true);
+                        if (
+                          !selectedEnquiry
+                        ) {
+                          setEnquiryOpen(
+                            true
+                          );
+
                           return;
                         }
 
-                        setShowPopup(false);
+                        setShowPopup(
+                          false
+                        );
                       }}
                       className="
                         flex
+
                         w-full
+
                         flex-col
+
                         gap-[11px]
                       "
                     >
-                      {/* NAME */}
+                      {/* ===============================================
+                          NAME
+                      =============================================== */}
+
                       <Field
                         label="Name"
                         placeholder="Enter your name"
                       />
 
-                      {/* PHONE */}
+                      {/* ===============================================
+                          PHONE
+                      =============================================== */}
+
                       <Field
                         label="Phone Number"
                         type="tel"
                         placeholder="Enter your number"
                       />
 
-                      {/* EMAIL */}
+                      {/* ===============================================
+                          EMAIL
+                      =============================================== */}
+
                       <Field
                         label="Email ID"
                         type="email"
                         placeholder="Enter your mail"
                       />
 
-                      {/* LOCATION */}
+                      {/* ===============================================
+                          LOCATION
+                      =============================================== */}
+
                       <Field
                         label="Location"
                         placeholder="Enter your pin code or area"
@@ -594,31 +853,52 @@ export default function EnquiryBanner() {
                       ================================================= */}
 
                       <div className="relative w-full">
-                        <label className={labelClass}>
+                        <label
+                          className={
+                            labelClass
+                          }
+                        >
                           Enquiry Type
+
                           <span className="ml-[2px] text-red-500">
                             *
                           </span>
                         </label>
 
+                        {/* =============================================
+                            DROPDOWN BUTTON
+                        ============================================= */}
+
                         <button
                           type="button"
                           onClick={() => {
-                            setEnquiryOpen((prev) => !prev);
+                            setEnquiryOpen(
+                              (prev) =>
+                                !prev
+                            );
                           }}
                           className="
                             flex
+
                             h-[39px]
                             w-full
+
                             items-center
                             justify-between
+
                             border
                             border-[#AEB7C2]
+
                             bg-[#FAFAFA]
+
                             px-[12px]
+
                             text-left
+
                             text-[12px]
+
                             outline-none
+
                             transition-all
                             duration-200
 
@@ -640,11 +920,15 @@ export default function EnquiryBanner() {
 
                           <ChevronDown
                             size={15}
-                            strokeWidth={2}
+                            strokeWidth={
+                              2
+                            }
                             className={`
                               shrink-0
+
                               transition-transform
                               duration-200
+
                               ${
                                 enquiryOpen
                                   ? "rotate-180"
@@ -654,7 +938,9 @@ export default function EnquiryBanner() {
                           />
                         </button>
 
-                        {/* DROPDOWN */}
+                        {/* =============================================
+                            DROPDOWN OPTIONS
+                        ============================================= */}
 
                         <AnimatePresence>
                           {enquiryOpen && (
@@ -676,44 +962,71 @@ export default function EnquiryBanner() {
                               }}
                               className="
                                 absolute
+
                                 left-0
                                 top-full
+
                                 z-[999]
+
                                 mt-[2px]
+
                                 w-full
+
                                 border
                                 border-[#AEB7C2]
+
                                 bg-white
+
                                 shadow-[0_7px_20px_rgba(0,0,0,0.15)]
                               "
                             >
-                              {enquiryOptions.map((item) => (
-                                <button
-                                  key={item}
-                                  type="button"
-                                  onClick={() => {
-                                    setSelectedEnquiry(item);
-                                    setEnquiryOpen(false);
-                                  }}
-                                  className="
-                                    flex
-                                    h-[32px]
-                                    w-full
-                                    items-center
-                                    px-[12px]
-                                    text-left
-                                    text-[11px]
-                                    text-gray-800
-                                    transition-colors
+                              {enquiryOptions.map(
+                                (
+                                  item
+                                ) => (
+                                  <button
+                                    key={
+                                      item
+                                    }
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedEnquiry(
+                                        item
+                                      );
 
-                                    hover:bg-[#E8F6FF]
+                                      setEnquiryOpen(
+                                        false
+                                      );
+                                    }}
+                                    className="
+                                      flex
 
-                                    sm:text-[12px]
-                                  "
-                                >
-                                  {item}
-                                </button>
-                              ))}
+                                      h-[32px]
+                                      w-full
+
+                                      items-center
+
+                                      px-[12px]
+
+                                      text-left
+
+                                      text-[11px]
+
+                                      text-gray-800
+
+                                      transition-colors
+
+                                      hover:bg-[#E8F6FF]
+
+                                      sm:text-[12px]
+                                    "
+                                  >
+                                    {
+                                      item
+                                    }
+                                  </button>
+                                )
+                              )}
                             </motion.div>
                           )}
                         </AnimatePresence>
@@ -727,16 +1040,24 @@ export default function EnquiryBanner() {
                         type="submit"
                         className="
                           mt-[7px]
+
                           flex
+
                           h-[40px]
                           w-full
+
                           items-center
                           justify-center
+
                           bg-[#075CA8]
+
                           px-4
+
                           text-[12px]
                           font-medium
+
                           text-white
+
                           transition-colors
                           duration-300
 

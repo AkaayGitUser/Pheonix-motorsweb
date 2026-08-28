@@ -411,7 +411,7 @@ export default function MomentsMotion() {
       className="
         w-full
         overflow-x-hidden
-        bg-white
+        bg-[#F5F6F6]
         text-[#111111]
       "
       style={{
@@ -425,7 +425,7 @@ export default function MomentsMotion() {
           w-full
           max-w-[1600px]
 
-          bg-white
+          bg-[#F5F6F6]
 
           px-3
           py-3
@@ -435,13 +435,14 @@ export default function MomentsMotion() {
 
           md:px-7
 
-          lg:min-h-[100svh] lg:h-[100svh]
-          lg:min-h-[650px]
-          lg:max-h-[950px]
+          lg:h-[100svh]
+          lg:min-h-0
+          lg:max-h-none
           lg:px-10
-          lg:py-5
+          lg:py-3
 
           xl:px-[52px]
+          xl:py-4
         "
       >
         <div
@@ -451,11 +452,12 @@ export default function MomentsMotion() {
             gap-7
 
             lg:h-full
-            lg:grid-cols-[535px_minmax(0,1fr)]
-            lg:gap-[55px]
+            lg:min-h-0
+            lg:grid-cols-[500px_minmax(0,1fr)]
+            lg:gap-[42px]
 
-            xl:grid-cols-[545px_minmax(0,1fr)]
-            xl:gap-[65px]
+            xl:grid-cols-[520px_minmax(0,1fr)]
+            xl:gap-[52px]
           "
         >
           {/* LEFT PANEL */}
@@ -578,9 +580,9 @@ export default function MomentsMotion() {
                 md:grid-cols-4
 
                 lg:grid-cols-2
-                lg:auto-rows-[205px]
+                lg:auto-rows-[175px]
 
-                xl:auto-rows-[212px]
+                xl:auto-rows-[182px]
 
                 [&::-webkit-scrollbar]:w-[4px]
 
@@ -675,11 +677,12 @@ export default function MomentsMotion() {
                       className="
                         relative
 
-                        h-[150px]
+                        h-[132px]
                         w-full
 
-                        sm:h-[155px]
-                        lg:h-[160px]
+                        sm:h-[138px]
+                        lg:h-[136px]
+                        xl:h-[142px]
 
                         shrink-0
 
@@ -766,7 +769,7 @@ export default function MomentsMotion() {
               min-w-0
               flex-col
 
-              bg-white
+              bg-[#F5F6F6]
 
               lg:overflow-hidden
             "
@@ -995,22 +998,23 @@ export default function MomentsMotion() {
               className="
                 relative
 
-                mt-1
+                mt-0
 
-                h-[290px]
+                h-[250px]
                 w-full
 
-                shrink-0
+                min-h-0
+                flex-1
 
                 overflow-hidden
 
                 bg-white
 
-                sm:h-[330px]
-                md:h-[370px]
-                lg:h-[clamp(300px,45vh,390px)]
-                xl:h-[clamp(330px,48vh,420px)]
-                2xl:h-[430px]
+                sm:h-[280px]
+                md:h-[300px]
+                lg:h-auto
+                lg:min-h-[210px]
+                xl:min-h-[230px]
               "
             >
               <SmartImage
@@ -1036,152 +1040,188 @@ export default function MomentsMotion() {
 
             {/* SPECIFICATIONS */}
 
-            <div
-              className="
-                mt-auto
+           {/* SPECIFICATIONS */}
 
-                grid
-                shrink-0
+<div
+  className="
+    mt-[4px]
+    grid
+    shrink-0
+    grid-cols-2
+    overflow-hidden
+    rounded-[7px]
+    border
+    border-[#E6E6E6]
+    bg-white
+    shadow-[0_3px_12px_rgba(0,0,0,0.05)]
 
-                grid-cols-2
+    sm:grid-cols-3
+    lg:grid-cols-5
+  "
+>
+  {selectedVehicle.specs.map((spec, index) => (
+    <SpecBox
+      key={`${spec.label}-${index}`}
+      spec={spec}
+      last={index === selectedVehicle.specs.length - 1}
+    />
+  ))}
+</div>
 
-                overflow-hidden
+{/* BUTTONS */}
 
-                rounded-[8px]
+{/* BUTTONS */}
+{/* =====================================================
+    BUTTONS
+===================================================== */}
 
-                border
-                border-[#E6E6E6]
+<div
+  className="
+    mt-[7px]
+    flex
+    shrink-0
+    flex-col
+    items-center
+    justify-center
+    gap-[10px]
 
-                bg-white
+    sm:flex-row
+  "
+>
+  {/* =================================================
+      VIEW DETAILS
+      SAME NORMAL SIZE - NO WIDTH EXPANSION
+  ================================================= */}
 
-                shadow-[0_4px_17px_rgba(0,0,0,0.055)]
+  <button
+    type="button"
+    className="
+      flex
+      h-[40px]
+      w-[150px]
 
-                sm:grid-cols-3
+      items-center
+      justify-center
 
-                lg:grid-cols-5
-              "
-            >
-              {selectedVehicle.specs.map(
-                (spec, index) => (
-                  <SpecBox
-                    key={`${spec.label}-${index}`}
-                    spec={spec}
-                    last={
-                      index ===
-                      selectedVehicle.specs.length - 1
-                    }
-                  />
-                )
-              )}
-            </div>
+      border
+      border-[#07131D]
 
-            {/* CENTERED BUTTONS */}
+      bg-transparent
 
-            <div
-              className="
-                mt-[16px]
+      px-4
 
-                flex
-                shrink-0
+      text-[9px]
+      font-semibold
+      uppercase
+      tracking-[0.14em]
 
-                flex-col
+      text-[#07131D]
 
-                items-center
-                justify-center
+      transition-colors
+      duration-300
+      ease-out
 
-                gap-[12px]
+      hover:bg-[#07131D]
+      hover:text-white
 
-                sm:flex-row
-              "
-            >
-              <button
-                type="button"
-                className="
-                  h-[46px]
+      sm:w-[165px]
 
-                  w-full
+      lg:w-[170px]
+    "
+  >
+    <span className="whitespace-nowrap">
+      VIEW DETAILS
+    </span>
+  </button>
 
-        
+  {/* =================================================
+      BOOK A TEST RIDE
+      SAME NORMAL SIZE
+      EXPANDS ONLY ON HOVER
+  ================================================= */}
 
-                  border
-                  border-[#111111]
+  <div
+    className="
+      relative
 
-                  bg-white
+      h-[40px]
+      w-[150px]
 
-                  px-6
+      shrink-0
+      overflow-visible
 
-                  text-[10px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.015em]
+      sm:w-[165px]
 
-                  text-black
+      lg:w-[170px]
+    "
+  >
+    <button
+      type="button"
+      onClick={() => setShowTestRide(true)}
+      className="
+        group
 
-                  transition-all
-                  duration-300
+        absolute
+        left-0
+        top-0
 
-                  hover:bg-black
-                  hover:text-white
+        flex
+        h-[40px]
+        w-[150px]
 
-                  sm:w-[190px]
-                  lg:w-[200px]
-                "
-              >
-                VIEW DETAILS
-              </button>
+        items-center
+        justify-between
 
-              <button
-                type="button"
-                onClick={() => setShowTestRide(true)}
-                className="
-                  group
+        overflow-hidden
 
-                  flex
+        border
+        border-black
 
-                  h-[46px]
+        bg-black
 
-                  w-full
+        px-5
 
-                  items-center
-                  justify-center
+        text-[9px]
+        font-semibold
+        uppercase
+        tracking-[0.10em]
 
-                  gap-5
+        text-white
 
+        transition-[width,background-color]
+        duration-300
+        ease-out
 
-                  bg-black
+        hover:w-[205px]
+        hover:bg-[#1a1a1a]
 
-                  px-5
+        sm:w-[165px]
+        sm:hover:w-[210px]
 
-                  text-[10px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.015em]
+        lg:w-[170px]
+        lg:hover:w-[205px]
+      "
+    >
+      <span className="whitespace-nowrap">
+        BOOK A TEST RIDE
+      </span>
 
-                  text-white
+      <ArrowRight
+        size={17}
+        strokeWidth={1.6}
+        className="
+          ml-4
+          shrink-0
 
-                  transition-all
-                  duration-300
+          transition-transform
+          duration-300
 
-                  hover:bg-[#1a1a1a]
-
-                  sm:w-[235px]
-                  lg:w-[245px]
-                "
-              >
-                BOOK A TEST RIDE
-
-                <ArrowRight
-                  size={16}
-                  strokeWidth={1.8}
-                  className="
-                    transition-transform
-                    duration-300
-
-                    group-hover:translate-x-1
-                  "
-                />
-              </button>
-            </div>
+          group-hover:translate-x-1
+        "
+      />
+    </button>
+  </div>
+</div>
           </main>
         </div>
       </div>
@@ -1320,22 +1360,22 @@ function SpecBox({
   const getIcon = () => {
     switch (spec.type) {
       case "engine":
-        return <Cog size={24} strokeWidth={1.7} />;
+        return <Cog size={17} strokeWidth={1.7} />;
 
       case "mileage":
-        return <Gauge size={24} strokeWidth={1.7} />;
+        return <Gauge size={17} strokeWidth={1.7} />;
 
       case "power":
-        return <Zap size={24} strokeWidth={1.7} />;
+        return <Zap size={17} strokeWidth={1.7} />;
 
       case "transmission":
-        return <Settings size={24} strokeWidth={1.7} />;
+        return <Settings size={17} strokeWidth={1.7} />;
 
       case "fuel":
-        return <Fuel size={24} strokeWidth={1.7} />;
+        return <Fuel size={17} strokeWidth={1.7} />;
 
       default:
-        return <Cog size={24} strokeWidth={1.7} />;
+        return <Cog size={17} strokeWidth={1.7} />;
     }
   };
 
@@ -1343,16 +1383,13 @@ function SpecBox({
     <div
       className={`
         flex
-
-        min-h-[94px]
-
+        min-h-[64px]
         flex-col
-
         items-center
         justify-center
 
-        px-2
-        py-[10px]
+        px-1.5
+        py-[5px]
 
         text-center
 
@@ -1375,21 +1412,17 @@ function SpecBox({
 
       <strong
         className="
-          mt-[7px]
+          mt-[4px]
 
-          text-[10px]
-
+          text-[8px]
           font-semibold
-
           leading-none
-
           tracking-[-0.01em]
 
           text-[#111111]
 
-          sm:text-[11px]
-
-          lg:text-[12px]
+          sm:text-[9px]
+          lg:text-[9px]
         "
       >
         {spec.value}
@@ -1397,19 +1430,16 @@ function SpecBox({
 
       <span
         className="
-          mt-[5px]
+          mt-[2px]
 
-          text-[7px]
-
+          text-[6px]
           font-normal
-
           leading-none
 
           text-[#555555]
 
-          sm:text-[8px]
-
-          lg:text-[8px]
+          sm:text-[6.5px]
+          lg:text-[7px]
         "
       >
         {spec.label}
@@ -1417,7 +1447,6 @@ function SpecBox({
     </div>
   );
 }
-
 /* =========================================================
    TEST RIDE POPUP CONTENT
    Embedded here so no import from app/test_ride/page.tsx is needed.
