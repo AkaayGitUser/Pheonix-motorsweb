@@ -95,7 +95,7 @@ export default function Footer() {
                 height={16}
                 className="w-3.5 h-3.5 shrink-0 object-contain brightness-0 invert"
               />
-              <a href="tel:04022225555" className="hover:underline transition-all leading-tight">
+              <a href="tel:04022225555" className=" text-white/80 hover:underline transition-all leading-tight">
                 040-2222 5555/6666/7777
               </a>
             </div>
@@ -107,7 +107,7 @@ export default function Footer() {
                 height={16}
                 className="w-3.5 h-3.5 shrink-0 object-contain brightness-0 invert"
               />
-              <a href="mailto:info@phoenixindia.net" className="hover:underline transition-all break-all leading-tight">
+              <a href="mailto:info@phoenixindia.net" className="text-white/80 hover:underline transition-all break-all leading-tight">
                 info@phoenixindia.net
               </a>
             </div>

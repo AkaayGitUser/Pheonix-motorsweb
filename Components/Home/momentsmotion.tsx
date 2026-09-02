@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import {
   Gauge,
   Zap,
@@ -10,8 +9,8 @@ import {
   Fuel,
   Cog,
   ArrowRight,
+  ArrowLeft,
   Check,
-  X,
   ChevronDown,
 } from "lucide-react";
 
@@ -26,22 +25,13 @@ interface VehicleColor {
   name: string;
   hex: string;
   image: string;
-
-  // Optional 360-style image sequence.
-  // Keep `image` as the normal/default image.
-  // Add multiple angle images here when available.
   views?: string[];
 }
 
 interface VehicleSpec {
   value: string;
   label: string;
-  type:
-    | "engine"
-    | "mileage"
-    | "power"
-    | "transmission"
-    | "fuel";
+  type: "engine" | "mileage" | "power" | "transmission" | "fuel";
 }
 
 interface Vehicle {
@@ -63,16 +53,14 @@ const motorcycles: Vehicle[] = [
     id: "karizma-xmr",
     name: "KARIZMA XMR",
     subtitle: "Born to perform. Built to thrill.",
-    thumbnail:
-      "/book/destini-110/karizma-xmr/grey/front-three-quarter.jpg",
+    thumbnail: "/book/destini-110/karizma-xmr/grey/front-three-quarter.jpg",
     imageScale: 1.28,
     colors: [
       {
         id: "grey",
         name: "Grey",
         hex: "#7A7A7A",
-        image:
-          "/book/destini-110/karizma-xmr/grey/front-three-quarter.jpg",
+        image: "/book/destini-110/karizma-xmr/grey/front-three-quarter.jpg",
         views: [
           "/book/destini-110/karizma-xmr/grey/front.jpg",
           "/book/destini-110/karizma-xmr/grey/front-three-quarter.jpg",
@@ -93,16 +81,14 @@ const motorcycles: Vehicle[] = [
     id: "hf-deluxe",
     name: "HF DELUXE",
     subtitle: "Reliable performance for every journey.",
-    thumbnail:
-      "/book/destini-110/deluxe/black/front-three-quarter.jpg",
+    thumbnail: "/book/destini-110/deluxe/black/front-three-quarter.jpg",
     imageScale: 1.12,
     colors: [
       {
         id: "black",
         name: "Black",
         hex: "#111111",
-        image:
-          "/book/destini-110/deluxe/black/front-three-quarter.jpg",
+        image: "/book/destini-110/deluxe/black/front-three-quarter.jpg",
         views: [
           "/book/destini-110/deluxe/black/front.jpg",
           "/book/destini-110/deluxe/black/front-three-quarter.jpg",
@@ -123,16 +109,14 @@ const motorcycles: Vehicle[] = [
     id: "splendor",
     name: "SPLENDOR",
     subtitle: "Reliable. Efficient. Everyday.",
-    thumbnail:
-      "/book/destini-110/splendor/black/front-three-quarter.webp",
+    thumbnail: "/book/destini-110/splendor/black/front-three-quarter.webp",
     imageScale: 1.14,
     colors: [
       {
         id: "black",
         name: "Black",
         hex: "#111111",
-        image:
-          "/book/destini-110/splendor/black/front-three-quarter.webp",
+        image: "/book/destini-110/splendor/black/front-three-quarter.webp",
         views: [
           "/book/destini-110/splendor/black/front-three-quarter.webp",
           "/book/destini-110/splendor/black/side.webp",
@@ -161,7 +145,7 @@ const scooters: Vehicle[] = [
     name: "Destini 110",
     subtitle: "Comfort. Style. Everyday convenience.",
     thumbnail: "/book/destini-110/blue/front-three-quarter.jpg",
-    imageScale: 1.10,
+    imageScale: 1.1,
     colors: [
       {
         id: "blue",
@@ -268,14 +252,8 @@ const vehicleData: Record<Category, Vehicle[]> = {
   ev: evVehicles,
 };
 
-
 /* =========================================================
    SMART IMAGE
-   - Tries the exact path first.
-   - If the extension is different, it automatically tries
-     .avif, .webp, .png, .jpg and .jpeg.
-   - This avoids blank images when your saved file extension
-     is different from the code.
 ========================================================= */
 
 function SmartImage({
@@ -321,9 +299,7 @@ function SmartImage({
       style={style}
       onError={() => {
         setCandidateIndex((current) =>
-          current < candidates.length - 1
-            ? current + 1
-            : current
+          current < candidates.length - 1 ? current + 1 : current
         );
       }}
     />
@@ -335,17 +311,12 @@ function SmartImage({
 ========================================================= */
 
 export default function MomentsMotion() {
-  const [category, setCategory] =
-    useState<Category>("scooter");
-
-  const [selectedVehicle, setSelectedVehicle] =
-    useState<Vehicle>(scooters[0]);
-
-  const [selectedColor, setSelectedColor] =
-    useState<VehicleColor>(scooters[0].colors[0]);
-
+  const [category, setCategory] = useState<Category>("scooter");
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(scooters[0]);
+  const [selectedColor, setSelectedColor] = useState<VehicleColor>(
+    scooters[0].colors[0]
+  );
   const [viewIndex, setViewIndex] = useState(0);
-  const [isAutoRotatePaused, setIsAutoRotatePaused] = useState(false);
   const [showTestRide, setShowTestRide] = useState(false);
 
   const vehicles = vehicleData[category];
@@ -355,9 +326,6 @@ export default function MomentsMotion() {
       ? selectedColor.views
       : [selectedColor.image];
 
-  // AUTO ROTATE:
-  // changes the main vehicle image automatically to create
-  // a 360-style rotating effect from your angle images.
   useEffect(() => {
     if (!showTestRide) return;
 
@@ -379,22 +347,19 @@ export default function MomentsMotion() {
   }, [showTestRide]);
 
   useEffect(() => {
-    if (selectedViews.length <= 1 || isAutoRotatePaused) return;
+    if (selectedViews.length <= 1) return;
 
     const timer = window.setInterval(() => {
       setViewIndex((prev) => (prev + 1) % selectedViews.length);
     }, 1300);
 
     return () => window.clearInterval(timer);
-  }, [selectedVehicle.id, selectedColor.id, selectedViews.length, isAutoRotatePaused]);
+  }, [selectedVehicle.id, selectedColor.id, selectedViews.length]);
 
   const changeCategory = (newCategory: Category) => {
     setCategory(newCategory);
-
     const first = vehicleData[newCategory][0];
-
     if (!first) return;
-
     setSelectedVehicle(first);
     setSelectedColor(first.colors[0]);
     setViewIndex(0);
@@ -408,289 +373,64 @@ export default function MomentsMotion() {
 
   return (
     <section
-      className="
-        w-full
-        overflow-x-hidden
-        bg-[#F5F6F6]
-        text-[#111111]
-      "
+      className="w-full overflow-x-hidden bg-[#F5F6F6] text-[#111111]"
       style={{
-        fontFamily:
-          '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
+        fontFamily: '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
       }}
     >
-      <div
-        className="
-          mx-auto
-          w-full
-          max-w-[1600px]
-
-          bg-[#F5F6F6]
-
-          px-3
-          py-3
-
-          sm:px-5
-          sm:py-4
-
-          md:px-7
-
-          lg:h-[100svh]
-          lg:min-h-0
-          lg:max-h-none
-          lg:px-10
-          lg:py-3
-
-          xl:px-[52px]
-          xl:py-4
-        "
-      >
-        <div
-          className="
-            grid
-            grid-cols-1
-            gap-7
-
-            lg:h-full
-            lg:min-h-0
-            lg:grid-cols-[500px_minmax(0,1fr)]
-            lg:gap-[42px]
-
-            xl:grid-cols-[520px_minmax(0,1fr)]
-            xl:gap-[52px]
-          "
-        >
+      <div className="mx-auto w-full max-w-[1600px] bg-[#F5F6F6] px-3 py-3 sm:px-5 sm:py-4 md:px-7 lg:h-[100svh] lg:min-h-0 lg:max-h-none lg:px-10 lg:py-3 xl:px-[52px] xl:py-4">
+        <div className="grid grid-cols-1 gap-7 lg:h-full lg:min-h-0 lg:grid-cols-[500px_minmax(0,1fr)] lg:gap-[42px] xl:grid-cols-[520px_minmax(0,1fr)] xl:gap-[52px]">
           {/* LEFT PANEL */}
-
-          <aside
-            className="
-              flex
-              min-h-0
-              w-full
-              flex-col
-
-              overflow-hidden
-
-              rounded-[10px]
-
-              border
-              border-[#E4E4E4]
-
-              bg-white
-
-              shadow-[0_4px_20px_rgba(0,0,0,0.07)]
-            "
-          >
-            <div
-              className="
-                shrink-0
-
-                px-4
-                pt-4
-
-                sm:px-6
-                sm:pt-5
-
-                lg:px-7
-              "
-            >
-              <h2
-                className="
-                  text-[17px]
-                  font-bold
-                  uppercase
-                  leading-[1.05]
-                  tracking-[0.015em]
-
-                  sm:text-[18px]
-                  lg:text-[19px]
-                "
-                style={{
-                  fontFamily:
-                    '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
-                }}
-              >
+          <aside className="flex min-h-0 w-full flex-col overflow-hidden rounded-[10px] border border-[#E4E4E4] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.07)]">
+            <div className="shrink-0 px-4 pt-4 sm:px-6 sm:pt-5 lg:px-7">
+              <h2 className="text-[17px] font-bold uppercase leading-[1.05] tracking-[0.015em] sm:text-[18px] lg:text-[19px]">
                 SELECT A VEHICLE
               </h2>
 
-              {/* TABS */}
-
-              <div
-                className="
-                  mt-4
-
-                  grid
-                  grid-cols-3
-
-                  border-b
-                  border-[#DDDDDD]
-                "
-              >
+              <div className="mt-4 grid grid-cols-3 border-b border-[#DDDDDD]">
                 <CategoryTab
                   title="Motorcycle"
                   active={category === "motorcycle"}
                   disabled={false}
-                  onClick={() =>
-                    changeCategory("motorcycle")
-                  }
+                  onClick={() => changeCategory("motorcycle")}
                 />
-
                 <CategoryTab
                   title="Scooter"
                   active={category === "scooter"}
                   disabled={scooters.length === 0}
-                  onClick={() =>
-                    changeCategory("scooter")
-                  }
+                  onClick={() => changeCategory("scooter")}
                 />
-
                 <CategoryTab
                   title="EV"
                   active={category === "ev"}
                   disabled={false}
-                  onClick={() =>
-                    changeCategory("ev")
-                  }
+                  onClick={() => changeCategory("ev")}
                 />
               </div>
             </div>
 
-            {/* VEHICLE CARDS */}
-
-            <div
-              className="
-                grid
-                min-h-0
-                flex-1
-
-                content-start
-
-                grid-cols-2
-                auto-rows-[205px]
-
-                gap-[14px]
-
-                overflow-y-auto
-                overflow-x-hidden
-
-                p-4
-
-                sm:grid-cols-3
-
-                md:grid-cols-4
-
-                lg:grid-cols-2
-                lg:auto-rows-[175px]
-
-                xl:auto-rows-[182px]
-
-                [&::-webkit-scrollbar]:w-[4px]
-
-                [&::-webkit-scrollbar-track]:bg-transparent
-
-                [&::-webkit-scrollbar-thumb]:rounded-full
-
-                [&::-webkit-scrollbar-thumb]:bg-[#A4A4A4]
-              "
-            >
+            <div className="grid min-h-0 flex-1 content-start grid-cols-2 auto-rows-[205px] gap-[14px] overflow-y-auto overflow-x-hidden p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-2 lg:auto-rows-[175px] xl:auto-rows-[182px] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#A4A4A4] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-[4px]">
               {vehicles.map((vehicle) => {
-                const active =
-                  selectedVehicle.id === vehicle.id;
+                const active = selectedVehicle.id === vehicle.id;
 
                 return (
                   <button
                     key={vehicle.id}
                     type="button"
-                    onClick={() =>
-                      changeVehicle(vehicle)
-                    }
-                    className={`
-                      group
-
-                      relative
-
-                      flex
-                      h-full
-                      w-full
-                      flex-col
-
-                      overflow-hidden
-
-                      rounded-[7px]
-
-                      border
-
-                      bg-white
-
-                      text-left
-
-                      transition-all
-                      duration-300
-
-                      ${
-                        active
-                          ? `
-                              border-[#000000]
-                              shadow-[0_3px_13px_rgba(237,28,36,0.10)]
-                            `
-                          : `
-                              border-[#E0E0E0]
-                              shadow-[0_2px_9px_rgba(0,0,0,0.07)]
-                              hover:border-black
-                              hover:shadow-[0_4px_15px_rgba(0,0,0,0.10)]
-                            `
-                      }
-                    `}
+                    onClick={() => changeVehicle(vehicle)}
+                    className={`group relative flex h-full w-full flex-col overflow-hidden rounded-[7px] border bg-white text-left transition-all duration-300 ${
+                      active
+                        ? "border-[#000000] shadow-[0_3px_13px_rgba(237,28,36,0.10)]"
+                        : "border-[#E0E0E0] shadow-[0_2px_9px_rgba(0,0,0,0.07)] hover:border-black hover:shadow-[0_4px_15px_rgba(0,0,0,0.10)]"
+                    }`}
                   >
                     {active && (
-                      <span
-                        className="
-                          absolute
-                          right-[10px]
-                          top-[10px]
-                          z-20
-
-                          flex
-                          h-[22px]
-                          w-[22px]
-
-                          items-center
-                          justify-center
-
-                          rounded-full
-
-                          bg-[#000000]
-
-                          text-white
-                        "
-                      >
-                        <Check
-                          size={13}
-                          strokeWidth={3}
-                        />
+                      <span className="absolute right-[10px] top-[10px] z-20 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#000000] text-white">
+                        <Check size={13} strokeWidth={3} />
                       </span>
                     )}
 
-                    {/* IMAGE AREA */}
-
-                    <div
-                      className="
-                        relative
-
-                        h-[132px]
-                        w-full
-
-                        sm:h-[138px]
-                        lg:h-[136px]
-                        xl:h-[142px]
-
-                        shrink-0
-
-                        overflow-hidden
-
-                        bg-white
-                      "
-                    >
+                    <div className="relative h-[132px] w-full shrink-0 overflow-hidden bg-white sm:h-[138px] lg:h-[136px] xl:h-[142px]">
                       <SmartImage
                         src={vehicle.thumbnail}
                         alt={vehicle.name}
@@ -698,58 +438,15 @@ export default function MomentsMotion() {
                           transform: `scale(${vehicle.imageScale ?? 1.1})`,
                           transformOrigin: "center",
                         }}
-                        className="
-                          h-full
-                          w-full
-                          object-contain
-                          object-center
-                          p-3
-
-                          transition-transform
-                          duration-300
-                        "
+                        className="h-full w-full object-contain object-center p-3 transition-transform duration-300"
                       />
                     </div>
 
-                    {/* NAME FOOTER */}
-
-                    <div
-                      className="
-                        flex
-                        min-h-0
-                        flex-1
-
-                        items-center
-                        justify-center
-
-                        border-t
-                        border-[#E7E7E7]
-
-                        bg-[#F1F1F1]
-
-                        px-3
-
-                        text-center
-                      "
-                    >
+                    <div className="flex min-h-0 flex-1 items-center justify-center border-t border-[#E7E7E7] bg-[#F1F1F1] px-3 text-center">
                       <span
-                        className={`
-                          text-[10px]
-                          font-semibold
-                          uppercase
-                          leading-[1.15]
-                          tracking-[0.025em]
-
-                          sm:text-[11px]
-                          lg:text-[11px]
-                          xl:text-[12px]
-
-                          ${
-                            active
-                              ? "text-[#000000]"
-                              : "text-[#101010]"
-                          }
-                        `}
+                        className={`text-[10px] font-semibold uppercase leading-[1.15] tracking-[0.025em] sm:text-[11px] lg:text-[11px] xl:text-[12px] ${
+                          active ? "text-[#000000]" : "text-[#101010]"
+                        }`}
                       >
                         {vehicle.name}
                       </span>
@@ -761,124 +458,30 @@ export default function MomentsMotion() {
           </aside>
 
           {/* RIGHT PANEL */}
-
-          <main
-            className="
-              flex
-              min-h-0
-              min-w-0
-              flex-col
-
-              bg-[#F5F6F6]
-
-              lg:overflow-hidden
-            "
-          >
-            {/* TOP TITLE + COLOURS */}
-
-            <div
-              className="
-                flex
-                shrink-0
-                flex-col
-                gap-3
-
-                sm:flex-row
-                sm:items-start
-                sm:justify-between
-              "
-            >
+          <main className="flex min-h-0 min-w-0 flex-col bg-[#F5F6F6] lg:overflow-hidden">
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
-                <h1
-                  className="
-                    text-[26px]
-                    font-bold
-                    uppercase
-                    leading-[1.05]
-                    tracking-[0.015em]
-
-                    sm:text-[28px]
-                    md:text-[29px]
-                    lg:text-[30px]
-                    xl:text-[30px]
-                  "
-                  style={{
-                    fontFamily:
-                      '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
-                  }}
-                >
+                <h1 className="text-[26px] font-bold uppercase leading-[1.05] tracking-[0.015em] sm:text-[28px] md:text-[29px] lg:text-[30px] xl:text-[30px]">
                   {selectedVehicle.name}
                 </h1>
-
-                <p
-                  className="
-                    mt-[7px]
-
-                    text-[12px]
-                    font-normal
-                    leading-[1.4]
-                    tracking-[-0.01em]
-
-                    text-[#555555]
-
-                    sm:text-[13px]
-                    lg:text-[14px]
-                  "
-                >
+                <p className="mt-[7px] text-[12px] font-normal leading-[1.4] tracking-[-0.01em] text-[#555555] sm:text-[13px] lg:text-[14px]">
                   {selectedVehicle.subtitle}
                 </p>
               </div>
 
-              {/* COLOR SELECTOR */}
-
-              <div
-                className="
-                  shrink-0
-                  pr-[8px]
-                  sm:min-w-[190px]
-                  sm:pr-[10px]
-                "
-              >
-                <p
-                  className="
-                    mb-[7px]
-
-                    text-[8px]
-                    font-medium
-                    uppercase
-                    tracking-[0.13em]
-
-                    text-[#555555]
-
-                    sm:text-right
-                  "
-                >
+              <div className="shrink-0 pr-[8px] sm:min-w-[190px] sm:pr-[10px]">
+                <p className="mb-[7px] text-[8px] font-medium uppercase tracking-[0.13em] text-[#555555] sm:text-right">
                   CHOOSE YOUR COLOUR
                 </p>
 
-                <div
-                  className="
-                    flex
-                    flex-wrap
-                    items-start
-                    gap-[9px]
-
-                    sm:justify-end
-                  "
-                >
+                <div className="flex flex-wrap items-start gap-[9px] sm:justify-end">
                   {selectedVehicle.colors.map((color) => {
-                    const active =
-                      selectedColor.id === color.id;
+                    const active = selectedColor.id === color.id;
 
                     return (
                       <div
                         key={color.id}
-                        className="
-                          flex
-                          min-w-[38px]
-                          flex-col
-                          items-center
-                        "
+                        className="flex min-w-[38px] flex-col items-center"
                       >
                         <button
                           type="button"
@@ -888,100 +491,28 @@ export default function MomentsMotion() {
                             setSelectedColor(color);
                             setViewIndex(0);
                           }}
-                          className={`
-                            relative
-
-                            flex
-
-                            h-[34px]
-                            w-[34px]
-
-                            shrink-0
-
-                            items-center
-                            justify-center
-
-                            rounded-full
-
-                            bg-white
-
-                            transition-all
-                            duration-200
-
-                            ${
-                              active
-                                ? `
-                                    border-2
-                                    border-black
-                                  `
-                                : `
-                                    border
-                                    border-[#CFCFCF]
-                                    hover:border-black
-                                  `
-                            }
-                          `}
+                          className={`relative flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-white transition-all duration-200 ${
+                            active
+                              ? "border-2 border-black"
+                              : "border border-[#CFCFCF] hover:border-black"
+                          }`}
                         >
                           <span
-                            className="
-                              h-[22px]
-                              w-[22px]
-
-                              rounded-full
-
-                              border
-                              border-black/10
-                            "
-                            style={{
-                              backgroundColor: color.hex,
-                            }}
+                            className="h-[22px] w-[22px] rounded-full border border-black/10"
+                            style={{ backgroundColor: color.hex }}
                           />
 
                           {active && (
-                            <span
-                              className="
-                                absolute
-                                right-[-2px]
-                                top-[-3px]
-
-                                flex
-                                h-[15px]
-                                w-[15px]
-
-                                items-center
-                                justify-center
-
-                                rounded-full
-
-                                bg-[#000000]
-
-                                text-white
-                              "
-                            >
-                              <Check
-                                size={9}
-                                strokeWidth={4}
-                              />
+                            <span className="absolute right-[-2px] top-[-3px] flex h-[15px] w-[15px] items-center justify-center rounded-full bg-[#000000] text-white">
+                              <Check size={9} strokeWidth={4} />
                             </span>
                           )}
                         </button>
 
                         <span
-                          className={`
-                            mt-[5px]
-                            min-h-[10px]
-
-                            text-center
-                            text-[8px]
-                            font-medium
-                            uppercase
-                            leading-none
-                            tracking-[0.05em]
-
-                            text-black
-
-                            ${active ? "opacity-100" : "opacity-0"}
-                          `}
+                          className={`mt-[5px] min-h-[10px] text-center text-[8px] font-medium uppercase leading-none tracking-[0.05em] text-black ${
+                            active ? "opacity-100" : "opacity-0"
+                          }`}
                         >
                           {color.name}
                         </span>
@@ -992,236 +523,58 @@ export default function MomentsMotion() {
               </div>
             </div>
 
-            {/* LARGE VEHICLE IMAGE */}
+            {/* UNIFIED CONTAINER FOR IMAGE AND SPECS */}
+            <div className="relative mt-2 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[10px] border border-[#E6E6E6] bg-white shadow-[0_3px_12px_rgba(0,0,0,0.05)]">
+              {/* IMAGE DISPLAY */}
+              <div className="relative h-[250px] w-full flex-1 overflow-hidden sm:h-[280px] md:h-[300px] lg:h-auto">
+                <SmartImage
+                  key={`${selectedVehicle.id}-${selectedColor.id}-${viewIndex}`}
+                  src={selectedViews[viewIndex] ?? selectedColor.image}
+                  alt={`${selectedVehicle.name} ${selectedColor.name} angle ${viewIndex + 1}`}
+                  style={{
+                    transform: `scale(${selectedVehicle.imageScale ?? 1.1})`,
+                    transformOrigin: "center",
+                  }}
+                  className="h-full w-full object-contain object-center p-2 sm:p-3 lg:p-4"
+                />
+              </div>
 
-            <div
-              className="
-                relative
-
-                mt-0
-
-                h-[250px]
-                w-full
-
-                min-h-0
-                flex-1
-
-                overflow-hidden
-
-                bg-white
-
-                sm:h-[280px]
-                md:h-[300px]
-                lg:h-auto
-                lg:min-h-[210px]
-                xl:min-h-[230px]
-              "
-            >
-              <SmartImage
-                key={`${selectedVehicle.id}-${selectedColor.id}-${viewIndex}`}
-                src={selectedViews[viewIndex] ?? selectedColor.image}
-                alt={`${selectedVehicle.name} ${selectedColor.name} angle ${viewIndex + 1}`}
-                style={{
-                  transform: `scale(${selectedVehicle.imageScale ?? 1.1})`,
-                  transformOrigin: "center",
-                }}
-                className="
-                  h-full
-                  w-full
-                  object-contain
-                  object-center
-                  p-2
-                  sm:p-3
-                  lg:p-4
-                "
-              />
-
+              {/* INTEGRATED SPECS BAR INSIDE THE SAME DIV */}
+              <div className="grid shrink-0 grid-cols-2 border-t border-[#ECECEC] bg-white sm:grid-cols-3 lg:grid-cols-5">
+                {selectedVehicle.specs.map((spec, index) => (
+                  <SpecBox
+                    key={`${spec.label}-${index}`}
+                    spec={spec}
+                    last={index === selectedVehicle.specs.length - 1}
+                  />
+                ))}
+              </div>
             </div>
 
-            {/* SPECIFICATIONS */}
+            {/* ACTION BUTTONS */}
+            <div className="mt-[12px] flex shrink-0 flex-col items-center justify-center gap-[10px] sm:flex-row">
+              <button
+                type="button"
+                className="flex h-[40px] w-[150px] items-center justify-center border border-[#07131D] bg-transparent px-4 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#07131D] transition-colors duration-300 ease-out hover:bg-[#07131D] hover:text-white sm:w-[165px] lg:w-[170px]"
+              >
+                <span className="whitespace-nowrap">VIEW DETAILS</span>
+              </button>
 
-           {/* SPECIFICATIONS */}
-
-<div
-  className="
-    mt-[4px]
-    grid
-    shrink-0
-    grid-cols-2
-    overflow-hidden
-    rounded-[7px]
-    border
-    border-[#E6E6E6]
-    bg-white
-    shadow-[0_3px_12px_rgba(0,0,0,0.05)]
-
-    sm:grid-cols-3
-    lg:grid-cols-5
-  "
->
-  {selectedVehicle.specs.map((spec, index) => (
-    <SpecBox
-      key={`${spec.label}-${index}`}
-      spec={spec}
-      last={index === selectedVehicle.specs.length - 1}
-    />
-  ))}
-</div>
-
-{/* BUTTONS */}
-
-{/* BUTTONS */}
-{/* =====================================================
-    BUTTONS
-===================================================== */}
-
-<div
-  className="
-    mt-[7px]
-    flex
-    shrink-0
-    flex-col
-    items-center
-    justify-center
-    gap-[10px]
-
-    sm:flex-row
-  "
->
-  {/* =================================================
-      VIEW DETAILS
-      SAME NORMAL SIZE - NO WIDTH EXPANSION
-  ================================================= */}
-
-  <button
-    type="button"
-    className="
-      flex
-      h-[40px]
-      w-[150px]
-
-      items-center
-      justify-center
-
-      border
-      border-[#07131D]
-
-      bg-transparent
-
-      px-4
-
-      text-[9px]
-      font-semibold
-      uppercase
-      tracking-[0.14em]
-
-      text-[#07131D]
-
-      transition-colors
-      duration-300
-      ease-out
-
-      hover:bg-[#07131D]
-      hover:text-white
-
-      sm:w-[165px]
-
-      lg:w-[170px]
-    "
-  >
-    <span className="whitespace-nowrap">
-      VIEW DETAILS
-    </span>
-  </button>
-
-  {/* =================================================
-      BOOK A TEST RIDE
-      SAME NORMAL SIZE
-      EXPANDS ONLY ON HOVER
-  ================================================= */}
-
-  <div
-    className="
-      relative
-
-      h-[40px]
-      w-[150px]
-
-      shrink-0
-      overflow-visible
-
-      sm:w-[165px]
-
-      lg:w-[170px]
-    "
-  >
-    <button
-      type="button"
-      onClick={() => setShowTestRide(true)}
-      className="
-        group
-
-        absolute
-        left-0
-        top-0
-
-        flex
-        h-[40px]
-        w-[150px]
-
-        items-center
-        justify-between
-
-        overflow-hidden
-
-        border
-        border-black
-
-        bg-black
-
-        px-5
-
-        text-[9px]
-        font-semibold
-        uppercase
-        tracking-[0.10em]
-
-        text-white
-
-        transition-[width,background-color]
-        duration-300
-        ease-out
-
-        hover:w-[205px]
-        hover:bg-[#1a1a1a]
-
-        sm:w-[165px]
-        sm:hover:w-[210px]
-
-        lg:w-[170px]
-        lg:hover:w-[205px]
-      "
-    >
-      <span className="whitespace-nowrap">
-        BOOK A TEST RIDE
-      </span>
-
-      <ArrowRight
-        size={17}
-        strokeWidth={1.6}
-        className="
-          ml-4
-          shrink-0
-
-          transition-transform
-          duration-300
-
-          group-hover:translate-x-1
-        "
-      />
-    </button>
-  </div>
-</div>
+              <div className="relative h-[40px] w-[150px] shrink-0 overflow-visible sm:w-[165px] lg:w-[170px]">
+                <button
+                  type="button"
+                  onClick={() => setShowTestRide(true)}
+                  className="group absolute left-0 top-0 flex h-[40px] w-[150px] items-center justify-between overflow-hidden border border-black bg-black px-5 text-[9px] font-semibold uppercase tracking-[0.10em] text-white transition-[width,background-color] duration-300 ease-out hover:w-[205px] hover:bg-[#1a1a1a] sm:w-[165px] sm:hover:w-[210px] lg:w-[170px] lg:hover:w-[205px]"
+                >
+                  <span className="whitespace-nowrap">BOOK A TEST RIDE</span>
+                  <ArrowRight
+                    size={17}
+                    strokeWidth={1.6}
+                    className="ml-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </button>
+              </div>
+            </div>
           </main>
         </div>
       </div>
@@ -1236,21 +589,10 @@ export default function MomentsMotion() {
           aria-label="Book a test ride"
         >
           <div
-            className="relative w-full max-w-[980px] max-h-[94vh] overflow-hidden rounded-[16px] bg-white shadow-[0_24px_80px_rgba(0,0,0,0.30)] sm:rounded-[20px]"
+            className="relative max-h-[94vh] w-full max-w-[980px] overflow-hidden rounded-[16px] bg-white shadow-[0_24px_80px_rgba(0,0,0,0.30)] sm:rounded-[20px]"
             onMouseDown={(event) => event.stopPropagation()}
           >
-            <button
-              type="button"
-              onClick={() => setShowTestRide(false)}
-              aria-label="Close test ride popup"
-              className="absolute right-2 top-2 z-[120] flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-sm backdrop-blur-sm transition hover:scale-110 hover:bg-white sm:right-3 sm:top-3 md:right-4 md:top-4"
-            >
-              <X size={24} strokeWidth={2} />
-            </button>
-
-            <div className="">
-              <TestRidePopupContent />
-            </div>
+            <TestRidePopupContent onClose={() => setShowTestRide(false)} />
           </div>
         </div>
       )}
@@ -1278,69 +620,15 @@ function CategoryTab({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`
-        relative
-
-        flex
-
-        min-h-[50px]
-
-        items-center
-        justify-center
-
-        px-2
-
-        text-[9px]
-
-        font-medium
-
-        uppercase
-
-        tracking-[0.015em]
-
-        transition-colors
-        duration-300
-
-        disabled:cursor-not-allowed
-        disabled:opacity-35
-
-        sm:text-[10px]
-
-        lg:text-[10px]
-
-        ${
-          active
-            ? "text-[#111111]"
-            : "text-[#555555] hover:text-black"
-        }
-      `}
+      className={`relative flex min-h-[50px] items-center justify-center px-2 text-[9px] font-medium uppercase tracking-[0.015em] transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-35 sm:text-[10px] lg:text-[10px] ${
+        active ? "text-[#111111]" : "text-[#555555] hover:text-black"
+      }`}
     >
       {title}
-
       <span
-        className={`
-          absolute
-
-          bottom-0
-          left-1/2
-
-          h-[3px]
-
-          -translate-x-1/2
-
-          rounded-full
-
-          bg-[#000000]
-
-          transition-all
-          duration-300
-
-          ${
-            active
-              ? "w-full opacity-100"
-              : "w-0 opacity-0"
-          }
-        `}
+        className={`absolute bottom-0 left-1/2 h-[3px] -translate-x-1/2 rounded-full bg-[#000000] transition-all duration-300 ${
+          active ? "w-full opacity-100" : "w-0 opacity-0"
+        }`}
       />
     </button>
   );
@@ -1350,30 +638,19 @@ function CategoryTab({
    SPEC BOX
 ========================================================= */
 
-function SpecBox({
-  spec,
-  last,
-}: {
-  spec: VehicleSpec;
-  last: boolean;
-}) {
+function SpecBox({ spec, last }: { spec: VehicleSpec; last: boolean }) {
   const getIcon = () => {
     switch (spec.type) {
       case "engine":
         return <Cog size={17} strokeWidth={1.7} />;
-
       case "mileage":
         return <Gauge size={17} strokeWidth={1.7} />;
-
       case "power":
         return <Zap size={17} strokeWidth={1.7} />;
-
       case "transmission":
         return <Settings size={17} strokeWidth={1.7} />;
-
       case "fuel":
         return <Fuel size={17} strokeWidth={1.7} />;
-
       default:
         return <Cog size={17} strokeWidth={1.7} />;
     }
@@ -1381,75 +658,23 @@ function SpecBox({
 
   return (
     <div
-      className={`
-        flex
-        min-h-[64px]
-        flex-col
-        items-center
-        justify-center
-
-        px-1.5
-        py-[5px]
-
-        text-center
-
-        ${
-          !last
-            ? `
-                border-b
-                border-r
-                border-[#ECECEC]
-
-                lg:border-b-0
-              `
-            : ""
-        }
-      `}
+      className={`flex min-h-[64px] flex-col items-center justify-center px-1.5 py-[5px] text-center ${
+        !last ? "border-r border-[#ECECEC]" : ""
+      }`}
     >
-      <div className="text-[#ED111C]">
-        {getIcon()}
-      </div>
-
-      <strong
-        className="
-          mt-[4px]
-
-          text-[8px]
-          font-semibold
-          leading-none
-          tracking-[-0.01em]
-
-          text-[#111111]
-
-          sm:text-[9px]
-          lg:text-[9px]
-        "
-      >
+      <div className="text-[#ED111C]">{getIcon()}</div>
+      <strong className="mt-[4px] text-[8px] font-semibold leading-none tracking-[-0.01em] text-[#111111] sm:text-[9px] lg:text-[9px]">
         {spec.value}
       </strong>
-
-      <span
-        className="
-          mt-[2px]
-
-          text-[6px]
-          font-normal
-          leading-none
-
-          text-[#555555]
-
-          sm:text-[6.5px]
-          lg:text-[7px]
-        "
-      >
+      <span className="mt-[2px] text-[6px] font-normal leading-none text-[#555555] sm:text-[6.5px] lg:text-[7px]">
         {spec.label}
       </span>
     </div>
   );
 }
+
 /* =========================================================
-   TEST RIDE POPUP CONTENT
-   Embedded here so no import from app/test_ride/page.tsx is needed.
+   COMPACT DROPDOWN COMPONENT
 ========================================================= */
 
 function CompactDropdown({
@@ -1471,43 +696,21 @@ function CompactDropdown({
 
   return (
     <div className="relative">
-      <label className="mb-1 block text-[10px] font-medium text-gray-800 sm:text-[11px]">
+      <label className="mb-0.5 block text-[10px] font-medium text-gray-800 sm:text-[11px]">
         {label} <span className="text-red-500">*</span>
       </label>
 
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="
-          flex
-          h-9
-          w-full
-          items-center
-          justify-between
-          rounded-[5px]
-          border
-          border-[#D7DCE2]
-          bg-[#F6F7F8]
-          px-3
-          text-left
-          text-[10px]
-          font-medium
-          text-gray-800
-          outline-none
-          transition
-          hover:border-[#B9C1CC]
-          focus:border-[#0052A5]
-          focus:bg-white
-          sm:h-10
-          sm:text-[11px]
-        "
+        className="flex h-7 w-full items-center justify-between rounded-[5px] border border-[#D7DCE2] bg-[#F6F7F8] px-2.5 text-left text-[10px] font-medium text-gray-800 outline-none transition hover:border-[#B9C1CC] focus:border-[#0052A5] focus:bg-white sm:h-8 sm:text-[11px]"
       >
         <span className={selectedLabel ? "text-gray-800" : "text-[#7C8798]"}>
           {selectedLabel || placeholder}
         </span>
 
         <ChevronDown
-          size={16}
+          size={14}
           className={`shrink-0 text-[#6B7280] transition-transform duration-200 ${
             open ? "rotate-180" : ""
           }`}
@@ -1516,24 +719,11 @@ function CompactDropdown({
 
       {open && (
         <div
-          className={`
-            absolute
-            left-0
-            right-0
-            z-[250]
-            overflow-hidden
-            rounded-[6px]
-            border
-            border-[#D7DCE2]
-            bg-white
-            shadow-[0_10px_25px_rgba(0,0,0,0.14)]
-
-            ${
-              direction === "up"
-                ? "bottom-[calc(100%+6px)]"
-                : "top-[calc(100%+6px)]"
-            }
-          `}
+          className={`absolute left-0 right-0 z-[250] overflow-hidden rounded-[6px] border border-[#D7DCE2] bg-white shadow-[0_10px_25px_rgba(0,0,0,0.14)] ${
+            direction === "up"
+              ? "bottom-[calc(100%+4px)]"
+              : "top-[calc(100%+4px)]"
+          }`}
         >
           {options.map((option) => (
             <button
@@ -1543,22 +733,7 @@ function CompactDropdown({
                 setSelected(option.value);
                 setOpen(false);
               }}
-              className="
-                block
-                w-full
-                border-b
-                border-[#EEF1F4]
-                px-3
-                py-2.5
-                text-left
-                text-[10px]
-                font-medium
-                text-gray-800
-                transition
-                last:border-b-0
-                hover:bg-[#F5F7FA]
-                sm:text-[11px]
-              "
+              className="block w-full border-b border-[#EEF1F4] px-2.5 py-1.5 text-left text-[10px] font-medium text-gray-800 transition last:border-b-0 hover:bg-[#F5F7FA] sm:text-[11px]"
             >
               {option.label}
             </button>
@@ -1569,8 +744,11 @@ function CompactDropdown({
   );
 }
 
+/* =========================================================
+   TEST RIDE POPUP CONTENT
+========================================================= */
 
-function TestRidePopupContent() {
+function TestRidePopupContent({ onClose }: { onClose?: () => void }) {
   const vehicleOptions = [
     { value: "splendor-plus", label: "Splendor Plus" },
     { value: "xtreme-160r", label: "Xtreme 160R" },
@@ -1589,183 +767,141 @@ function TestRidePopupContent() {
     <section
       className="relative w-full overflow-hidden bg-[#111] text-black"
       style={{
-        fontFamily:
-          '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
+        fontFamily: '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
       }}
     >
-      {/* ================= BACKGROUND ================= */}
+      {/* BACKGROUND */}
       <div className="absolute inset-0">
         <SmartImage
           src="/images/momentsinmotion/test.png"
           alt="Book a test ride"
-          className="
-            h-full
-            w-full
-            object-cover
-
-            object-[40%_center]
-
-            sm:object-[42%_center]
-            md:object-[45%_center]
-            lg:object-[47%_center]
-          "
+          className="h-full w-full object-cover object-[40%_center] sm:object-[42%_center] md:object-[45%_center] lg:object-[47%_center]"
         />
 
-        {/* DARK OVERLAY */}
-        <div
-          className="
-            absolute
-            inset-0
-
-            bg-black/20
-
-            md:bg-gradient-to-r
-            md:from-black/35
-            md:via-black/10
-            md:to-black/5
-          "
-        />
+        <div className="absolute inset-0 bg-black/20 md:bg-gradient-to-r md:from-black/35 md:via-black/10 md:to-black/5" />
       </div>
 
-      {/* ================= PHOENIX LOGO ================= */}
-      <div
-        className="
-          absolute
-          left-4
-          top-4
-          z-30
-
-          sm:left-6
-          sm:top-5
-
-          md:left-8
-          md:top-7
-
-          lg:left-10
-          lg:top-8
-        "
-      >
+      {/* PHOENIX LOGO */}
+      <div className="absolute left-4 top-4 z-30 sm:left-6 sm:top-5 md:left-8 md:top-7 lg:left-10 lg:top-8">
         <Image
           src="/images/momentsinmotion/logo.png"
           alt="Phoenix Motors"
           width={100}
           height={40}
           unoptimized
-          className="
-            h-auto
-            w-[72px]
-            object-contain
-
-            sm:w-[82px]
-            md:w-[92px]
-            lg:w-[100px]
-          "
+          className="h-auto w-[72px] object-contain sm:w-[82px] md:w-[92px] lg:w-[100px]"
         />
       </div>
 
-      {/* ================= CONTENT ================= */}
-      <div className="relative z-10 flex w-full flex-col overflow-y-auto max-h-[90vh] md:max-h-[94vh] md:flex-row md:items-stretch md:justify-between md:overflow-visible">
-  {/* ================= LEFT SIDE ================= */}
-  <div className="flex w-full flex-col justify-end p-5 pt-12 text-white sm:p-7 sm:pt-16 md:w-[45%] md:p-8 md:pt-20 lg:p-10">
-    <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/85 sm:text-xs">
-      Phoenix Motors
-    </p>
+      {/* CONTENT */}
+      <div className="relative z-10 flex max-h-[90vh] w-full flex-col overflow-y-auto md:max-h-[94vh] md:flex-row md:items-stretch md:justify-between md:overflow-visible">
+        {/* LEFT SIDE */}
+        <div className="flex w-full flex-col justify-end p-5 pt-12 text-white sm:p-7 sm:pt-16 md:w-[45%] md:p-8 md:pt-20 lg:p-10">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/85 sm:text-xs">
+            Phoenix Motors
+          </p>
 
-    <h4 className="mt-1.5 max-w-[300px] text-lg font-medium leading-tight sm:mt-2 sm:text-2xl md:text-3xl">
-      Find Your Perfect Ride
-    </h4>
+          <h4 className="mt-1.5 max-w-[300px] text-lg font-medium leading-tight sm:mt-2 sm:text-2xl md:text-3xl">
+            Find Your Perfect Ride
+          </h4>
 
-    <p className="mt-1.5 max-w-[340px] text-xs font-normal leading-relaxed text-white/90 sm:mt-2 sm:text-sm">
-      Book your test ride and experience your preferred motorcycle before you
-      decide.
-    </p>
-  </div>
-
-  {/* ================= RIGHT FORM ================= */}
-  <div className="flex w-full items-center justify-center p-3 sm:p-4 md:w-[55%] md:justify-end md:p-6 lg:p-8">
-    <div className="relative mx-auto w-full max-w-[420px] rounded-xl bg-white p-4 shadow-[0_14px_45px_rgba(0,0,0,0.22)] sm:rounded-2xl sm:p-6 md:mx-0">
-      {/* FORM MAIN HEADING */}
-      <h2 className="mb-1 text-center text-lg font-bold leading-tight text-gray-900 sm:text-xl md:text-2xl">
-        Start Your Journey
-      </h2>
-
-      {/* FORM SUB HEADING */}
-      <h3 className="mb-3 text-left text-xs font-semibold text-gray-700 sm:mb-4 sm:text-sm">
-        Find Your Perfect Ride
-      </h3>
-
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className="w-full space-y-2 sm:space-y-3"
-      >
-        {/* NAME */}
-        <div>
-          <label className="mb-0.5 block text-[11px] font-medium text-gray-800 sm:text-xs">
-            Name <span className="text-red-500">*</span>
-          </label>
-
-          <input
-            type="text"
-            placeholder="Enter your name"
-            className="h-8 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-3 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-9"
-          />
+          <p className="mt-1.5 max-w-[340px] text-xs font-normal leading-relaxed text-white/90 sm:mt-2 sm:text-sm">
+            Book your test ride and experience your preferred motorcycle before you
+            decide.
+          </p>
         </div>
 
-        {/* PHONE */}
-        <div>
-          <label className="mb-0.5 block text-[11px] font-medium text-gray-800 sm:text-xs">
-            Phone Number <span className="text-red-500">*</span>
-          </label>
+        {/* RIGHT FORM */}
+        <div className="flex w-full items-center justify-center p-3 sm:p-4 md:w-[55%] md:justify-end md:p-6 lg:p-8">
+          <div className="relative mx-auto w-full max-w-[420px] rounded-xl bg-white p-4 shadow-[0_14px_45px_rgba(0,0,0,0.22)] sm:rounded-2xl sm:p-5 md:mx-0">
+            {/* FORM MAIN HEADING WITH LEFT BACK ARROW */}
+            <div className="mb-3 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Go back"
+                className="flex h-7 w-7 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100"
+              >
+                <ArrowLeft size={18} strokeWidth={2} />
+              </button>
 
-          <input
-            type="tel"
-            inputMode="numeric"
-            maxLength={10}
-            placeholder="Enter your number"
-            className="h-8 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-3 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-9"
-          />
+              <h2 className="text-base font-bold leading-tight text-gray-900 sm:text-lg md:text-xl">
+                Start Your Journey
+              </h2>
+            </div>
+
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="w-full space-y-2"
+            >
+              {/* NAME */}
+              <div>
+                <label className="mb-0.5 block text-[10px] font-medium text-gray-800 sm:text-[11px]">
+                  Name <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="Enter your name"
+                  className="h-7 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-2.5 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-8"
+                />
+              </div>
+
+              {/* PHONE */}
+              <div>
+                <label className="mb-0.5 block text-[10px] font-medium text-gray-800 sm:text-[11px]">
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  maxLength={10}
+                  placeholder="Enter your number"
+                  className="h-7 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-2.5 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-8"
+                />
+              </div>
+
+              {/* EMAIL */}
+              <div>
+                <label className="mb-0.5 block text-[10px] font-medium text-gray-800 sm:text-[11px]">
+                  Email ID <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="h-7 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-2.5 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-8"
+                />
+              </div>
+
+              {/* VEHICLE */}
+              <CompactDropdown
+                label="Vehicle Model"
+                placeholder="Select vehicle model"
+                options={vehicleOptions}
+                direction="down"
+              />
+
+              {/* SHOWROOM */}
+              <CompactDropdown
+                label="Showroom"
+                placeholder="Select showroom"
+                options={showroomOptions}
+                direction="up"
+              />
+
+              {/* SUBMIT */}
+              <button
+                type="submit"
+                className="mt-2 h-8 w-full rounded-md bg-[#0052A5] text-xs font-semibold text-white transition-all duration-300 hover:bg-[#003D7C] hover:shadow-[0_5px_16px_rgba(0,82,165,0.25)] sm:h-9"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
-
-        {/* EMAIL */}
-        <div>
-          <label className="mb-0.5 block text-[11px] font-medium text-gray-800 sm:text-xs">
-            Email ID <span className="text-red-500">*</span>
-          </label>
-
-          <input
-            type="email"
-            placeholder="Enter your email"
-            className="h-8 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-3 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-9"
-          />
-        </div>
-
-        {/* VEHICLE */}
-        <CompactDropdown
-          label="Vehicle Model"
-          placeholder="Select vehicle model"
-          options={vehicleOptions}
-          direction="down"
-        />
-
-        {/* SHOWROOM */}
-        <CompactDropdown
-          label="Showroom"
-          placeholder="Select showroom"
-          options={showroomOptions}
-          direction="up"
-        />
-
-        {/* SUBMIT */}
-        <button
-          type="submit"
-          className="mt-3 h-9 w-full rounded-md bg-[#0052A5] text-xs font-semibold text-white transition-all duration-300 hover:bg-[#003D7C] hover:shadow-[0_5px_16px_rgba(0,82,165,0.25)] sm:h-10 sm:text-sm"
-        >
-          Submit
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
+      </div>
     </section>
   );
 }
