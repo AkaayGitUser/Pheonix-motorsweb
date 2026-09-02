@@ -57,7 +57,7 @@ useEffect(() => {
       {/* 1. Fullscreen Media Slider Viewport (Adjusted height to account for header) */}
       <section 
         id="hero-section" 
-      className="relative w-full h-[calc(100dvh-48px)] md:h-[calc(100dvh-56px)] min-h-[500px] flex flex-col justify-between bg-black overflow-hidden select-none">
+      className="relative w-full h-[calc(100dvh-48px)] md:h-[calc(100dvh-56px)] min-h-[550px] flex flex-col justify-between bg-black overflow-hidden select-none ">
 
         {/* Background media wrapper */}
         <div
@@ -98,13 +98,13 @@ useEffect(() => {
 
         <AnimatePresence>
           {slides[activeIndex].type === "video" && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pt-24 md:pt-28 pb-24 md:pb-40 z-10 pointer-events-none">
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pt-24 md:pt-28 pb-24 md:pb-40 z-10 pointer-events-none mt-20">
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
-                className="text-white text-2xl md:text-4xl lg:text-6xl font-semibold tracking-tight max-w-3xl font-sans uppercase leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)] mt-5"
+                className="text-white text-2xl md:text-4xl lg:text-6xl font-semibold tracking-tight max-w-3xl font-sans uppercase leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)] "
               >
                 Your Next Adventure Starts in Style
               </motion.h1>
@@ -113,7 +113,7 @@ useEffect(() => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
-                className="text-white/90 text-sm md:text-xl mt-4 max-w-2xl font-sans drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]"
+                className="text-white/90 text-sm md:text-xl mt-4 max-w-2xl font-sans drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)] "
               >
 
               </motion.p>
@@ -122,9 +122,9 @@ useEffect(() => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ delay: 0.5, duration: 0.4 }}
-                className="pointer-events-auto mt-12 sm:mt-14 md:mt-16 lg:mt-20"
+                className="pointer-events-auto mt-8 sm:mt-14 md:mt-13 lg:mt-4"
               >
-               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4  ">
 
   <button
     type="button"
@@ -155,6 +155,7 @@ useEffect(() => {
       cursor-pointer
       transition-all
       duration-300
+      
     "
   >
     Request Call Back
@@ -189,6 +190,7 @@ useEffect(() => {
       cursor-pointer
       transition-all
       duration-300
+      
     "
   >
     Book A Testride

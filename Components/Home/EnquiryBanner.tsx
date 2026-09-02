@@ -313,7 +313,7 @@ export default function EnquiryBanner() {
                 "
                 style={{
                   writingMode:
-                    "vertical-rl",
+                    "vertical-rl", 
 
                   transform:
                     "rotate(180deg)",
@@ -550,7 +550,8 @@ export default function EnquiryBanner() {
 
                       min-h-[250px]
 
-                      bg-[#E8F6FF]
+                      bg-[url('/hero/bg.png')]
+                      bg-cover
 
                       px-[24px]
                       py-[24px]
