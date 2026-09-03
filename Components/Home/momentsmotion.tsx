@@ -506,17 +506,10 @@ export default function MomentsMotion() {
               </div>
             </div>
 
-<<<<<<< HEAD
             {/* UNIFIED CONTAINER FOR IMAGE AND SPECS */}
             <div className="relative mt-2 flex min-h-0 flex-1 flex-row overflow-hidden rounded-[10px] border border-[#E6E6E6] bg-white shadow-[0_3px_12px_rgba(0,0,0,0.05)]">
               {/* IMAGE DISPLAY ON THE LEFT */}
               <div className="relative flex-1 overflow-hidden">
-=======
-            {/* DISPLAY PANEL: IMAGE & SPECS */}
-            <div className="relative flex w-full flex-col overflow-hidden rounded-[8px] border border-[#E6E6E6] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04)] lg:min-h-0 lg:flex-1 lg:rounded-[10px]">
-              {/* FIXED DESKTOP FLEX IMAGE CONTAINER */}
-              <div className="relative h-[240px] w-full shrink-0 overflow-hidden p-3 sm:h-[320px] lg:h-auto lg:min-h-0 lg:flex-1 lg:p-6">
->>>>>>> 8fd6f7fb13ae579f4124e5b3da5c534b765d2af3
                 <SmartImage
                   key={`${selectedVehicle.id}-${selectedColor.id}-${viewIndex}`}
                   src={selectedViews[viewIndex] ?? selectedColor.image}
@@ -529,13 +522,8 @@ export default function MomentsMotion() {
                 />
               </div>
 
-<<<<<<< HEAD
               {/* INTEGRATED SPECS BAR (REDUCED WIDTH) */}
               <div className="flex w-[65px] shrink-0 flex-col justify-center border-l border-[#ECECEC] bg-white sm:w-[75px] md:w-[85px] lg:w-[90px]">
-=======
-              {/* INTEGRATED SPECS BAR */}
-              <div className="grid shrink-0 grid-cols-5 border-t border-[#ECECEC] bg-white">
->>>>>>> 8fd6f7fb13ae579f4124e5b3da5c534b765d2af3
                 {selectedVehicle.specs.map((spec, index) => (
                   <SpecBox
                     key={`${spec.label}-${index}`}
@@ -631,7 +619,6 @@ function SpecBox({ spec, last }: { spec: VehicleSpec; last: boolean }) {
   const getIcon = () => {
     switch (spec.type) {
       case "engine":
-<<<<<<< HEAD
         return <Cog size={15} strokeWidth={1.7} />;
       case "mileage":
         return <Gauge size={15} strokeWidth={1.7} />;
@@ -643,25 +630,11 @@ function SpecBox({ spec, last }: { spec: VehicleSpec; last: boolean }) {
         return <Fuel size={15} strokeWidth={1.7} />;
       default:
         return <Cog size={15} strokeWidth={1.7} />;
-=======
-        return <Cog size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
-      case "mileage":
-        return <Gauge size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
-      case "power":
-        return <Zap size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
-      case "transmission":
-        return <Settings size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
-      case "fuel":
-        return <Fuel size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
-      default:
-        return <Cog size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
->>>>>>> 8fd6f7fb13ae579f4124e5b3da5c534b765d2af3
     }
   };
 
   return (
     <div
-<<<<<<< HEAD
       className={`flex flex-1 flex-col items-center justify-center px-1 py-[4px] text-center ${
         !last ? "border-b border-[#ECECEC]" : ""
       }`}
@@ -671,17 +644,6 @@ function SpecBox({ spec, last }: { spec: VehicleSpec; last: boolean }) {
         {spec.value}
       </strong>
       <span className="mt-[2px] text-[6px] font-normal leading-none text-[#555555] sm:text-[6.5px]">
-=======
-      className={`flex min-h-[38px] flex-col items-center justify-center p-0.5 text-center sm:min-h-[46px] ${
-        !last ? "border-r border-[#ECECEC]" : ""
-      }`}
-    >
-      <div className="text-[#ED111C]">{getIcon()}</div>
-      <strong className="mt-[1px] text-[7px] font-semibold leading-none tracking-[-0.01em] text-[#111111] sm:text-[8px]">
-        {spec.value}
-      </strong>
-      <span className="mt-[1px] text-[5px] font-normal leading-none text-[#555555] sm:text-[6px]">
->>>>>>> 8fd6f7fb13ae579f4124e5b3da5c534b765d2af3
         {spec.label}
       </span>
     </div>
