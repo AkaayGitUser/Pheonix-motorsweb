@@ -11,10 +11,10 @@ export default function MomentsInMotion() {
         overflow-hidden
         bg-[#F5F6F6]
 
-        py-8
+        py-6
         sm:py-10
-        md:py-12
-        lg:py-12
+        md:py-10
+        lg:py-10
       "
     >
       {/* =====================================================
@@ -24,13 +24,13 @@ export default function MomentsInMotion() {
       <div
         className="
           mx-auto
-          mb-6
+          mb-3
           w-full
           max-w-7xl
 
           px-4
 
-          sm:mb-8
+          sm:mb-6
           sm:px-6
 
           md:px-8

@@ -54,7 +54,7 @@ const motorcycles: Vehicle[] = [
     name: "KARIZMA XMR",
     subtitle: "Born to perform. Built to thrill.",
     thumbnail: "/book/destini-110/karizma-xmr/grey/front-three-quarter.jpg",
-    imageScale: 1.28,
+    imageScale: 1.1,
     colors: [
       {
         id: "grey",
@@ -82,7 +82,7 @@ const motorcycles: Vehicle[] = [
     name: "HF DELUXE",
     subtitle: "Reliable performance for every journey.",
     thumbnail: "/book/destini-110/deluxe/black/front-three-quarter.jpg",
-    imageScale: 1.12,
+    imageScale: 1.0,
     colors: [
       {
         id: "black",
@@ -110,7 +110,7 @@ const motorcycles: Vehicle[] = [
     name: "SPLENDOR",
     subtitle: "Reliable. Efficient. Everyday.",
     thumbnail: "/book/destini-110/splendor/black/front-three-quarter.webp",
-    imageScale: 1.14,
+    imageScale: 1.0,
     colors: [
       {
         id: "black",
@@ -145,7 +145,7 @@ const scooters: Vehicle[] = [
     name: "Destini 110",
     subtitle: "Comfort. Style. Everyday convenience.",
     thumbnail: "/book/destini-110/blue/front-three-quarter.jpg",
-    imageScale: 1.1,
+    imageScale: 1.0,
     colors: [
       {
         id: "blue",
@@ -203,7 +203,7 @@ const evVehicles: Vehicle[] = [
     name: "VIDA VX2 PLUS",
     subtitle: "Electric mobility for everyday life.",
     thumbnail: "/book/destini-110/vida-vx2/black/front-three-quarter-1.jpg",
-    imageScale: 1.08,
+    imageScale: 1.0,
     colors: [
       {
         id: "black",
@@ -291,8 +291,7 @@ function SmartImage({
     <Image
       src={candidates[activeCandidateIndex]}
       alt={alt}
-      width={1000}
-      height={1000}
+      fill
       unoptimized
       draggable={false}
       className={className}
@@ -373,21 +372,21 @@ export default function MomentsMotion() {
 
   return (
     <section
-      className="w-full overflow-x-hidden bg-[#F5F6F6] text-[#111111]"
+      className="min-h-[calc(100dvh-64px)] w-full overflow-hidden bg-[#F5F6F6] text-[#111111] lg:h-[calc(100dvh-64px)] lg:max-h-[calc(100dvh-64px)]"
       style={{
         fontFamily: '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
       }}
     >
-      <div className="mx-auto w-full max-w-[1600px] bg-[#F5F6F6] px-3 py-3 sm:px-5 sm:py-4 md:px-7 lg:h-[100svh] lg:min-h-0 lg:max-h-none lg:px-10 lg:py-3 xl:px-[52px] xl:py-4">
-        <div className="grid grid-cols-1 gap-7 lg:h-full lg:min-h-0 lg:grid-cols-[500px_minmax(0,1fr)] lg:gap-[42px] xl:grid-cols-[520px_minmax(0,1fr)] xl:gap-[52px]">
+      <div className="mx-auto flex h-full max-h-full w-full max-w-[1600px] flex-col bg-[#F5F6F6] p-1.5 sm:p-3 md:p-4">
+        <div className="flex flex-col gap-2 lg:grid lg:h-full lg:min-h-0 lg:flex-1 lg:grid-cols-[380px_minmax(0,1fr)] xl:grid-cols-[440px_minmax(0,1fr)] xl:gap-5">
           {/* LEFT PANEL */}
-          <aside className="flex min-h-0 w-full flex-col overflow-hidden rounded-[10px] border border-[#E4E4E4] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.07)]">
-            <div className="shrink-0 px-4 pt-4 sm:px-6 sm:pt-5 lg:px-7">
-              <h2 className="text-[17px] font-bold uppercase leading-[1.05] tracking-[0.015em] sm:text-[18px] lg:text-[19px]">
+          <aside className="flex h-auto w-full flex-col overflow-hidden rounded-[8px] border border-[#E4E4E4] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] lg:h-full lg:min-h-0 lg:rounded-[10px]">
+            <div className="shrink-0 px-2.5 pt-2 lg:px-3 lg:pt-3">
+              <h2 className="text-[12px] font-bold uppercase leading-none tracking-[0.015em] sm:text-[14px]">
                 SELECT A VEHICLE
               </h2>
 
-              <div className="mt-4 grid grid-cols-3 border-b border-[#DDDDDD]">
+              <div className="mt-1.5 grid grid-cols-3 border-b border-[#DDDDDD]">
                 <CategoryTab
                   title="Motorcycle"
                   active={category === "motorcycle"}
@@ -409,7 +408,7 @@ export default function MomentsMotion() {
               </div>
             </div>
 
-            <div className="grid min-h-0 flex-1 content-start grid-cols-2 auto-rows-[205px] gap-[14px] overflow-y-auto overflow-x-hidden p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-2 lg:auto-rows-[175px] xl:auto-rows-[182px] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#A4A4A4] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-[4px]">
+            <div className="grid auto-rows-[75px] grid-cols-2 gap-1.5 p-1.5 sm:auto-rows-[90px] sm:grid-cols-3 lg:min-h-0 lg:flex-1 lg:auto-rows-[125px] lg:grid-cols-2 lg:overflow-y-auto xl:auto-rows-[140px] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#A4A4A4] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-[4px]">
               {vehicles.map((vehicle) => {
                 const active = selectedVehicle.id === vehicle.id;
 
@@ -418,33 +417,33 @@ export default function MomentsMotion() {
                     key={vehicle.id}
                     type="button"
                     onClick={() => changeVehicle(vehicle)}
-                    className={`group relative flex h-full w-full flex-col overflow-hidden rounded-[7px] border bg-white text-left transition-all duration-300 ${
+                    className={`group relative flex h-full w-full flex-col overflow-hidden rounded-[6px] border bg-white text-left transition-all duration-300 ${
                       active
-                        ? "border-[#000000] shadow-[0_3px_13px_rgba(237,28,36,0.10)]"
-                        : "border-[#E0E0E0] shadow-[0_2px_9px_rgba(0,0,0,0.07)] hover:border-black hover:shadow-[0_4px_15px_rgba(0,0,0,0.10)]"
+                        ? "border-[#000000] shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
+                        : "border-[#E0E0E0] hover:border-black"
                     }`}
                   >
                     {active && (
-                      <span className="absolute right-[10px] top-[10px] z-20 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#000000] text-white">
-                        <Check size={13} strokeWidth={3} />
+                      <span className="absolute right-[4px] top-[4px] z-20 flex h-[14px] w-[14px] items-center justify-center rounded-full bg-[#000000] text-white">
+                        <Check size={8} strokeWidth={3} />
                       </span>
                     )}
 
-                    <div className="relative h-[132px] w-full shrink-0 overflow-hidden bg-white sm:h-[138px] lg:h-[136px] xl:h-[142px]">
+                    <div className="relative flex-1 min-h-0 w-full overflow-hidden bg-white p-1">
                       <SmartImage
                         src={vehicle.thumbnail}
                         alt={vehicle.name}
                         style={{
-                          transform: `scale(${vehicle.imageScale ?? 1.1})`,
+                          transform: `scale(${vehicle.imageScale ?? 1.0})`,
                           transformOrigin: "center",
                         }}
-                        className="h-full w-full object-contain object-center p-3 transition-transform duration-300"
+                        className="object-contain object-center transition-transform duration-300"
                       />
                     </div>
 
-                    <div className="flex min-h-0 flex-1 items-center justify-center border-t border-[#E7E7E7] bg-[#F1F1F1] px-3 text-center">
+                    <div className="flex h-[18px] shrink-0 items-center justify-center border-t border-[#E7E7E7] bg-[#F1F1F1] px-1 text-center sm:h-[22px]">
                       <span
-                        className={`text-[10px] font-semibold uppercase leading-[1.15] tracking-[0.025em] sm:text-[11px] lg:text-[11px] xl:text-[12px] ${
+                        className={`text-[8.5px] font-semibold uppercase leading-none tracking-[0.02em] sm:text-[9.5px] ${
                           active ? "text-[#000000]" : "text-[#101010]"
                         }`}
                       >
@@ -458,89 +457,85 @@ export default function MomentsMotion() {
           </aside>
 
           {/* RIGHT PANEL */}
-          <main className="flex min-h-0 min-w-0 flex-col bg-[#F5F6F6] lg:overflow-hidden">
-            <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <main className="flex w-full min-w-0 flex-1 flex-col bg-[#F5F6F6] lg:h-full lg:min-h-0">
+            <div className="flex shrink-0 items-center justify-between gap-1 pb-1">
               <div className="min-w-0">
-                <h1 className="text-[26px] font-bold uppercase leading-[1.05] tracking-[0.015em] sm:text-[28px] md:text-[29px] lg:text-[30px] xl:text-[30px]">
+                <h1 className="text-[16px] font-bold uppercase leading-tight tracking-[0.015em] sm:text-[20px] lg:text-[24px]">
                   {selectedVehicle.name}
                 </h1>
-                <p className="mt-[7px] text-[12px] font-normal leading-[1.4] tracking-[-0.01em] text-[#555555] sm:text-[13px] lg:text-[14px]">
+                <p className="hidden text-[10px] font-normal leading-tight text-[#555555] sm:block sm:text-[11.5px]">
                   {selectedVehicle.subtitle}
                 </p>
               </div>
 
-              <div className="shrink-0 pr-[8px] sm:min-w-[190px] sm:pr-[10px]">
-                <p className="mb-[7px] text-[8px] font-medium uppercase tracking-[0.13em] text-[#555555] sm:text-right">
-                  CHOOSE YOUR COLOUR
-                </p>
-
-                <div className="flex flex-wrap items-start gap-[9px] sm:justify-end">
+              <div className="shrink-0">
+                <div className="flex items-center gap-[6px]">
                   {selectedVehicle.colors.map((color) => {
                     const active = selectedColor.id === color.id;
 
                     return (
-                      <div
+                      <button
                         key={color.id}
-                        className="flex min-w-[38px] flex-col items-center"
+                        type="button"
+                        title={color.name}
+                        aria-label={`Select ${color.name}`}
+                        onClick={() => {
+                          setSelectedColor(color);
+                          setViewIndex(0);
+                        }}
+                        className={`relative flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-white transition-all duration-200 sm:h-[25px] sm:w-[25px] ${
+                          active
+                            ? "border-2 border-black"
+                            : "border border-[#CFCFCF] hover:border-black"
+                        }`}
                       >
-                        <button
-                          type="button"
-                          title={color.name}
-                          aria-label={`Select ${color.name}`}
-                          onClick={() => {
-                            setSelectedColor(color);
-                            setViewIndex(0);
-                          }}
-                          className={`relative flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-white transition-all duration-200 ${
-                            active
-                              ? "border-2 border-black"
-                              : "border border-[#CFCFCF] hover:border-black"
-                          }`}
-                        >
-                          <span
-                            className="h-[22px] w-[22px] rounded-full border border-black/10"
-                            style={{ backgroundColor: color.hex }}
-                          />
-
-                          {active && (
-                            <span className="absolute right-[-2px] top-[-3px] flex h-[15px] w-[15px] items-center justify-center rounded-full bg-[#000000] text-white">
-                              <Check size={9} strokeWidth={4} />
-                            </span>
-                          )}
-                        </button>
-
                         <span
-                          className={`mt-[5px] min-h-[10px] text-center text-[8px] font-medium uppercase leading-none tracking-[0.05em] text-black ${
-                            active ? "opacity-100" : "opacity-0"
-                          }`}
-                        >
-                          {color.name}
-                        </span>
-                      </div>
+                          className="h-[13px] w-[13px] rounded-full border border-black/10 sm:h-[15px] sm:w-[15px]"
+                          style={{ backgroundColor: color.hex }}
+                        />
+
+                        {active && (
+                          <span className="absolute right-[-2px] top-[-3px] flex h-[10px] w-[10px] items-center justify-center rounded-full bg-[#000000] text-white">
+                            <Check size={6} strokeWidth={4} />
+                          </span>
+                        )}
+                      </button>
                     );
                   })}
                 </div>
               </div>
             </div>
 
+<<<<<<< HEAD
             {/* UNIFIED CONTAINER FOR IMAGE AND SPECS */}
             <div className="relative mt-2 flex min-h-0 flex-1 flex-row overflow-hidden rounded-[10px] border border-[#E6E6E6] bg-white shadow-[0_3px_12px_rgba(0,0,0,0.05)]">
               {/* IMAGE DISPLAY ON THE LEFT */}
               <div className="relative flex-1 overflow-hidden">
+=======
+            {/* DISPLAY PANEL: IMAGE & SPECS */}
+            <div className="relative flex w-full flex-col overflow-hidden rounded-[8px] border border-[#E6E6E6] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04)] lg:min-h-0 lg:flex-1 lg:rounded-[10px]">
+              {/* FIXED DESKTOP FLEX IMAGE CONTAINER */}
+              <div className="relative h-[240px] w-full shrink-0 overflow-hidden p-3 sm:h-[320px] lg:h-auto lg:min-h-0 lg:flex-1 lg:p-6">
+>>>>>>> 8fd6f7fb13ae579f4124e5b3da5c534b765d2af3
                 <SmartImage
                   key={`${selectedVehicle.id}-${selectedColor.id}-${viewIndex}`}
                   src={selectedViews[viewIndex] ?? selectedColor.image}
                   alt={`${selectedVehicle.name} ${selectedColor.name} angle ${viewIndex + 1}`}
                   style={{
-                    transform: `scale(${selectedVehicle.imageScale ?? 1.1})`,
+                    transform: `scale(${selectedVehicle.imageScale ?? 1.0})`,
                     transformOrigin: "center",
                   }}
-                  className="h-full w-full object-contain object-center p-2 sm:p-3 lg:p-4"
+                  className="object-contain object-center"
                 />
               </div>
 
+<<<<<<< HEAD
               {/* INTEGRATED SPECS BAR (REDUCED WIDTH) */}
               <div className="flex w-[65px] shrink-0 flex-col justify-center border-l border-[#ECECEC] bg-white sm:w-[75px] md:w-[85px] lg:w-[90px]">
+=======
+              {/* INTEGRATED SPECS BAR */}
+              <div className="grid shrink-0 grid-cols-5 border-t border-[#ECECEC] bg-white">
+>>>>>>> 8fd6f7fb13ae579f4124e5b3da5c534b765d2af3
                 {selectedVehicle.specs.map((spec, index) => (
                   <SpecBox
                     key={`${spec.label}-${index}`}
@@ -552,28 +547,22 @@ export default function MomentsMotion() {
             </div>
 
             {/* ACTION BUTTONS */}
-            <div className="mt-[12px] flex shrink-0 flex-col items-center justify-center gap-[10px] sm:flex-row">
+            <div className="mt-2 flex shrink-0 items-center justify-center gap-2">
               <button
                 type="button"
-                className="flex h-[40px] w-[150px] items-center justify-center border border-[#07131D] bg-transparent px-4 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#07131D] transition-colors duration-300 ease-out hover:bg-[#07131D] hover:text-white sm:w-[165px] lg:w-[170px]"
+                className="flex h-[32px] flex-1 max-w-[140px] items-center justify-center border border-[#07131D] bg-transparent px-2 text-[8.5px] font-semibold uppercase tracking-[0.10em] text-[#07131D] transition-colors duration-300 ease-out hover:bg-[#07131D] hover:text-white"
               >
                 <span className="whitespace-nowrap">VIEW DETAILS</span>
               </button>
 
-              <div className="relative h-[40px] w-[150px] shrink-0 overflow-visible sm:w-[165px] lg:w-[170px]">
-                <button
-                  type="button"
-                  onClick={() => setShowTestRide(true)}
-                  className="group absolute left-0 top-0 flex h-[40px] w-[150px] items-center justify-between overflow-hidden border border-black bg-black px-5 text-[9px] font-semibold uppercase tracking-[0.10em] text-white transition-[width,background-color] duration-300 ease-out hover:w-[205px] hover:bg-[#1a1a1a] sm:w-[165px] sm:hover:w-[210px] lg:w-[170px] lg:hover:w-[205px]"
-                >
-                  <span className="whitespace-nowrap">BOOK A TEST RIDE</span>
-                  <ArrowRight
-                    size={17}
-                    strokeWidth={1.6}
-                    className="ml-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
-                  />
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => setShowTestRide(true)}
+                className="flex h-[32px] flex-1 max-w-[155px] items-center justify-center border border-black bg-black px-2 text-[8.5px] font-semibold uppercase tracking-[0.10em] text-white transition-colors duration-300 hover:bg-[#1a1a1a]"
+              >
+                <span className="whitespace-nowrap">BOOK TEST RIDE</span>
+                <ArrowRight size={12} strokeWidth={2} className="ml-1 shrink-0" />
+              </button>
             </div>
           </main>
         </div>
@@ -589,7 +578,7 @@ export default function MomentsMotion() {
           aria-label="Book a test ride"
         >
           <div
-            className="relative max-h-[94vh] w-full max-w-[980px] overflow-hidden rounded-[16px] bg-white shadow-[0_24px_80px_rgba(0,0,0,0.30)] sm:rounded-[20px]"
+            className="relative max-h-[94vh] w-full max-w-[980px] overflow-hidden rounded-[14px] bg-white shadow-[0_24px_80px_rgba(0,0,0,0.30)] sm:rounded-[20px]"
             onMouseDown={(event) => event.stopPropagation()}
           >
             <TestRidePopupContent onClose={() => setShowTestRide(false)} />
@@ -620,13 +609,13 @@ function CategoryTab({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`relative flex min-h-[50px] items-center justify-center px-2 text-[9px] font-medium uppercase tracking-[0.015em] transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-35 sm:text-[10px] lg:text-[10px] ${
+      className={`relative flex min-h-[30px] items-center justify-center px-1 text-[8px] font-medium uppercase tracking-[0.015em] transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-35 sm:min-h-[36px] sm:text-[9.5px] ${
         active ? "text-[#111111]" : "text-[#555555] hover:text-black"
       }`}
     >
       {title}
       <span
-        className={`absolute bottom-0 left-1/2 h-[3px] -translate-x-1/2 rounded-full bg-[#000000] transition-all duration-300 ${
+        className={`absolute bottom-0 left-1/2 h-[2px] -translate-x-1/2 rounded-full bg-[#000000] transition-all duration-300 ${
           active ? "w-full opacity-100" : "w-0 opacity-0"
         }`}
       />
@@ -642,6 +631,7 @@ function SpecBox({ spec, last }: { spec: VehicleSpec; last: boolean }) {
   const getIcon = () => {
     switch (spec.type) {
       case "engine":
+<<<<<<< HEAD
         return <Cog size={15} strokeWidth={1.7} />;
       case "mileage":
         return <Gauge size={15} strokeWidth={1.7} />;
@@ -653,11 +643,25 @@ function SpecBox({ spec, last }: { spec: VehicleSpec; last: boolean }) {
         return <Fuel size={15} strokeWidth={1.7} />;
       default:
         return <Cog size={15} strokeWidth={1.7} />;
+=======
+        return <Cog size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
+      case "mileage":
+        return <Gauge size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
+      case "power":
+        return <Zap size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
+      case "transmission":
+        return <Settings size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
+      case "fuel":
+        return <Fuel size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
+      default:
+        return <Cog size={12} strokeWidth={1.7} className="sm:size-[14px]" />;
+>>>>>>> 8fd6f7fb13ae579f4124e5b3da5c534b765d2af3
     }
   };
 
   return (
     <div
+<<<<<<< HEAD
       className={`flex flex-1 flex-col items-center justify-center px-1 py-[4px] text-center ${
         !last ? "border-b border-[#ECECEC]" : ""
       }`}
@@ -667,6 +671,17 @@ function SpecBox({ spec, last }: { spec: VehicleSpec; last: boolean }) {
         {spec.value}
       </strong>
       <span className="mt-[2px] text-[6px] font-normal leading-none text-[#555555] sm:text-[6.5px]">
+=======
+      className={`flex min-h-[38px] flex-col items-center justify-center p-0.5 text-center sm:min-h-[46px] ${
+        !last ? "border-r border-[#ECECEC]" : ""
+      }`}
+    >
+      <div className="text-[#ED111C]">{getIcon()}</div>
+      <strong className="mt-[1px] text-[7px] font-semibold leading-none tracking-[-0.01em] text-[#111111] sm:text-[8px]">
+        {spec.value}
+      </strong>
+      <span className="mt-[1px] text-[5px] font-normal leading-none text-[#555555] sm:text-[6px]">
+>>>>>>> 8fd6f7fb13ae579f4124e5b3da5c534b765d2af3
         {spec.label}
       </span>
     </div>
@@ -770,18 +785,16 @@ function TestRidePopupContent({ onClose }: { onClose?: () => void }) {
         fontFamily: '"Land Rover Web Bold", Arial, Helvetica, sans-serif',
       }}
     >
-      {/* BACKGROUND */}
       <div className="absolute inset-0">
         <SmartImage
           src="/images/momentsinmotion/test.png"
           alt="Book a test ride"
-          className="h-full w-full object-cover object-[40%_center] sm:object-[42%_center] md:object-[45%_center] lg:object-[47%_center]"
+          className="object-cover object-[40%_center] sm:object-[42%_center] md:object-[45%_center] lg:object-[47%_center]"
         />
 
         <div className="absolute inset-0 bg-black/20 md:bg-gradient-to-r md:from-black/35 md:via-black/10 md:to-black/5" />
       </div>
 
-      {/* PHOENIX LOGO */}
       <div className="absolute left-4 top-4 z-30 sm:left-6 sm:top-5 md:left-8 md:top-7 lg:left-10 lg:top-8">
         <Image
           src="/images/momentsinmotion/logo.png"
@@ -789,52 +802,47 @@ function TestRidePopupContent({ onClose }: { onClose?: () => void }) {
           width={100}
           height={40}
           unoptimized
-          className="h-auto w-[72px] object-contain sm:w-[82px] md:w-[92px] lg:w-[100px]"
+          className="h-auto w-[60px] object-contain sm:w-[82px] md:w-[92px] lg:w-[100px]"
         />
       </div>
 
-      {/* CONTENT */}
       <div className="relative z-10 flex max-h-[90vh] w-full flex-col overflow-y-auto md:max-h-[94vh] md:flex-row md:items-stretch md:justify-between md:overflow-visible">
-        {/* LEFT SIDE */}
-        <div className="flex w-full flex-col justify-end p-5 pt-12 text-white sm:p-7 sm:pt-16 md:w-[45%] md:p-8 md:pt-20 lg:p-10">
+        <div className="flex w-full flex-col justify-end p-4 pt-10 text-white sm:p-7 sm:pt-16 md:w-[45%] md:p-8 md:pt-20 lg:p-10">
           <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/85 sm:text-xs">
             Phoenix Motors
           </p>
 
-          <h4 className="mt-1.5 max-w-[300px] text-lg font-medium leading-tight sm:mt-2 sm:text-2xl md:text-3xl">
+          <h4 className="mt-1 max-w-[300px] text-base font-medium leading-tight sm:mt-2 sm:text-2xl md:text-3xl">
             Find Your Perfect Ride
           </h4>
 
-          <p className="mt-1.5 max-w-[340px] text-xs font-normal leading-relaxed text-white/90 sm:mt-2 sm:text-sm">
+          <p className="mt-1 max-w-[340px] text-[11px] font-normal leading-relaxed text-white/90 sm:mt-2 sm:text-sm">
             Book your test ride and experience your preferred motorcycle before you
             decide.
           </p>
         </div>
 
-        {/* RIGHT FORM */}
-        <div className="flex w-full items-center justify-center p-3 sm:p-4 md:w-[55%] md:justify-end md:p-6 lg:p-8">
-          <div className="relative mx-auto w-full max-w-[420px] rounded-xl bg-white p-4 shadow-[0_14px_45px_rgba(0,0,0,0.22)] sm:rounded-2xl sm:p-5 md:mx-0">
-            {/* FORM MAIN HEADING WITH LEFT BACK ARROW */}
-            <div className="mb-3 flex items-center gap-2">
+        <div className="flex w-full items-center justify-center p-2.5 sm:p-4 md:w-[55%] md:justify-end md:p-6 lg:p-8">
+          <div className="relative mx-auto w-full max-w-[420px] rounded-xl bg-white p-3.5 shadow-[0_14px_45px_rgba(0,0,0,0.22)] sm:rounded-2xl sm:p-5 md:mx-0">
+            <div className="mb-2 flex items-center gap-2">
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Go back"
-                className="flex h-7 w-7 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100"
+                className="flex h-6 w-6 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100 sm:h-7 sm:w-7"
               >
-                <ArrowLeft size={18} strokeWidth={2} />
+                <ArrowLeft size={16} strokeWidth={2} />
               </button>
 
-              <h2 className="text-base font-bold leading-tight text-gray-900 sm:text-lg md:text-xl">
+              <h2 className="text-sm font-bold leading-tight text-gray-900 sm:text-lg md:text-xl">
                 Start Your Journey
               </h2>
             </div>
 
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="w-full space-y-2"
+              className="w-full space-y-1.5 sm:space-y-2"
             >
-              {/* NAME */}
               <div>
                 <label className="mb-0.5 block text-[10px] font-medium text-gray-800 sm:text-[11px]">
                   Name <span className="text-red-500">*</span>
@@ -843,11 +851,10 @@ function TestRidePopupContent({ onClose }: { onClose?: () => void }) {
                 <input
                   type="text"
                   placeholder="Enter your name"
-                  className="h-7 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-2.5 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-8"
+                  className="h-7 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-2 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-8 sm:px-2.5"
                 />
               </div>
 
-              {/* PHONE */}
               <div>
                 <label className="mb-0.5 block text-[10px] font-medium text-gray-800 sm:text-[11px]">
                   Phone Number <span className="text-red-500">*</span>
@@ -858,24 +865,22 @@ function TestRidePopupContent({ onClose }: { onClose?: () => void }) {
                   inputMode="numeric"
                   maxLength={10}
                   placeholder="Enter your number"
-                  className="h-7 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-2.5 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-8"
+                  className="h-7 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-2 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-8 sm:px-2.5"
                 />
               </div>
 
-              {/* EMAIL */}
               <div>
                 <label className="mb-0.5 block text-[10px] font-medium text-gray-800 sm:text-[11px]">
-                  Email ID <span className="text-red-500">*</span>
+                  Email ID <span className="text-red-[#FF0000]">*</span>
                 </label>
 
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="h-7 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-2.5 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-8"
+                  className="h-7 w-full rounded-md border border-[#D7DCE2] bg-[#F6F7F8] px-2 text-xs font-medium text-gray-800 outline-none transition placeholder:text-[#98A2B3] focus:border-[#0052A5] focus:bg-white sm:h-8 sm:px-2.5"
                 />
               </div>
 
-              {/* VEHICLE */}
               <CompactDropdown
                 label="Vehicle Model"
                 placeholder="Select vehicle model"
@@ -883,7 +888,6 @@ function TestRidePopupContent({ onClose }: { onClose?: () => void }) {
                 direction="down"
               />
 
-              {/* SHOWROOM */}
               <CompactDropdown
                 label="Showroom"
                 placeholder="Select showroom"
@@ -891,10 +895,9 @@ function TestRidePopupContent({ onClose }: { onClose?: () => void }) {
                 direction="up"
               />
 
-              {/* SUBMIT */}
               <button
                 type="submit"
-                className="mt-2 h-8 w-full rounded-md bg-[#0052A5] text-xs font-semibold text-white transition-all duration-300 hover:bg-[#003D7C] hover:shadow-[0_5px_16px_rgba(0,82,165,0.25)] sm:h-9"
+                className="mt-2 h-7 w-full rounded-md bg-[#0052A5] text-xs font-semibold text-white transition-all duration-300 hover:bg-[#003D7C] hover:shadow-[0_5px_16px_rgba(0,82,165,0.25)] sm:h-9"
               >
                 Submit
               </button>

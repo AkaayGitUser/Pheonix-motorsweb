@@ -9,6 +9,7 @@ export default function BuildYourOwn() {
       className="
         relative
         w-full
+        
         overflow-hidden
         bg-[#F5F6F6]
       "
@@ -35,14 +36,14 @@ export default function BuildYourOwn() {
           md:px-10
           md:py-14
 
-          lg:min-h-[650px]
+          lg:min-h-[600px]
           lg:grid-cols-[37%_63%]
           lg:items-center
           lg:gap-8
-          lg:px-12
+          lg:px-10
           lg:py-8
 
-          xl:min-h-[680px]
+          xl:min-h-[600px]
           xl:grid-cols-[38%_62%]
           xl:px-[60px]
 

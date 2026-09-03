@@ -15,8 +15,9 @@ export default function Home() {
         <EnquiryBanner />
         <Exploremore />
         <MomentsMotion />
-        <BuildYourOwn />
         <Gallery/>
+        <BuildYourOwn />
+        
         <Chooseus />
       </main>
       <Footer />
