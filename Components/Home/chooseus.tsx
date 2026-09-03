@@ -114,7 +114,7 @@ export default function Chooseus() {
 
   return (
     <section
-      className="bg-[#F1F1F1] pt-14 md:pt-5 pb-16 md:pb-10 overflow-hidden relative select-none"
+      className="bg-[#F5F6F6] pt-14 md:pt-5 pb-16 md:pb-10 overflow-hidden relative select-none"
       style={{ fontFamily: "'Neurial Grotesk', sans-serif" }}
     >
       {/* Header */}
