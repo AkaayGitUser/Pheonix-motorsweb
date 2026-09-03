@@ -5,19 +5,6 @@ import { Menu, ShoppingCart, MapPin, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Pure CSS representation of the India flag (scaled to match size)
-// const IndiaFlag = () => (
-//   <div className="w-[22px] h-[16px] relative flex flex-col justify-between overflow-hidden rounded-[1px] border border-gray-200 select-none">
-//     <div className="h-1/3 bg-[#FF9933]" />
-//     <div className="h-1/3 bg-white flex items-center justify-center relative">
-//       <div className="w-1.5 h-1.5 rounded-full border border-[#000080] flex items-center justify-center">
-//         <div className="w-0.5 h-0.5 rounded-full bg-[#000080]" />
-//       </div>
-//     </div>
-//     <div className="h-1/3 bg-[#128807]" />
-//   </div>
-// );
-
 export default function Header() {
   const [showMobileHead, setShowMobileHead] = useState(false);
   const [showPlacesModal, setShowPlacesModal] = useState(false);
@@ -39,15 +26,14 @@ export default function Header() {
     { name: "ECIL", flag: "📍" },
     { name: "Sainikpuri", flag: "📍" },
     { name: "Bhuvanagiri", flag: "📍" },
-
   ];
 
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
       isScrolled
-        ? "bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm py-1.5"
+        ? "bg-white/85 backdrop-blur-md border-b border-gray-100 shadow-sm py-1.5"
         : showPlacesModal
-          ? "bg-black/75 backdrop-blur-md border-b border-white/10 py-1.5 shadow-lg"
+          ? "bg-black/75 backdrop-blur-lg border-b border-white/10 py-1.5 shadow-lg"
           : "bg-transparent py-3"
     }`}>
       {/* Desktop View */}
@@ -55,11 +41,11 @@ export default function Header() {
         {/* Left Side: Logo */}
         <div className="flex items-center">
           <Image
-            src="/motor-logo.png"
+            src={isScrolled ? "/images/motorsslogo.png" : "/motor-logo.png"}
             alt="Logo"
             width={96}
             height={44}
-            className={`cursor-pointer ml-4 transition-all duration-300 ${isScrolled ? "invert hue-rotate-180" : ""}`}
+            className="cursor-pointer ml-4 transition-all duration-300"
           />
         </div>
 
@@ -83,7 +69,6 @@ export default function Header() {
           </button>
           <span className={`select-none transition-colors duration-300 ${isScrolled ? "text-gray-200" : "text-white/20"}`}>|</span>
 
-          {/* Flag Trigger Button */}
           {/* Location Trigger Button */}
           <button
             aria-label="Select Hyderabad Branch"
@@ -110,7 +95,6 @@ export default function Header() {
             <AnimatePresence>
               {showDesktopMenu && (
                 <>
-                  {/* Backdrop Overlay */}
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -120,7 +104,6 @@ export default function Header() {
                     className="fixed inset-0 bg-black/40 z-[60]"
                   />
 
-                  {/* Sliding Drawer */}
                   <motion.div
                     initial={{ x: "100%" }}
                     animate={{ x: 0 }}
@@ -149,41 +132,16 @@ export default function Header() {
                     <nav className={`flex flex-col gap-6 text-[16px] font-normal w-full ${
                       isScrolled ? "text-gray-800" : "text-gray-200"
                     }`}>
-                      <a
-                        href="#"
-                        onClick={() => setShowDesktopMenu(false)}
-                        className={`hover:text-[#E10A17] transition-colors py-1 border-b ${
-                          isScrolled ? "border-gray-50" : "border-white/10"
-                        }`}
-                      >
+                      <a href="#" onClick={() => setShowDesktopMenu(false)} className={`hover:text-[#E10A17] transition-colors py-1 border-b ${isScrolled ? "border-gray-50" : "border-white/10"}`}>
                         Exchange Your Bike
                       </a>
-
-                      <a
-                        href="#"
-                        onClick={() => setShowDesktopMenu(false)}
-                        className={`hover:text-[#E10A17] transition-colors py-1 border-b ${
-                          isScrolled ? "border-gray-50" : "border-white/10"
-                        }`}
-                      >
+                      <a href="#" onClick={() => setShowDesktopMenu(false)} className={`hover:text-[#E10A17] transition-colors py-1 border-b ${isScrolled ? "border-gray-50" : "border-white/10"}`}>
                         Find Dealers
                       </a>
-
-                      <a
-                        href="#"
-                        onClick={() => setShowDesktopMenu(false)}
-                        className={`hover:text-[#E10A17] transition-colors py-1 border-b ${
-                          isScrolled ? "border-gray-50" : "border-white/10"
-                        }`}
-                      >
+                      <a href="#" onClick={() => setShowDesktopMenu(false)} className={`hover:text-[#E10A17] transition-colors py-1 border-b ${isScrolled ? "border-gray-50" : "border-white/10"}`}>
                         Help & Support
                       </a>
-
-                      <a
-                        href="#"
-                        onClick={() => setShowDesktopMenu(false)}
-                        className="hover:text-[#E10A17] transition-colors py-1"
-                      >
+                      <a href="#" onClick={() => setShowDesktopMenu(false)} className="hover:text-[#E10A17] transition-colors py-1">
                         Corporate Offers
                       </a>
                     </nav>
@@ -195,15 +153,14 @@ export default function Header() {
         </div>
       </div>
 
-
       {/* Mobile View */}
       <div className="lg:hidden flex items-center justify-between w-full h-[48px] px-6">
         <Image
-          src="/motor-logo.png"
+          src={isScrolled ? "/motor-logo-dark.png" : "/motor-logo.png"}
           alt="Logo"
           width={80}
           height={36}
-          className={`cursor-pointer transition-all duration-300 ${isScrolled ? "invert hue-rotate-180" : ""}`}
+          className="cursor-pointer transition-all duration-300"
         />
         <button
           aria-label="Menu"
@@ -218,7 +175,6 @@ export default function Header() {
       <AnimatePresence>
         {showMobileHead && (
           <>
-            {/* Backdrop Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -228,7 +184,6 @@ export default function Header() {
               className="fixed inset-0 bg-black/40 z-40"
             />
 
-            {/* Sliding Drawer */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -259,17 +214,15 @@ export default function Header() {
         )}
       </AnimatePresence>
 
-      {/* Locations Full-Width Dropdown Panel (Tata style) */}
+      {/* Locations Full-Width Dropdown Panel */}
       <AnimatePresence>
         {showPlacesModal && (
           <>
-            {/* Backdrop Overlay to close on click outside */}
             <div
               onClick={() => setShowPlacesModal(false)}
               className="fixed inset-0 bg-black/40 z-30"
             />
 
-            {/* Dropdown Panel */}
             <motion.div
               initial={{ opacity: 0, y: -15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -282,7 +235,6 @@ export default function Header() {
               }`}
             >
               <div className="max-w-7xl mx-auto px-10 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
-                {/* Left Column: Overview */}
                 <div className="col-span-1 border-r border-gray-200/20 pr-6">
                   <h3 className="text-[20px] font-semibold tracking-tight mb-2">Our Locations</h3>
                   <p className={`text-[13px] ${isScrolled ? "text-gray-500" : "text-gray-400"} leading-relaxed`}>
@@ -290,7 +242,6 @@ export default function Header() {
                   </p>
                 </div>
 
-                {/* Right Columns: Branches List */}
                 <div className="col-span-3 pl-4">
                   <h4 className="text-[12px] font-semibold tracking-wider uppercase mb-6 opacity-60">
                     Branches in Hyderabad
@@ -320,4 +271,3 @@ export default function Header() {
     </header>
   );
 }
-
